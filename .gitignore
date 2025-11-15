@@ -1,0 +1,29 @@
+# Esta es una plantilla básica adaptada al caso, para evitar problemas con Git
+
+# Archivos de Python
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+
+# Entornos virtuales
+venv/
+.env
+
+# Archivos de configuración local
+*.sqlite3
+*.log
+*.db
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de dependencias
+pip-wheel-metadata/
+*.egg-info/
+
+# Archivos de IDEs
+.vscode/
+.idea/
+*.swp
