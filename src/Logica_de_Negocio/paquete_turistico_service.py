@@ -1,0 +1,1 @@
+## archivo encargado de logica y comunicar a paquete_turistico_controller con paquete_turistico_repository
