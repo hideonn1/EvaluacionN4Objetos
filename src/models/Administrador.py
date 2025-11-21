@@ -6,7 +6,7 @@ class Administrador(Persona):
     def __init__ (self,
                   id_administrador,
                   rut,
-                  nombre,
+                  nombres,
                   apellido_paterno,
                   apellido_materno,
                   email,
@@ -16,9 +16,9 @@ class Administrador(Persona):
                   fecha_nacimiento,
                   fecha_registro):
         
-        super().__init__(self,
+        super().__init__(id_administrador,
                        rut,
-                       nombre,
+                       nombres,
                        apellido_paterno,
                        apellido_materno,
                        email,

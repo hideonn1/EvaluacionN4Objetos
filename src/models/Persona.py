@@ -5,19 +5,21 @@
 from abc import ABC, abstractmethod
 
 class Persona(ABC):
-    def __init__ (self, rut,
-                  nombre,
+    def __init__ (self, id_usuario,
+                  rut,
+                  nombres,
                   apellido_paterno,
                   apellido_materno,
                   email,
                   contraseña_hash,
                   telefono,
                   direccion,
-                  fecha_nacimiento,
+                  fecha_nacimiento, 
                   fecha_registro):
         
+        self.id_usuario = id_usuario
         self.rut = rut
-        self.nombre = nombre
+        self.nombres = nombres
         self.apellido_paterno = apellido_paterno
         self.apellido_materno = apellido_materno
         self.email = email
