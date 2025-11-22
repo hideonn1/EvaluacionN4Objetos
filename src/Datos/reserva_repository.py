@@ -2,80 +2,72 @@
 
 from src.Logica_de_Negocio.models.Reserva import Reserva
 
-class Usuario_Repository:
+class Reserva_Repository:
     
     def __init__(self, conectar_db):
         self._conectar_db = conectar_db
 
-    # Crea un nuevo registro de usuario en la base de datos
-    def add(self, reserva):
-        pass
+    # Crea un nuevo registro de reserva en la base de datos
+    def create(self, reserva, id_usuario):
+        conexion = self._conectar_db()
+        cursor = conexion.cursor()
+        
+        try:
+            query = ("""
+                    INSERT INTO reserva (fecha_inicio, fecha_final, estado, monto_total, id_usuario) 
+                    VALUES (%s, %s, %s, %s, %s);
+                """)
+            datos = (reserva.fecha_inicio, 
+                    reserva.fecha_final,
+                    reserva.estado,
+                    reserva.monto_total,
+                    id_usuario
+                    )
+            cursor.execute(query, datos)
+            conexion.commit() 
+
+            reserva_id = cursor.lastrowid
+            reserva.id_reserva = reserva_id
+
+            return reserva
+            
+        except Exception as e:
+            conexion.rollback()
+            raise e
+            
+        finally:
+            cursor.close()
+            conexion.close()        
+        
     
     # Busca y retorna un Usuario por su ID
-    def get_by_id(self, id_reserva):
+    def read_by_id(self, id_reserva):
         conexion = self._conectar_db() 
         cursor = conexion.cursor(dictionary=True)
 
         try:
-            query = "SELECT * FROM Usuario WHERE id_usuario = %s"
+            query = "SELECT * FROM reserva WHERE id_reserva = %s"
             datos = (id_reserva,)
 
             cursor.execute(query,datos)
             resultado = cursor.fetchone()
 
             if resultado:
-                usuario_objeto = Reserva(
+                reserva_objeto = Reserva(
+                    id_reserva = resultado['id_usuario'],
                     id_cliente = resultado['id_usuario'],
-                    rut = resultado['rut'],
-                    nombres = resultado['nombres'],
-                    apellido_paterno = resultado['apellido_paterno'],
-                    apellido_materno = resultado['apellido_materno'],
-                    email = resultado['email'],
-                    contraseña_hash = ['contraseña'],
-                    telefono = resultado['telefono'],
-                    direccion = resultado['direccion'],
-                    fecha_nacimiento = resultado['fecha_nacimiento'],
-                    fecha_registro = resultado['fecha_registro']
+                    fecha_inicio = resultado['fecha_inicio'],
+                    fecha_final = resultado['fecha_final'],
+                    monto_total = resultado['monto_total']
                 )
-                return usuario_objeto 
+                return reserva_objeto 
             else:
                 return None 
 
         finally:
-            pass 
+            cursor.close()
+            conexion.close() 
 
-    # Busca y retorna un Usuario por su email
-    def get_by_email(self, email):
-        conexion = self._conectar_db() 
-        cursor = conexion.cursor(dictionary=True)
-
-        try:
-            query = "SELECT * FROM Usuario WHERE email = %s"
-            datos = (email,)
-
-            cursor.execute(query,datos)
-            resultado = cursor.fetchone()
-
-            if resultado:
-                usuario_objeto = Reserva(
-                    id_cliente = resultado['id_usuario'],
-                    rut = resultado['rut'],
-                    nombres = resultado['nombres'],
-                    apellido_paterno = resultado['apellido_paterno'],
-                    apellido_materno = resultado['apellido_materno'],
-                    email = resultado['email'],
-                    contraseña_hash = ['contraseña'],
-                    telefono = resultado['telefono'],
-                    direccion = resultado['direccion'],
-                    fecha_nacimiento = resultado['fecha_nacimiento'],
-                    fecha_registro = resultado['fecha_registro']
-                )
-                return usuario_objeto 
-            else:
-                return None 
-
-        finally:
-            pass 
     # Actualiza los datos de un usuario ya existente.
     def update(self, reserva):
         conexion = self._conectar_db()

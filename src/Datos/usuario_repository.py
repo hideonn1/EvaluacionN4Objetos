@@ -6,9 +6,39 @@ class Usuario_Repository:
         self._conectar_db = conectar_db
 
     # Crea un nuevo registro de usuario en la base de datos
-    def add(self, usuario):
-        pass
-    
+    def create(self, usuario):
+        conexion = self._conectar_db()
+        cursor = conexion.cursor()
+        
+        try:
+            query = ("""
+                    INSERT INTO usuario (rut, nombres, apellido_paterno, apellido_materno, email, contraseña, rol, telefono, fecha_nacimiento, fecha_registro) 
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
+                """)
+            datos = (usuario.rut,
+                     usuario.nombres,
+                     usuario.apellido_paterno,
+                     usuario.apellido_materno,
+                     usuario.email,
+                     usuario.contraseña,
+                     usuario.rol,
+                     usuario.telefono,
+                     usuario.fecha_nacimiento,
+                     usuario.fecha_registro
+                    )
+            cursor.execute(query, datos)
+            conexion.commit() 
+
+            return usuario
+            
+        except Exception as e:
+            conexion.rollback()
+            raise e
+            
+        finally:
+            cursor.close()
+            conexion.close()        
+               
     # Busca y retorna un Usuario por su ID
     def get_by_id(self, id_usuario):
         conexion = self._conectar_db() 

@@ -4,10 +4,10 @@ from PaqueteTuristico import PaqueteTuristico
 class Reserva():
     def __init__ (self, id_reserva,
                 id_cliente,
-                paquete_turistico,
                 fecha_reserva,
                 estado,
-                monto_pagado):
+                monto_pagado,
+                paquete_turistico = None):
         
         self.id_reserva = id_reserva
         self.id_cliente = id_cliente

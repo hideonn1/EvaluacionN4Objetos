@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`reserva` (
   `fecha_final` DATE NULL,
   `estado` VARCHAR(15) NULL,
   `monto_total` INT NULL,
-  `usuario_id_usuario` INT NOT NULL,
+  `id_usuario` INT NOT NULL,
   PRIMARY KEY (`id_reserva`),
   INDEX `fk_reserva_usuario_idx` (`usuario_id_usuario` ASC),
   CONSTRAINT `fk_reserva_usuario`
