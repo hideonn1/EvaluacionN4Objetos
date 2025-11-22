@@ -1,4 +1,6 @@
-from src.Logica_de_Negocio.models.Cliente import Cliente
+##archivo encargado de consultas sql con la tabla reserva
+
+from src.Logica_de_Negocio.models.Reserva import Reserva
 
 class Usuario_Repository:
     
@@ -6,23 +8,23 @@ class Usuario_Repository:
         self._conectar_db = conectar_db
 
     # Crea un nuevo registro de usuario en la base de datos
-    def add(self, usuario):
+    def add(self, reserva):
         pass
     
     # Busca y retorna un Usuario por su ID
-    def get_by_id(self, id_usuario):
+    def get_by_id(self, id_reserva):
         conexion = self._conectar_db() 
         cursor = conexion.cursor(dictionary=True)
 
         try:
             query = "SELECT * FROM Usuario WHERE id_usuario = %s"
-            datos = (id_usuario,)
+            datos = (id_reserva,)
 
             cursor.execute(query,datos)
             resultado = cursor.fetchone()
 
             if resultado:
-                usuario_objeto = Cliente(
+                usuario_objeto = Reserva(
                     id_cliente = resultado['id_usuario'],
                     rut = resultado['rut'],
                     nombres = resultado['nombres'],
@@ -55,7 +57,7 @@ class Usuario_Repository:
             resultado = cursor.fetchone()
 
             if resultado:
-                usuario_objeto = Cliente(
+                usuario_objeto = Reserva(
                     id_cliente = resultado['id_usuario'],
                     rut = resultado['rut'],
                     nombres = resultado['nombres'],
@@ -75,34 +77,24 @@ class Usuario_Repository:
         finally:
             pass 
     # Actualiza los datos de un usuario ya existente.
-    def update(self, usuario):
+    def update(self, reserva):
         conexion = self._conectar_db()
         cursor = conexion.cursor()
         
         try:
             query = ("""
-                UPDATE usuario SET 
-                    nombres = %s, 
-                    apellido_paterno = %s, 
-                    apellido_materno = %s, 
-                    email = %s, 
-                    telefono = %s, 
-                    direccion = %s,
-                    contraseña = %s 
-                WHERE id_usuario = %s;
+                UPDATE reserva SET 
+                    estado = %s, 
+                    monto_pagado = %s
+                WHERE id_reserva = %s;
                 """)
-            datos = (usuario.nombres, 
-                    usuario.apellido_paterno, 
-                    usuario.apellido_materno, 
-                    usuario.email, 
-                    usuario.telefono, 
-                    usuario.direccion,
-                    usuario.contraseña,
-                    usuario.id_usuario
+            datos = (reserva.estado, 
+                    reserva.monto_pagado,
+                    reserva.id_reserva
                     )
             cursor.execute(query, datos)
             conexion.commit() 
-            return usuario 
+            return reserva
             
         except Exception as e:
             conexion.rollback()
@@ -112,14 +104,13 @@ class Usuario_Repository:
             cursor.close()
             conexion.close()
 
-    # Elimina un registro de usuario
-    def delete(self, id_usuario):
+    def delete(self, id_reserva):
         conexion = self._conectar_db()
         cursor = conexion.cursor()
         
         try:
-            query = ("DELETE FROM usuario WHERE id_usuario = %s;")
-            datos = (id_usuario,)
+            query = ("DELETE FROM reserva WHERE id_reserva = %s;")
+            datos = (id_reserva,)
             cursor.execute(query, datos)
             conexion.commit() 
             return True 

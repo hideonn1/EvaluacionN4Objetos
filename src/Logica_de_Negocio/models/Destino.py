@@ -3,15 +3,19 @@
 class Destino():
     def __init__ (self, id_destino,
                 nombre,
+                ciudad,
+                pais,
                 descripcion,
-                actividades_disp,
-                costo_total):
+                actividades_disponibles,
+                costo):
 
         self.id_destino = id_destino
         self.nombre = nombre
+        self.ciudad = ciudad
+        self.pais = pais
         self.descripcion = descripcion
-        self.actividades_disp = actividades_disp
-        self.costo_total = costo_total
+        self.actividades_disponibles = actividades_disponibles
+        self.costo = costo
 
     def __str__(self):
         # La variable destinos_str se utiliza para mayor reutilización, legibilidad y depuración
@@ -22,6 +26,6 @@ class Destino():
         f"Destino: {self.nombre} (ID: {self.id_destino})\n"
         f"Descripción: {self.descripcion}\n"
         f"Actividades disponibles:{actividades_str}\n"
-        f"Costo total: ${self.costo_total}"
+        f"Costo total: ${self.costo}"
         )
     

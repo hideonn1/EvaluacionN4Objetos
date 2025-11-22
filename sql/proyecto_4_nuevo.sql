@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`reserva` (
   `monto_total` INT NULL,
   `usuario_id_usuario` INT NOT NULL,
   PRIMARY KEY (`id_reserva`),
-  INDEX `fk_reserva_usuario_idx` (`usuario_id_usuario` ASC) VISIBLE,
+  INDEX `fk_reserva_usuario_idx` (`usuario_id_usuario` ASC),
   CONSTRAINT `fk_reserva_usuario`
     FOREIGN KEY (`usuario_id_usuario`)
     REFERENCES `mydb`.`usuario` (`id_usuario`)
@@ -88,17 +88,17 @@ CREATE TABLE IF NOT EXISTS `mydb`.`reserva_has_paquete_turistico` (
   `reserva_id_reserva` INT NOT NULL,
   `paquete_turistico_id_paquete_turistico` INT NOT NULL,
   PRIMARY KEY (`reserva_id_reserva`, `paquete_turistico_id_paquete_turistico`),
-  INDEX `fk_reserva_has_paquete_turistico_paquete_turistico1_idx` (`paquete_turistico_id_paquete_turistico` ASC) VISIBLE,
-  INDEX `fk_reserva_has_paquete_turistico_reserva1_idx` (`reserva_id_reserva` ASC) VISIBLE,
+  INDEX `fk_reserva_has_paquete_turistico_paquete_turistico1_idx` (`paquete_turistico_id_paquete_turistico` ASC),
+  INDEX `fk_reserva_has_paquete_turistico_reserva1_idx` (`reserva_id_reserva` ASC),
   CONSTRAINT `fk_reserva_has_paquete_turistico_reserva1`
     FOREIGN KEY (`reserva_id_reserva`)
     REFERENCES `mydb`.`reserva` (`id_reserva`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_reserva_has_paquete_turistico_paquete_turistico1`
     FOREIGN KEY (`paquete_turistico_id_paquete_turistico`)
     REFERENCES `mydb`.`paquete_turistico` (`id_paquete_turistico`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -110,17 +110,17 @@ CREATE TABLE IF NOT EXISTS `mydb`.`destino_has_paquete_turistico` (
   `destino_id_destino` INT NOT NULL,
   `paquete_turistico_id_paquete_turistico` INT NOT NULL,
   PRIMARY KEY (`destino_id_destino`, `paquete_turistico_id_paquete_turistico`),
-  INDEX `fk_destino_has_paquete_turistico_paquete_turistico1_idx` (`paquete_turistico_id_paquete_turistico` ASC) VISIBLE,
-  INDEX `fk_destino_has_paquete_turistico_destino1_idx` (`destino_id_destino` ASC) VISIBLE,
+  INDEX `fk_destino_has_paquete_turistico_paquete_turistico1_idx` (`paquete_turistico_id_paquete_turistico` ASC),
+  INDEX `fk_destino_has_paquete_turistico_destino1_idx` (`destino_id_destino` ASC),
   CONSTRAINT `fk_destino_has_paquete_turistico_destino1`
     FOREIGN KEY (`destino_id_destino`)
     REFERENCES `mydb`.`destino` (`id_destino`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_destino_has_paquete_turistico_paquete_turistico1`
     FOREIGN KEY (`paquete_turistico_id_paquete_turistico`)
     REFERENCES `mydb`.`paquete_turistico` (`id_paquete_turistico`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 

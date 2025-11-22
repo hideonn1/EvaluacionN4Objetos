@@ -1,28 +1,22 @@
 # Clase del Paquete Turístico.
+from Destino import Destino
 
 class PaqueteTuristico():
     def __init__ (self, id_paquete,
-                  nombre,
-                  destinos,
-                  fecha_inicio,
-                  fecha_fin,
-                  precio_total,
-                  cupos_disp,
-                  descripcion):
+                  fecha_llegada,
+                  fecha_salida,
+                  orden_visita,
+                  costo_destino,
+                  destinos):
         
         self.id_paquete = id_paquete
-        self.nombre = nombre
-        self.destinos = destinos
-        self.fecha_inicio = fecha_inicio
-        self.fecha_fin = fecha_fin
-        self.precio_total = precio_total
-        self.cupos_disp = cupos_disp
-        self.descripcion = descripcion
+        self.fecha_llegada = fecha_llegada
+        self.fecha_salida = fecha_salida
+        self.orden_visita = orden_visita
+        self.costo_destino = costo_destino
+        self.destinos = [Destino(**d) for d in destinos]
     
     def __str__ (self):
-        # La variable destinos_str se utiliza para mayor reutilización, legibilidad y depuración
-        # para favorecer la escabilidad.
-
         destinos_str = '\n    - ' + '\n    - '.join([destino.nombre for destino in self.destinos])
         return (
             f"Paquete Turístico: {self.nombre} (ID: {self.id_paquete})\n"
