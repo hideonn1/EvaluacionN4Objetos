@@ -4,14 +4,17 @@ from datetime import datetime
 
 class Paquete_Service:
     
-    def __init__(self, usuario_repository):
+    def __init__(self, paquete_repository, destino_repository):
         # Recibe el Repositorio por inyección. No sabe nada de conexiones.
-        self._repo = usuario_repository 
+        self._repo = paquete_repository
+        self._repo_destino = destino_repository
 
     def buscar_paquete(self, paquete_id):
-
-
-
+        paquete_objeto = self._repo.read_by_id(paquete_id)
+        lista_destinos = self._repo_destino.get_all_destinos(paquete_id)
+        paquete_objeto.destinos = lista_destinos
+        for i in lista_destinos:
+            print(i)
 
         destino_santiago = {
             'id_destino': 101,
@@ -48,4 +51,7 @@ class Paquete_Service:
             ]
         )
 
-        return paquete_ejemplo
+        return paquete_objeto
+    
+    def agregar_paquete(self, paquete):
+        self._repo.create(paquete)

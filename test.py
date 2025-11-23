@@ -21,13 +21,13 @@ def main():
     destino_cont = Destino_Controller(destino_serv)
 
     paquete_repo = Paquete_Repository(conectar_db)
-    paquete_serv = Paquete_Service(paquete_repo)
+    paquete_serv = Paquete_Service(paquete_repo, destino_repo)
     paquete_cont = Paquete_Controller(paquete_serv)
 
     #usuario_cont.buscar_usuario("correofalso@prueba.pru")
     #destino_cont.buscar_destino_nombre("mi_casa")
     #destino_cont.buscar_destino_id(1)
-    paquete_cont.mostrar_destinos()
+    paquete_cont.mostrar_paquete(1)
 
 
 

@@ -149,3 +149,34 @@ class Destino_Repository:
         finally:
             cursor.close()
             conexion.close()
+
+
+    def get_all_destinos(self, paquete_id):
+        conexion = self._conectar_db()
+        cursor = conexion.cursor(dictionary=True)
+        try:
+            query= """
+                    SELECT
+                        d.id_destino, d.nombre, d.ciudad, d.pais, d.descripcion,
+                        d.actividades_disponibles,
+                        d.costo 
+                    FROM 
+                        destino AS d
+                    JOIN 
+                        destino_has_paquete_turistico AS dhp 
+                        ON d.id_destino = dhp.destino_id_destino
+                    WHERE 
+                        dhp.paquete_turistico_id_paquete_turistico = %s;"""
+            datos = (paquete_id,)
+
+            cursor.execute(query,datos)
+            lista_destinos = cursor.fetchall()
+            for i in lista_destinos:
+                print(i)
+            return lista_destinos
+            
+        except Exception as e:
+            print(e)
+        finally:
+            cursor.close()
+            conexion.close()
