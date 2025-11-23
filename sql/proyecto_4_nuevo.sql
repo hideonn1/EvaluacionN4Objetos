@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`destino` (
   `id_destino` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(150) NULL,
   `ciudad` VARCHAR(150) NULL,
-  `pais` INT NULL,
+  `pais` VARCHAR(11) NULL,
   `descripcion` VARCHAR(255) NULL,
   `actividades_disponibles` VARCHAR(255) NULL,
   `costo` INT NULL,
@@ -72,9 +72,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`reserva` (
   `monto_total` INT NULL,
   `id_usuario` INT NOT NULL,
   PRIMARY KEY (`id_reserva`),
-  INDEX `fk_reserva_usuario_idx` (`usuario_id_usuario` ASC),
+  INDEX `fk_reserva_usuario_idx` (`id_usuario` ASC),
   CONSTRAINT `fk_reserva_usuario`
-    FOREIGN KEY (`usuario_id_usuario`)
+    FOREIGN KEY (`id_usuario`)
     REFERENCES `mydb`.`usuario` (`id_usuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)

@@ -1,1 +1,0 @@
-## archivo encargado de logica y comunicar a destinos_controller con destinos_repository

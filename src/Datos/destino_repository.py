@@ -1,7 +1,7 @@
 ##archivo encargado de consultas sql con la tabla destino
 from src.Logica_de_Negocio.models.Destino import Destino
 
-class Usuario_Repository:
+class Destino_Repository:
     
     def __init__(self, conectar_db):
         self._conectar_db = conectar_db
@@ -49,7 +49,7 @@ class Usuario_Repository:
             resultado = cursor.fetchone()
 
             if resultado:
-                reserva_objeto = Destino(
+                destino_objeto = Destino(
                     id_destino = resultado['id_destino'],
                     nombre = resultado['nombre'],
                     ciudad = resultado['ciudad'],
@@ -58,7 +58,35 @@ class Usuario_Repository:
                     actividades_disponibles = resultado['actividades_disponibles'],
                     costo = resultado['costo']
                 )
-                return reserva_objeto 
+                return destino_objeto 
+            else:
+                return None 
+
+        finally:
+            cursor.close()
+            conexion.close() 
+
+    def read_by_name(self, nombre):
+        conexion = self._conectar_db() 
+        cursor = conexion.cursor(dictionary=True)
+        try:
+            query = "SELECT * FROM destino WHERE nombre = %s"
+            datos = (nombre,)
+
+            cursor.execute(query,datos)
+            resultado = cursor.fetchone()
+
+            if resultado:
+                destino_objeto = Destino(
+                    id_destino = resultado['id_destino'],
+                    nombre = resultado['nombre'],
+                    ciudad = resultado['ciudad'],
+                    pais = resultado['pais'],
+                    descripcion = resultado['costo'],
+                    actividades_disponibles = resultado['actividades_disponibles'],
+                    costo = resultado['costo']
+                )
+                return destino_objeto 
             else:
                 return None 
 
