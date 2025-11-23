@@ -3,6 +3,9 @@ import mysql.connector
 from src.Datos.usuario_repository import Usuario_Repository
 from src.Logica_de_Negocio.usuarios_service import Usuario_Service
 from src.Presentacion.controlador.usuarios_controller import Usuario_Controller
+from src.Datos.destino_repository import Destino_Repository
+from src.Logica_de_Negocio.destino_service import Destino_Service
+from src.Presentacion.controlador.destinos_controller import Destino_Controller
 
 
 def main():
@@ -11,8 +14,13 @@ def main():
     usuario_serv = Usuario_Service(usuario_repo)
     usuario_cont = Usuario_Controller(usuario_serv)
 
+    destino_repo = Destino_Repository(conectar_db)
+    destino_serv = Destino_Service(destino_repo)
+    destino_cont = Destino_Controller(destino_serv)
+
     usuario_cont.buscar_usuario("correofalso@prueba.pru")
-    usuario_cont.iniciar
+    destino_cont.buscar_destino_nombre("mi_casa")
+    destino_cont.buscar_destino_id(1)
 
 
 

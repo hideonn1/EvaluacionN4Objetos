@@ -21,11 +21,10 @@ class Destino():
         # La variable destinos_str se utiliza para mayor reutilización, legibilidad y depuración
         # para favorecer la escabilidad.
 
-        actividades_str = '\n    - ' + '\n    - '.join(self.actividades_disp)
         return (
         f"Destino: {self.nombre} (ID: {self.id_destino})\n"
         f"Descripción: {self.descripcion}\n"
-        f"Actividades disponibles:{actividades_str}\n"
+        f"Actividades disponibles:{self.actividades_disponibles}\n"
         f"Costo total: ${self.costo}"
         )
     
