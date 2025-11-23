@@ -1,7 +1,7 @@
 ##archivo encargado de consultas sql con la tabla paquete_turistico
 from src.Logica_de_Negocio.models.PaqueteTuristico import PaqueteTuristico
 
-class Usuario_Repository:
+class Paquete_Repository:
     
     def __init__(self, conectar_db):
         self._conectar_db = conectar_db

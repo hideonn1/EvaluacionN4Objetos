@@ -1,5 +1,5 @@
 # Clase del Paquete Turístico.
-from Destino import Destino
+from .Destino import Destino
 
 class PaqueteTuristico():
     def __init__ (self, id_paquete,

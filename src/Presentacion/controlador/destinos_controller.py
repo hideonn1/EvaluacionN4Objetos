@@ -1,5 +1,5 @@
 ## controlador de destinos_view
-from vista.destinos_view import eliminar_destino_vista, modificar_destino_vista
+from ..vista.destinos_view import eliminar_destino_vista, modificar_destino_vista
 class Destino_Controller:
     
     def __init__(self, usuario_service):

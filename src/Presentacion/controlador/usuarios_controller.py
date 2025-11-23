@@ -57,7 +57,7 @@ class Usuario_Controller:
                 print(Error)
 
         
-        
+        """
         while True:
             try:
                 fecha_nacimiento = input
@@ -67,7 +67,7 @@ class Usuario_Controller:
             if self._service.nuevo_usuario(registro) == True: 
                 print("Usuario registrado con exito")
                 return 
-            
+            """
     def modificar_usuario(self):
-
+        pass
             

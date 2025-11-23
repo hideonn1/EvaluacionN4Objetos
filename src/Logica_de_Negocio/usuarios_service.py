@@ -1,6 +1,6 @@
 ## archivo encargado de logica y comunicar a usuarios_service con usuarios_controller
 import bcrypt
-from models.Cliente import Cliente
+from .models.Cliente import Cliente
 class Usuario_Service:
     
     def __init__(self, usuario_repository):
@@ -22,7 +22,7 @@ class Usuario_Service:
         return False
     
     def nuevo_usuario(self, registro):
-        usuario_objeto = Cliente(#llenar con datos que estan dentro de registro)
+        usuario_objeto = Cliente()#llenar con datos que estan dentro de registro)
         self._repo.create(usuario_objeto)
     
     #solo repositorios usan base de datos
