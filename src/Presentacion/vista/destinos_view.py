@@ -2,3 +2,6 @@
 
 def eliminar_destino_vista():
     pass
+
+def modificar_destino_vista():
+    pass

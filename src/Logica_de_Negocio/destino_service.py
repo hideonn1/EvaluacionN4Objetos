@@ -23,3 +23,5 @@ class Destino_Service:
         pass
     def eliminar_destino_por_nombre(self, nombre_destino):
         pass
+    def modificar_destino(self, destino):
+        pass
