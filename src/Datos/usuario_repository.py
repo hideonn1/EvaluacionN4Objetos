@@ -1,4 +1,6 @@
 from src.Logica_de_Negocio.models.Cliente import Cliente
+import mysql.connector
+
 
 class Usuario_Repository:
     
@@ -100,10 +102,19 @@ class Usuario_Repository:
                 )
                 return usuario_objeto 
             else:
-                return None 
-
+                return None
+        except mysql.connector.Error as Error:
+            print(f"Error inesperado al intentar iniciar sesión: {Error}")
+            return None
         finally:
-            pass 
+            try:
+                if cursor:
+                    cursor.close()
+                if conexion:
+                    conexion.close()
+            except:
+                pass
+
     # Actualiza los datos de un usuario ya existente.
     def update(self, usuario):
         conexion = self._conectar_db()

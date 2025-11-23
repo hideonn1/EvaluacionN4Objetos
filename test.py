@@ -12,7 +12,7 @@ def main():
     usuario_cont = Usuario_Controller(usuario_serv)
 
     usuario_cont.buscar_usuario("correofalso@prueba.pru")
-
+    usuario_cont.iniciar
 
 
 
