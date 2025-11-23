@@ -17,3 +17,9 @@ class Destino_Service:
         if destino_objeto is None:
             raise ValueError(f"El destino con nombre {id_destino} no existe.")
         return destino_objeto
+    def nuevo_destino(self,registro):
+        pass
+    def eliminar_destino_por_id(self,id_destino):
+        pass
+    def eliminar_destino_por_nombre(self, nombre_destino):
+        pass

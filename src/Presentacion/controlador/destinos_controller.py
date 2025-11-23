@@ -1,5 +1,5 @@
 ## controlador de destinos_view
-
+from vista.destinos_view import eliminar_destino_vista
 class Destino_Controller:
     
     def __init__(self, usuario_service):
@@ -62,3 +62,42 @@ class Destino_Controller:
                 break
             except ValueError as e:
                 print("Error! Ingrese un costo valido.")
+        datos_destino = {
+            'nombre':nombre,
+            'ciudad':ciudad,
+            'pais':pais,
+            'descripcion':descripcion,
+            'actividades_disponibles':actividades_disponibles,
+            'costo':costo}
+        
+        self._service.nuevo_destino(datos_destino)
+    def eliminar_destino(self):
+        opcion = int(input(eliminar_destino_vista()))
+        while opcion not in [1,2,3]:
+            print("Error. Opcion no encontrada")
+            opcion = int(input(eliminar_destino_vista()))
+        match opcion:
+            case 1:
+                while True:
+                    try:
+                        id_destino = int(input("Ingrese el id del destino"))
+                        break
+                    except ValueError as e:
+                        print(e)
+                self._service.eliminar_destino_por_id(id_destino)
+            case 2:
+                while True:
+                    try:
+                        nombre_destino = input("Ingrese el id del destino")
+                        if not nombre_destino or not all(c.isalpha() or c.isspace() for c in nombre_destino):
+                            raise ValueError("Ingrese un Pais valido (solo letras y espacios).")
+                        break
+                    except ValueError as e:
+                        print(e)
+                self._service.eliminar_destino_por_nombre(nombre_destino)
+            case 3:
+                print("Será devuelto al menu anterior...")
+                input("PRESIONE ENTER PARA CONTINUAR")
+                return
+    def modificar_destino(self, opcion):
+        pass
