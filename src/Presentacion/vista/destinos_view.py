@@ -5,3 +5,7 @@ def eliminar_destino_vista():
 
 def modificar_destino_vista():
     pass
+
+def mostrar_destinos(lista):
+    for i in lista:
+        print (i)
