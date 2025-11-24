@@ -1,10 +1,11 @@
 ## controlador de usuarios
 
 # Módulo: usuario_controller.py
-import pwinput
+import bcrypt
 import re
 from datetime import datetime
-
+import pwinput
+from Logica_de_Negocio.models.Cliente import Cliente
 class Usuario_Controller:
     
     def __init__(self, usuario_service):
@@ -43,6 +44,7 @@ class Usuario_Controller:
                 print("Sesión iniciada exitosamente!")
             break
         return True
+    
     def registrar_usuario(self):
         while True:
             try:
@@ -51,23 +53,186 @@ class Usuario_Controller:
                 if not re.match(patron, email):
                     raise ValueError("Formato de email inválido. Intente nuevamente.")
                 if self._service.obtener_usuario_por_email(email) != None:
-                    raise ValueError ("Este email existe en el sistema")
+                    raise ValueError ("Este email existe en el sistema. ")
                 break
             except ValueError as Error:
                 print(Error)
 
+        while True:
+            try: 
+                nombre = input("Ingrese el primer nombre del empleado: ")
+                if not nombre or not all(c.isalpha() or c.isspace() for c in nombre):
+                    raise ValueError("Ingrese un nombre válido (solo letras y espacios).")
+                break
+            except ValueError as Error:
+                print(Error)
         
+        while True:
+            try: 
+                apellido_paterno = input("Ingrese el apellido paterno del empleado: ")
+                if not apellido_paterno or not all(c.isalpha() or c.isspace() for c in apellido_paterno):
+                    raise ValueError("Ingrese un apellido paterno válido (solo letras y espacios).")
+                break
+            except ValueError as Error:
+                print(Error)
+
+        while True:
+            try: 
+                apellido_materno = input("Ingrese el apellido materno del empleado: ")
+                if not apellido_materno or not all(c.isalpha() or c.isspace() for c in apellido_materno):
+                    raise ValueError("Ingrese un apellido materno válido (solo letras y espacios).")
+                break
+            except ValueError as Error:
+                print(Error)  
+
+        while True:
+            try:
+                rut = input("Ingrese su RUT: (ej: 12345678-K o 9876543-1): ").strip().lower()
+                if self._service.validador_rut(rut) != None:              
+                    raise ValueError("El rut ya se encuentra registrado en")
+                break
+            except ValueError as e:
+                print(f"Error en el formato del RUT: {e}. Intente nuevamente")
         
         while True:
             try:
-                fecha_nacimiento = input
+                fecha = input("Ingrese la fecha de nacimiento del empleado (formato DD/MM/AAAA): ")
+                fecha_nacimiento = datetime.strptime(fecha_nacimiento, '%d/%m/%Y').date()
+                if self._service.mayor_a_18(fecha_nacimiento) == False:   
+                    raise ValueError("Usted no tiene 18 años. ")
+                    return
+                break                
+            except ValueError:
+                    print("Formato inválido. Use el formato DD/MM/AAAA.") 
 
+        while True:
+            try:
+                direccion = input("Ingrese la direccion del empleado (ej: Av Arturo Prat 967): ")
+                if not direccion:
+                    raise ValueError("Ingrese una dirección válida. ")
+                break
+            except ValueError as Error:
+                print(Error)
+        
+        while True:
+            try:
+                nro_telefono = input("Ingrese el número de teléfono del empleado (formato: +56 9 XXXX XXXX): ").strip()
+                patron = r"^\+56 9 \d{4} \d{4}$"
+                if not re.match(patron, nro_telefono):
+                    raise ValueError("Formato inválido. Use: +56 9 XXXX XXXX")
+                if self._service.verificar_numero(nro_telefono) == False:  #crear funcion de verificacion de numeros ya existentes en la base de datos
+                    raise ValueError("Numero ya registrado en la base de datos")
+                break
+            except ValueError as Error:
+                print(Error)
 
-            registro = {'nombre':nombre, 'email': email }
+        roles_validos = {"cliente", "administrador"}
+        while True:
+            try:
+                rol_usuario = input("Ingrese el rol del usuario: ").strip().lower()
+                if rol_usuario not in roles_validos:
+                    raise ValueError("Rol inválido. Debe ser: Cliente o Administrador.")
+                
+                # Capitaliza la primera letra para que coincida con la llave del diccionario
+                rol_usuario = rol_usuario.capitalize() 
+
+                break
+            except ValueError as Error:
+                print(Error)
+
+        while True:
+            try:
+                fecha_registro = input("Ingrese la fecha de nacimiento del empleado (formato DD/MM/AAAA): ")
+                fecha = datetime.strptime(fecha_registro, '%d/%m/%Y').date()
+                break              
+            except ValueError:
+                    print("Formato inválido. Use el formato DD/MM/AAAA. ") 
+
+        while True:
+            try:
+                contraseña_texto_plano = input("Ingrese la contraseña para el nuevo empleado: ")
+                if self._validar_contraseña_segura(contraseña_texto_plano) == True:
+                    contraseña_hash = bcrypt.hashpw(contraseña_texto_plano.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+                    break
+            except ValueError as Error:
+                # Asumo que validar_contraseña_segura levanta ValueError
+                print(Error)
+            except Exception as Error: 
+                print(f"Error inesperado al guardar la contraseña: {Error}")
+
+        try:
+            registro = {'rut': rut, 'nombre':nombre, 'apellido_paterno': apellido_paterno, 
+                        'apellido_materno': apellido_materno, 'email':email, 'contraseña': contraseña_hash,
+                        'rol': rol_usuario, 'telefono': nro_telefono, 'fecha_nacimiento': fecha_nacimiento,
+                        'fecha_registro': fecha_registro}
+            
             if self._service.nuevo_usuario(registro) == True: 
-                print("Usuario registrado con exito")
-                return 
+                print("Usuario registrado con exito. ")
+                return
+        except Exception as e:
+            print(f"Error al crear el objeto: {e}")
+        
             
-    def modificar_usuario(self):
+    def modificar_usuario_admin(self):
+        email = input("Ingrese el email del empleado (ej: usuario@dominio.cl): ").strip()
+        patron = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"               
+        if not re.match(patron, email):
+            raise ValueError("Formato de email inválido. Intente nuevamente.")
+        if self._service.obtener_usuario_por_email(email) != None:
+            pass
 
-            
+
+
+
+    def eliminar_usuario_admin(self):
+        while True:
+            try:
+                email = input("Ingrese el email del empleado (ej: usuario@dominio.cl): ").strip()
+                patron = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"               
+                if not re.match(patron, email):
+                    raise ValueError("Formato de email inválido. Intente nuevamente.")
+                if self._service.obtener_usuario_por_email(email) != None:
+                    while True:
+                        try:
+                            print("Desea eliminar de forma permanente a este usuario? ")
+                            print("1.- Eliminar permanentemente ")
+                            print("2.- No Eliminar\n ")
+                            respuesta = int("Elija una opcion: ")
+                            if respuesta not in [1, 2]:
+                                raise ValueError("Las opciones de respuesta son solo '1' o '2'. ")
+                            elif respuesta == 1:
+                                self._service.eliminar_usuario_admin(email)
+                                print("Usuario eliminado. ")
+                                break
+                            else:
+                                break
+                        except ValueError as Error:
+                            print(Error)
+                    break
+                if self._service.obtener_usuario_por_email(email) == None:
+                    raise ValueError("No se encontro este correo en la base de datos.")
+            except ValueError as Error:
+                print(Error)
+
+    def eliminar_usuario_basico(self, usuario:Cliente):
+        while True:
+            try:
+                rut_usuario = usuario.rut
+                print(f"Desea eliminar la cuenta de usuario, rut:{rut_usuario}? ")
+                print("1.- Eliminar permanentemente ")
+                print("2.- No Eliminar\n ")
+                respuesta = int("Elija una opcion: ")
+                if respuesta not in [1, 2]:
+                    raise ValueError("Las opciones de respuesta son solo '1' o '2'. ")
+                elif respuesta == 1:
+                    self._service.eliminar_usuario_admin(rut_usuario)
+                    print("Usuario eliminado. ")
+                    break
+                else:
+                    break
+            except ValueError as Error:
+                print(Error)
+
+
+
+          
