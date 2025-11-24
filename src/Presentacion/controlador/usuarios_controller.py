@@ -67,7 +67,6 @@ class Usuario_Controller:
             except ValueError as Error:
                 print(Error)
         
-<<<<<<< HEAD
         while True:
             try: 
                 apellido_paterno = input("Ingrese el apellido paterno del empleado: ")
@@ -95,9 +94,6 @@ class Usuario_Controller:
             except ValueError as e:
                 print(f"Error en el formato del RUT: {e}. Intente nuevamente")
         
-=======
-        """
->>>>>>> b8ec2f3c7ef1a5337d9a387c478a52ec3b076f1e
         while True:
             try:
                 fecha = input("Ingrese la fecha de nacimiento del empleado (formato DD/MM/AAAA): ")
@@ -171,7 +167,6 @@ class Usuario_Controller:
                         'fecha_registro': fecha_registro}
             
             if self._service.nuevo_usuario(registro) == True: 
-<<<<<<< HEAD
                 print("Usuario registrado con exito. ")
                 return
         except Exception as e:
@@ -241,11 +236,3 @@ class Usuario_Controller:
 
 
           
-=======
-                print("Usuario registrado con exito")
-                return 
-            """
-    def modificar_usuario(self):
-        pass
-            
->>>>>>> b8ec2f3c7ef1a5337d9a387c478a52ec3b076f1e

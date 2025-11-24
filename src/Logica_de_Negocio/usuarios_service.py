@@ -1,12 +1,8 @@
 ## archivo encargado de logica y comunicar a usuarios_service con usuarios_controller
 import bcrypt
-<<<<<<< HEAD
 from models.Cliente import Cliente
 from datetime import date
 import re
-=======
-from .models.Cliente import Cliente
->>>>>>> b8ec2f3c7ef1a5337d9a387c478a52ec3b076f1e
 class Usuario_Service:
     
     def __init__(self, usuario_repository):
@@ -28,23 +24,7 @@ class Usuario_Service:
         return False
     
     def nuevo_usuario(self, registro):
-<<<<<<< HEAD
-        usuario_objeto = Cliente(
-                    rut = registro['rut'],
-                    nombres = registro['nombres'],
-                    apellido_paterno = registro['apellido_paterno'],
-                    apellido_materno = registro['apellido_materno'],
-                    email = registro['email'],
-                    contraseña_hash = ['contraseña'],
-                    rol_usuario = ['rol'],
-                    telefono = registro['telefono'],
-                    direccion = registro['direccion'],
-                    fecha_nacimiento = registro['fecha_nacimiento'],
-                    fecha_registro = registro['fecha_registro']
-                )
-=======
         usuario_objeto = Cliente()#llenar con datos que estan dentro de registro)
->>>>>>> b8ec2f3c7ef1a5337d9a387c478a52ec3b076f1e
         self._repo.create(usuario_objeto)
 
     def eliminar_usuario_admin(self, email):
