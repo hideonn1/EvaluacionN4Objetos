@@ -9,3 +9,6 @@ def modificar_destino_vista():
 def mostrar_destinos(lista):
     for i in lista:
         print (i)
+
+def agregar_destinos():
+    pass
