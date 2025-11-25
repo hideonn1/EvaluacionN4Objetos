@@ -1,5 +1,5 @@
 ## controlador de destinos_view
-from ..vista.destinos_view import eliminar_destino_vista, modificar_destino_vista, buscar_destino_vista, modificar_destino_escogido_vista
+from ..vista.destinos_view import eliminar_destino_vista, modificar_destino_vista, buscar_destino_vista, modificar_destino_escogido_vista, menu_destinos
 class Destino_Controller:
     
     def __init__(self, usuario_service):
@@ -21,6 +21,7 @@ class Destino_Controller:
                         destino_objeto = self._service.obtener_destino_por_nombre(destino_nombre)
                         if destino_objeto == None:
                             raise Exception("No existe un destino con ese nombre")
+                        print(destino_objeto)
                         break    
                     except Exception as e:
                         print("Error inesperado")
@@ -33,7 +34,7 @@ class Destino_Controller:
                             raise FileNotFoundError("No existe un destino con ese nombre")
                         break    
                     except Exception as e:
-                        print("Error inesperado")
+                        print(e)
                     except ValueError as v:
                         print("Los IDs de destino solo deben contener numeros")
             case 3:
@@ -47,7 +48,7 @@ class Destino_Controller:
                 if not nombre or not all(c.isalpha() or c.isspace() for c in nombre):
                     raise ValueError("Ingrese un nombre válido (solo letras y espacios).")
                 
-                if self._service.obtener_destino_por_nombre(nombre) is not None:
+                if self._service.obtener_destino_por_nombre(nombre) != None:
                     print("Ya existe un destino con ese nombre. Inténtelo de nuevo.")
                     continue
 
@@ -101,31 +102,40 @@ class Destino_Controller:
         self._service.nuevo_destino(datos_destino)
 
     def eliminar_destino(self):
-        opcion = int(input(eliminar_destino_vista()))
-        while opcion not in [1,2,3]:
-            print("Error. Opcion no encontrada")
-            opcion = int(input(eliminar_destino_vista()))
+        while True:
+            try:
+                eliminar_destino_vista()
+                opcion = int(input("Escoja una opcion: "))
+                while opcion not in [1,2,3]:
+                    print("Error. Opcion no encontrada")
+                    eliminar_destino_vista()
+                    opcion = int(input("Escoja una opcion: "))
+                break
+            except ValueError:
+                print("Error, debe ingresar un valor numerico")
         match opcion:
             case 2:
                 while True:
                     try:
-                        id_destino = int(input("Ingrese el id del destino"))
-                        destino_objeto = self._service.buscar_destino_por_id(id_destino)
+                        id_destino = int(input("Ingrese el id del destino: "))
+                        destino_objeto = self._service.obtener_destino_por_id(id_destino)
                         if destino_objeto == None:
-                            raise FileNotFoundError ("No se ha encontrado un destino con ese id intenelo denuevo")
+                            print("No se ha encontrado un destino con ese id intenelo denuevo")
                         break
                     except ValueError as e:
                         print("Error, los IDs solo pueden ser numeros")
                 while True: 
                     try:
                         print(f"Esta seguro que desea eliminar {destino_objeto}?")
-                        opcion.lower() = input("Para confirmar escriba 'si' o 'no'")
-                        while opcion != 'si' or opcion != 'no':
+                        opcion = input("Para confirmar escriba 'si' o 'no': ")
+                        while opcion.lower() != 'si' and opcion.lower() != 'no':
                             print("Error. Las unicas opciones disponibles son 'si' o 'no' ")
-                            opcion.lower() = input("Para confirmar escriba 'si' o 'no'")
-                        if opcion == 'si':
-                            self._service.eliminar_destino_por_id(id_destino)
-                        elif opcion == 'no':
+                            opcion = input("Para confirmar escriba 'si' o 'no': ")
+                        if opcion.lower() == 'si':
+                            self._service.eliminar_destino(id_destino)
+                            print("Destino eliminado")
+                            return
+                        elif opcion.lower() == 'no':
                             return
                     except ValueError:
                         print("Error al ingresar una opcion")
@@ -135,7 +145,7 @@ class Destino_Controller:
                         nombre_destino = input("Ingrese el nombre del destino")
                         if not nombre_destino or not all(c.isalpha() or c.isspace() for c in nombre_destino):
                             raise ValueError("Ingrese un nombre valido (solo letras y espacios).")
-                        destino_objeto = self._service.buscar_destino_por_nombre(nombre_destino)
+                        destino_objeto = self._service.obtener_destino_por_nombre(nombre_destino)
                         if destino_objeto == None:
                             raise FileNotFoundError ("No se ha encontrado un destino con ese nombre, intenelo denuevo")
                         break
@@ -144,13 +154,13 @@ class Destino_Controller:
                 while True: 
                     try:
                         print(f"Esta seguro que desea eliminar {destino_objeto}?")
-                        opcion.lower() = input("Para confirmar escriba 'si' o 'no'")
-                        while opcion != 'si' or opcion != 'no':
-                            print("Error. Las unicas opciones disponibles son 'si' o 'no' ")
-                            opcion.lower() = input("Para confirmar escriba 'si' o 'no'")
-                        if opcion == 'si':
-                            self._service.eliminar_destino_por_nombre(nombre_destino)
-                        elif opcion == 'no':
+                        opcion = input("Para confirmar escriba 'si' o 'no': ")
+                        while opcion.lower() != 'si' and opcion.lower() != 'no':
+                            print("Error. Las unicas opciones disponibles son 'si' o 'no': ")
+                            opcion = input("Para confirmar escriba 'si' o 'no'")
+                        if opcion.lower() == 'si':
+                            self._service.eliminar_destino(destino_objeto.id)
+                        elif opcion.lower() == 'no':
                             return
                     except ValueError:
                         print("Error al ingresar una opcion")
@@ -165,26 +175,26 @@ class Destino_Controller:
             print("Error. Opcion no encontrada")
             opcion = int(input(modificar_destino_vista()))
         match opcion:
-            case 1:
-                while True:
-                    try:
-                        id_destino = int(input("Ingrese el id del destino"))
-                        break
-                    except ValueError as e:
-                        print(e)
-                destino_objeto = self._service.buscar_destino_por_id(id_destino)
-                nuevo_destino = self.modificar_datos_objeto(destino_objeto)
-                self._service.modificar_destino(nuevo_destino)
             case 2:
                 while True:
                     try:
-                        nombre_destino = input("Ingrese el nombre del destino")
+                        id_destino = int(input("Ingrese el id del destino: "))
+                        break
+                    except ValueError as e:
+                        print(e)
+                destino_objeto = self._service.obtener_destino_por_id(id_destino)
+                nuevo_destino = self.modificar_datos_objeto(destino_objeto)
+                self._service.modificar_destino(nuevo_destino)
+            case 1:
+                while True:
+                    try:
+                        nombre_destino = input("Ingrese el nombre del destino: ")
                         if not nombre_destino or not all(c.isalpha() or c.isspace() for c in nombre_destino):
                             raise ValueError("Ingrese un Pais valido (solo letras y espacios).")
                         break
                     except ValueError as e:
                         print(e)
-                destino_objeto = self._service.buscar_destino_por_nombre(nombre_destino)
+                destino_objeto = self._service.obtener_destino_por_nombre(nombre_destino)
                 nuevo_destino = self.modificar_datos_objeto(destino_objeto)
                 self._service.modificar_destino(nuevo_destino)
             case 3:
@@ -213,25 +223,24 @@ class Destino_Controller:
                             raise ValueError("Ingrese un nombre valido (solo letras y espacios).")
                         if self._service.obtener_destino_por_nombre(nombre) != None:
                             print("Ya existe un destino con ese nombre. Intentelo denuevo")
-                        break
+                        destino.nombre = nombre
+                        return destino
                     except ValueError as e:
                         print("Error en ingresar nombre.")
-                    destino.nombre = nombre
-                    return destino
             case 2:
                 while True: 
                     try:
                         descripcion = input("Ingrese una descripcion del destino: ")
-                        break
+                        destino.descripcion = descripcion
+                        return destino
                     except ValueError as e:
                         print("Error en ingresar una descripcion valida.")
-                    destino.descripcion = descripcion
-                    return destino
             case 3:
                 while True:
                     try:
                         actividades_disponibles = input("Ingrese las actividades disponibles del destino: ")
-                        break
+                        destino.actividades_disponibles = actividades_disponibles
+                        return destino
                     except ValueError as e:
                         print("Error en ingresar una actividad valida.")
                     destino.actividades_disponibles = actividades_disponibles
@@ -239,13 +248,36 @@ class Destino_Controller:
             case 4:
                 while True:
                     try:
-                        costo = input("Ingrese el costo del destino: ")
+                        costo =int(input("Ingrese el costo del destino: "))
                         if costo <= 0:
                             raise ValueError("El costo del destino debe ser un numero mayor que 0")
-                        break
+                        destino.costo = costo
+                        return destino
                     except ValueError as e:
                         print("Error! Ingrese un costo valido.")
                     destino.costo = costo
                     return destino
+            case 5:
+                return
+
+    def destino_controleitor(self):
+        try: 
+            menu_destinos()
+            opcion = int(input("Seleccione una opcion (1-5): "))
+            while opcion not in [1,2,3,4,5]:
+                print("Error al ingresar una opcion, intenelo denuevo")
+                opcion = int(input("Seleccione una opcion (1-5): "))    
+        except ValueError as e:
+            print(e)
+
+        match opcion:
+            case 1:
+                self.crear_destino()
+            case 2:
+                self.buscar_destino()
+            case 3:
+                self.modificar_destino()
+            case 4:
+                self.eliminar_destino()
             case 5:
                 return

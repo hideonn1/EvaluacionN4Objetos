@@ -54,7 +54,7 @@ class Destino_Repository:
                     nombre = resultado['nombre'],
                     ciudad = resultado['ciudad'],
                     pais = resultado['pais'],
-                    descripcion = resultado['costo'],
+                    descripcion = resultado['descripcion'],
                     actividades_disponibles = resultado['actividades_disponibles'],
                     costo = resultado['costo']
                 )
@@ -82,7 +82,7 @@ class Destino_Repository:
                     nombre = resultado['nombre'],
                     ciudad = resultado['ciudad'],
                     pais = resultado['pais'],
-                    descripcion = resultado['costo'],
+                    descripcion = resultado['descripcion'],
                     actividades_disponibles = resultado['actividades_disponibles'],
                     costo = resultado['costo']
                 )

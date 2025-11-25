@@ -1,6 +1,6 @@
 ## archivo encargado de logica y comunicar a usuarios_service con usuarios_controller
 import bcrypt
-from models.Cliente import Cliente
+from .models.Cliente import Cliente
 from datetime import date
 import re
 class Usuario_Service:
