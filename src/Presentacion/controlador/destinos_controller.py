@@ -44,12 +44,15 @@ class Destino_Controller:
             try:
                 nombre = input("Ingrese el nombre del destino: ")
                 if not nombre or not all(c.isalpha() or c.isspace() for c in nombre):
-                    raise ValueError("Ingrese un nombre valido (solo letras y espacios).")
-                if self._service.obtener_destino_por_nombre(nombre) != None:
-                    print("Ya existe un destino con ese nombre. Intentelo denuevo")
+                    raise ValueError("Ingrese un nombre válido (solo letras y espacios).")
+                
+                if self._service.obtener_destino_por_nombre(nombre) is not None:
+                    print("Ya existe un destino con ese nombre. Inténtelo de nuevo.")
+                    continue
+
                 break
-            except ValueError as e:
-                print("Error en ingresar nombre.")
+            except ValueError as Error:
+                print(f"Error inesperado al ingresar el nombre: {Error}")
         while True:
             try:
                 pais = input("Ingrese el Pais de ubicacion: ")
@@ -80,7 +83,7 @@ class Destino_Controller:
                 print("Error en ingresar una actividad valida.")
         while True:
             try:
-                costo = input("Ingrese el costo del destino: ")
+                costo = int(input("Ingrese el costo del destino: "))
                 if costo <= 0:
                     raise ValueError("El costo del destino debe ser un numero mayor que 0")
                 break

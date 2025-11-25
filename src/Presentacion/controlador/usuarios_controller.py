@@ -6,6 +6,8 @@ import re
 from datetime import datetime
 import pwinput
 from Logica_de_Negocio.models.Cliente import Cliente
+from ..vista.principal_view import principal_view_inicio_sesion, principal_view_menu_admin, principal_view_menu_cliente
+
 class Usuario_Controller:
     
     def __init__(self, usuario_service):
@@ -19,7 +21,7 @@ class Usuario_Controller:
             print(f"\nUsuario encontrado: {usuario_encontrado}")
             
         except ValueError as e:
-            print(f"\n[CONTROLADOR] ❌ -> Error capturado: {e}")
+            print(f"\nError capturado: {e}")
 
     def iniciar_sesion(self):
         while True:
@@ -28,7 +30,8 @@ class Usuario_Controller:
                 patron = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"               
                 if not re.match(patron, email):
                     raise ValueError("Formato de email inválido. Intente nuevamente.")
-                if self._service.obtener_usuario_por_email(email) == None:
+                usuario = self._service.obtener_usuario_por_email(email)
+                if usuario == None:
                     raise ValueError ("Este email no existe en el sistema")
                 break
             except ValueError as Error:
@@ -43,7 +46,7 @@ class Usuario_Controller:
             else:
                 print("Sesión iniciada exitosamente!")
             break
-        return True
+        return usuario
     
     def registrar_usuario(self):
         while True:
@@ -217,22 +220,111 @@ class Usuario_Controller:
     def eliminar_usuario_basico(self, usuario:Cliente):
         while True:
             try:
-                rut_usuario = usuario.rut
-                print(f"Desea eliminar la cuenta de usuario, rut:{rut_usuario}? ")
+                email_usuario = usuario.email
+                print(f"Desea eliminar la cuenta de usuario, rut:{email_usuario}? ")
                 print("1.- Eliminar permanentemente ")
                 print("2.- No Eliminar\n ")
                 respuesta = int("Elija una opcion: ")
                 if respuesta not in [1, 2]:
                     raise ValueError("Las opciones de respuesta son solo '1' o '2'. ")
                 elif respuesta == 1:
-                    self._service.eliminar_usuario_admin(rut_usuario)
+                    self._service.eliminar_usuario_admin(email_usuario)
                     print("Usuario eliminado. ")
                     break
                 else:
                     break
             except ValueError as Error:
+<<<<<<< HEAD
                 print(Error)
 
 
 
-          
+    def menu_controlador(self):
+        while True:
+            principal_view_inicio_sesion()
+            try:
+                opcion_user = int(input("Ingrese una de las opciones disponibles (1-3): "))
+            except ValueError:
+                print("Debe ingresar un carácter numérico para continuar.")
+                continue
+
+            if opcion_user not in (1,2,3):
+                print("Debe ingresar una de las opciones disponibles para continuar.")
+                continue
+
+            match opcion_user:
+                case 1:
+                    usuario = self.iniciar_sesion()
+                    break
+                case 2:
+                    self.registrar_usuario()
+                case 3:
+                    input("PRESIONE ENTER PARA SALIR ")
+                    return None     
+        
+        if usuario.rol == 'Administrador':
+            self.admin_controlador(usuario)
+        elif usuario.rol == 'Cliente':
+            self.cliente_controlador(usuario)
+        else:
+            print("Solo hay 2 roles, administrador o cliente. ")
+
+
+    def admin_controlador(self, usuario):
+        while True:
+            principal_view_menu_admin()
+            try:
+                opcion_user = int(input("Ingrese una de las opciones disponibles (1-8): "))
+            except ValueError:
+                print("Debe ingresar un carácter numérico para continuar.")
+                continue
+
+            if opcion_user not in (1,2,3,4,5,6,7,8):
+                print("Debe ingresar una de las opciones disponibles para continuar.")
+                continue
+
+            match opcion_user:
+                case 1:
+                    break
+                case 2:
+                    break
+                case 3:
+                    break
+                case 4:
+                    break
+                case 5:
+                    break
+                case 6:
+                    break
+                case 7 :
+                    break
+                case 8:
+                    input("PRESIONE ENTER PARA SALIR ")
+                    return None     
+                
+    def cliente_controlador(self, cliente):
+        while True:
+            principal_view_menu_cliente()
+            try:
+                opcion_user = int(input("Ingrese una de las opciones disponibles (1-4): "))
+            except ValueError:
+                print("Debe ingresar un carácter numérico para continuar.")
+                continue
+
+            if opcion_user not in (1,2,3,4):
+                print("Debe ingresar una de las opciones disponibles para continuar.")
+                continue
+
+            match opcion_user:
+                case 1:
+                    break
+                case 2:
+                    break
+                case 3:
+                    break
+                case 4:
+                    input("PRESIONE ENTER PARA SALIR ")
+                    return None   
+=======
+                print(Error)
+>>>>>>> 1038cff213b902399f39ee2c35d669ab04e19140
