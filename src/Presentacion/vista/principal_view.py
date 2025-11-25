@@ -14,10 +14,12 @@ def principal_view_menu_admin():
     print("2. MODIFICAR DESTINO.")
     print("3. ELIMINAR DESTINO.")
     print("4. CREAR PAQUETE TURISTICO.")
-    print("5. ELIMINAR PAQUETE TURISTICO.")
+    print("5. MODIFICAR PAQUETE TURISTICO.")
     print("6. ELIMINAR PAQUETE TURISTICO.")
-    print("7. VER RESERVAS.")
-    print("8. VOLVER A MENÚ ANTERIOR.\n")
+    print("7. MODIFICAR USUARIO.")
+    print("8. ELIMINAR USUARIO.")
+    print("9. VER RESERVAS.")
+    print("10. VOLVER A MENÚ ANTERIOR.\n")
         
 def principal_view_menu_cliente():
     print("---Menú Administrador---\n")
@@ -26,6 +28,7 @@ def principal_view_menu_cliente():
     print("2. BUSCAR PAQUETE TURISTICO.")
     print("3. CREAR RESERVA.")
     print("3. MODIFICAR DATOS PERSONALES.")
-    print("4. VOLVER A MENÚ ANTERIOR.\n") 
+    print("4. ELIMINAR CUENTA.")
+    print("5. VOLVER A MENÚ ANTERIOR.\n") 
 
 #COMO PUEDE EL USUARIO VER TODOS LOS DESTINO, VER TODOS LOS DESTINOS O CLASIFICARLOS POR PAIS

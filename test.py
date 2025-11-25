@@ -27,8 +27,40 @@ def main():
     #usuario_cont.buscar_usuario("correofalso@prueba.pru")
     #destino_cont.buscar_destino_nombre("mi_casa")
     #destino_cont.buscar_destino_id(1)
+<<<<<<< HEAD
     ##paquete_cont.mostrar_paquete(1)
     destino_cont.destino_controleitor()
+=======
+    #paquete_cont.mostrar_paquete(1)
+    usuario = usuario_cont.menu_controlador()
+    if usuario.rol == "Administrador":
+        opcion_user = usuario_cont.admin_controlador()
+        match opcion_user:
+                case 1:
+                    paquete_cont._self.crear_destino()
+                case 2:
+                    paquete_cont._self.modificar_destino()
+                case 3:
+                    paquete_cont._self.eliminar_destino()
+                case 4:
+                    pass
+                case 5:
+                    pass
+                case 6:
+                    pass
+                case 7:
+                    pass
+                case 8:
+                    paquete_cont._self.eliminar_usuario_admin()
+                case 9:
+                    pass
+                case 10:
+                    input("PRESIONE ENTER PARA SALIR ")
+                    return None     
+    else:
+        usuario_cont.cliente_controlador()
+
+>>>>>>> 59a9c6f21408b81cdf4d88bc482eb0d125aa4bab
 
 
 main()

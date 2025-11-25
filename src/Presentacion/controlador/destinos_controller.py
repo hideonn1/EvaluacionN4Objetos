@@ -6,6 +6,17 @@ class Destino_Controller:
         # Recibe el Servicio por inyección. No sabe nada de repositorios o DB.
         self._service = usuario_service
 
+<<<<<<< HEAD
+
+    def buscar_destino(self, destino_nombre):        
+        try:
+            destino_encontrado = self._service.obtener_destino_por_nombre(destino_nombre)
+            
+            print(f"\nDestino encontrado: {destino_encontrado}")
+            
+        except ValueError as e:
+            print(f"\n[CONTROLADOR] ❌ -> Error capturado: {e}")
+=======
     def buscar_destino(self):   
         opcion = int(input(buscar_destino_vista()))
         while opcion not in [1,2,3]:
@@ -39,6 +50,8 @@ class Destino_Controller:
                         print("Los IDs de destino solo deben contener numeros")
             case 3:
                 return
+>>>>>>> 8a8ee43ae2a152e1574f06247a914f832a43195a
+
 
     def crear_destino(self):
         while True:
@@ -56,12 +69,12 @@ class Destino_Controller:
                 print(f"Error inesperado al ingresar el nombre: {Error}")
         while True:
             try:
-                pais = input("Ingrese el Pais de ubicacion: ")
+                pais = input("Ingrese el país de ubicación: ")
                 if not pais or not all(c.isalpha() or c.isspace() for c in pais):
                     raise ValueError("Ingrese un Pais valido (solo letras y espacios).")
                 break
             except ValueError as e:
-                print("Error en ingresar un Pais valido.")
+                print(f"Error inesperado al ingresar el país: {e}")
         while True:
             try:
                 ciudad = input("Ingrese la ciudad del destino: ")
@@ -69,13 +82,13 @@ class Destino_Controller:
                     raise ValueError("Ingrese una ciudad valida (solo letras y espacios).")
                 break
             except ValueError as e:
-                print("Error en ingresar una ciudad valida.")
+                print(f"Error inesperado al ingresar la ciudad: {e}")
         while True: 
             try:
                 descripcion = input("Ingrese una descripcion del destino: ")
                 break
             except ValueError as e:
-                print("Error en ingresar una descripcion valida.")
+                print(f"Error inesperado al ingresar la descripción: {e}")
         while True:
             try:
                 actividades_disponibles = input("Ingrese las actividades disponibles del destino: ")
@@ -100,6 +113,10 @@ class Destino_Controller:
         
         self._service.nuevo_destino(datos_destino)
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 8a8ee43ae2a152e1574f06247a914f832a43195a
     def eliminar_destino(self):
         while True:
             try:
@@ -167,6 +184,7 @@ class Destino_Controller:
                 print("Será devuelto al menu anterior...")
                 input("PRESIONE ENTER PARA CONTINUAR")
                 return
+            
     def modificar_destino(self):
         opcion = int(input(modificar_destino_vista()))
         while opcion not in [1,2,3]:
@@ -199,6 +217,7 @@ class Destino_Controller:
                 print("Será devuelto al menu anterior...")
                 input("PRESIONE ENTER PARA CONTINUAR")
                 return
+            
             
     def modificar_datos_objeto(self, destino):
         print(destino)
