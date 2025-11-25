@@ -7,6 +7,7 @@ from datetime import datetime
 import pwinput
 from Logica_de_Negocio.models.Cliente import Cliente
 from ..vista.principal_view import principal_view_inicio_sesion, principal_view_menu_admin, principal_view_menu_cliente
+from ..vista.usuario_view import modificar_usuario_vista
 
 
 class Usuario_Controller:
@@ -101,13 +102,14 @@ class Usuario_Controller:
         while True:
             try:
                 fecha = input("Ingrese la fecha de nacimiento del empleado (formato DD/MM/AAAA): ")
-                fecha_nacimiento = datetime.strptime(fecha_nacimiento, '%d/%m/%Y').date()
+                fecha_nacimiento = datetime.strptime(fecha, '%d/%m/%Y').date()
+
                 if self._service.mayor_a_18(fecha_nacimiento) == False:   
-                    raise ValueError("Usted no tiene 18 años. ")
+                    print("Usted no tiene 18 años.")
                     return
-                break                
+                break
             except ValueError:
-                    print("Formato inválido. Use el formato DD/MM/AAAA.") 
+                print("Formato inválido. Use el formato DD/MM/AAAA.")
 
         while True:
             try:
@@ -184,8 +186,93 @@ class Usuario_Controller:
             raise ValueError("Formato de email inválido. Intente nuevamente.")
         usuario = self._service.obtener_usuario_por_email(email) 
         if usuario != None:
-            pass
+            opcion = int(input(modificar_usuario_vista()))
+            if opcion not in [1,2,3,4,5,6,7,8,9,10]:
+                match opcion:
+                    case 1:
+                        rut = input("Ingrese su rut: ")
+                        self._service.validador_rut(rut)
+                    case 2:
+                        while True:
+                            try: 
+                                nombre = input("Ingrese el primer nombre del empleado: ")
+                                if not nombre or not all(c.isalpha() or c.isspace() for c in nombre):
+                                    raise ValueError("Ingrese un nombre válido (solo letras y espacios).")
+                                break
+                            except ValueError as Error:
+                                print(Error)
+                    case 3:
+                        while True:
+                            try: 
+                                apellido_paterno = input("Ingrese el apellido paterno del empleado: ")
+                                if not apellido_paterno or not all(c.isalpha() or c.isspace() for c in apellido_paterno):
+                                    raise ValueError("Ingrese un apellido paterno válido (solo letras y espacios).")
+                                break
+                            except ValueError as Error:
+                                print(Error)
+                    case 4:
+                        while True:
+                            try: 
+                                apellido_materno = input("Ingrese el apellido materno del empleado: ")
+                                if not apellido_materno or not all(c.isalpha() or c.isspace() for c in apellido_materno):
+                                    raise ValueError("Ingrese un apellido materno válido (solo letras y espacios).")
+                                break
+                            except ValueError as Error:
+                                print(Error) 
+                    case 5:
+                        while True:
+                            try:
+                                email = input("Ingrese el email del empleado (ej: usuario@dominio.cl): ").strip()
+                                patron = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"               
+                                if not re.match(patron, email):
+                                    raise ValueError("Formato de email inválido. Intente nuevamente.")
+                                usuario = self._service.obtener_usuario_por_email(email)
+                                if usuario == None:
+                                    raise ValueError ("Este email no existe en el sistema")
+                                break
+                            except ValueError as Error:
+                                print(Error)
+                                
+                    case 6:
+                        #preguntar por contraseña actual
+                        while True:
+                            try:
+                                contraseña_texto_plano = input("Ingrese la contraseña para el nuevo empleado: ")
+                                if self._validar_contraseña_segura(contraseña_texto_plano) == True:
+                                    contraseña_hash = bcrypt.hashpw(contraseña_texto_plano.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+                                    break
+                            except ValueError as Error:
+                                # Asumo que validar_contraseña_segura levanta ValueError
+                                print(Error)
+                            except Exception as Error: 
+                                print(f"Error inesperado al guardar la contraseña: {Error}")
+                    case 7:
+                        while True:
+                            try:
+                                nro_telefono = input("Ingrese el número de teléfono del empleado (formato: +56 9 XXXX XXXX): ").strip()
+                                patron = r"^\+56 9 \d{4} \d{4}$"
+                                if not re.match(patron, nro_telefono):
+                                    raise ValueError("Formato inválido. Use: +56 9 XXXX XXXX")
+                                if self._service.verificar_numero(nro_telefono) == False:  #crear funcion de verificacion de numeros ya existentes en la base de datos
+                                    raise ValueError("Numero ya registrado en la base de datos")
+                                break
+                            except ValueError as Error:
+                                print(Error)
+                    case 8:
+                        while True:
+                            try:
+                                fecha = input("Ingrese la fecha de nacimiento del empleado (formato DD/MM/AAAA): ")
+                                fecha_nacimiento = datetime.strptime(fecha, '%d/%m/%Y').date()
 
+                                if self._service.mayor_a_18(fecha_nacimiento) == False:   
+                                    print("Usted no tiene 18 años.")
+                                    return
+                                break
+                            except ValueError:
+                                print("Formato inválido. Use el formato DD/MM/AAAA.")
+                    case 9:
+                        input("PRESIONE ENTER PARA SALIR ")
+                        return None    
 
 
 
