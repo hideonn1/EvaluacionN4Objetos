@@ -2,7 +2,7 @@
 
 from src.Logica_de_Negocio.models.Reserva import Reserva
 
-class Reserva_Repository:
+class ReservaRepository:
     
     def __init__(self, conectar_db):
         self._conectar_db = conectar_db
@@ -40,7 +40,7 @@ class Reserva_Repository:
             conexion.close()        
         
     
-    # Busca y retorna un Usuario por su ID
+    # Retorna una reserva
     def read_by_id(self, id_reserva):
         conexion = self._conectar_db() 
         cursor = conexion.cursor(dictionary=True)
@@ -54,13 +54,15 @@ class Reserva_Repository:
 
             if resultado:
                 reserva_objeto = Reserva(
-                    id_reserva = resultado['id_usuario'],
-                    id_cliente = resultado['id_usuario'],
+                    id_reserva = resultado['id_reserva'],
+                    id_usuario = resultado['id_usuario'],
+
                     fecha_inicio = resultado['fecha_inicio'],
                     fecha_final = resultado['fecha_final'],
+                    estado = resultado['estado'],
                     monto_total = resultado['monto_total']
                 )
-                return reserva_objeto 
+                return reserva_objeto
             else:
                 return None 
 
@@ -77,11 +79,11 @@ class Reserva_Repository:
             query = ("""
                 UPDATE reserva SET 
                     estado = %s, 
-                    monto_pagado = %s
+                    monto_total = %s
                 WHERE id_reserva = %s;
                 """)
             datos = (reserva.estado, 
-                    reserva.monto_pagado,
+                    reserva.monto_total,
                     reserva.id_reserva
                     )
             cursor.execute(query, datos)
@@ -105,7 +107,7 @@ class Reserva_Repository:
             datos = (id_reserva,)
             cursor.execute(query, datos)
             conexion.commit() 
-            return True 
+            return cursor.rowcount > 0
             
         except Exception as e:
             conexion.rollback()
