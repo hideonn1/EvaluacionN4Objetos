@@ -1,29 +1,31 @@
 ## vista encargada de mostrar la interfaz principal del programa
 
-def pincipal_view_inicio_sesion():
-        while True:
-            print("---Sistema gestor de Viajes Aventura---\n")
-            print("---ELIJA UNA OPCIóN ---\n")
-            print("1. INICIAR SESIÓN.")
-            print("2. REGISTRARSE.")
-            print("3. CERRAR EL PROGRAMA.\n")
-            try:
-                opcion_user = int(input("Ingrese una de las opciones disponibles (1-3): "))
-            except ValueError:
-                print("Debe ingresar un carácter numérico para continuar.")
-                continue
+def principal_view_inicio_sesion():
+    print("---Sistema gestor de Viajes Aventura---\n")
+    print("---ELIJA UNA OPCIóN ---\n")
+    print("1. INICIAR SESIÓN.")
+    print("2. REGISTRARSE.")
+    print("3. CERRAR EL PROGRAMA.\n")
 
-            if opcion_user not in (1,2,3):
-                print("Debe ingresar una de las opciones disponibles para continuar.")
-                continue
+def principal_view_menu_admin():
+    print("---Menú Administrador---\n")
+    print("---ELIJA UNA OPCIóN ---\n")
+    print("1. CREAR DESTINO.")
+    print("2. MODIFICAR DESTINO.")
+    print("3. ELIMINAR DESTINO.")
+    print("4. CREAR PAQUETE TURISTICO.")
+    print("5. ELIMINAR PAQUETE TURISTICO.")
+    print("6. ELIMINAR PAQUETE TURISTICO.")
+    print("7. VER RESERVAS.")
+    print("8. VOLVER A MENÚ ANTERIOR.\n")
+        
+def principal_view_menu_cliente():
+    print("---Menú Administrador---\n")
+    print("---ELIJA UNA OPCIóN ---\n")
+    print("1. BUSCAR DESTINO POR PAÍS.")
+    print("2. BUSCAR PAQUETE TURISTICO.")
+    print("3. CREAR RESERVA.")
+    print("3. MODIFICAR DATOS PERSONALES.")
+    print("4. VOLVER A MENÚ ANTERIOR.\n") 
 
-            match opcion_user:
-                case 1:
-                    usuario = iniciar_sesion()
-                    return usuario
-                case 2:
-                    registrar_usuario()
-
-                case 3:
-                    input("PRESIONE ENTER PARA SALIR ")
-                    break
+#COMO PUEDE EL USUARIO VER TODOS LOS DESTINO, VER TODOS LOS DESTINOS O CLASIFICARLOS POR PAIS
