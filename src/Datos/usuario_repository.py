@@ -115,47 +115,6 @@ class Usuario_Repository:
             except:
                 pass
 
-    # Busca y retorna un Usuario por su rut
-    def get_by_rut(self, email):
-        conexion = self._conectar_db() 
-        cursor = conexion.cursor(dictionary=True)
-
-        try:
-            query = "SELECT * FROM Usuario WHERE rut = %s"
-            datos = (email,)
-
-            cursor.execute(query,datos)
-            resultado = cursor.fetchone()
-
-            if resultado:
-                usuario_objeto = Cliente(
-                    id_cliente = resultado['id_usuario'],
-                    rut = resultado['rut'],
-                    nombres = resultado['nombres'],
-                    apellido_paterno = resultado['apellido_paterno'],
-                    apellido_materno = resultado['apellido_materno'],
-                    email = resultado['email'],
-                    contraseña_hash = ['contraseña'],
-                    telefono = resultado['telefono'],
-                    direccion = resultado['direccion'],
-                    fecha_nacimiento = resultado['fecha_nacimiento'],
-                    fecha_registro = resultado['fecha_registro']
-                )
-                return usuario_objeto 
-            else:
-                return None
-        except mysql.connector.Error as Error:
-            print(f"Error inesperado al intentar iniciar sesión: {Error}")
-            return None
-        finally:
-            try:
-                if cursor:
-                    cursor.close()
-                if conexion:
-                    conexion.close()
-            except:
-                pass
-
     # Actualiza los datos de un usuario ya existente.
     def update(self, usuario):
         conexion = self._conectar_db()
