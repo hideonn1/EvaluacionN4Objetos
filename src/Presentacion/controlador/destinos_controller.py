@@ -31,12 +31,12 @@ class Destino_Controller:
                 print(f"Error inesperado al ingresar el nombre: {Error}")
         while True:
             try:
-                pais = input("Ingrese el Pais de ubicacion: ")
+                pais = input("Ingrese el país de ubicación: ")
                 if not pais or not all(c.isalpha() or c.isspace() for c in pais):
                     raise ValueError("Ingrese un Pais valido (solo letras y espacios).")
                 break
             except ValueError as e:
-                print("Error en ingresar un Pais valido.")
+                print(f"Error inesperado al ingresar el país: {e}")
         while True:
             try:
                 ciudad = input("Ingrese la ciudad del destino: ")
@@ -44,13 +44,13 @@ class Destino_Controller:
                     raise ValueError("Ingrese una ciudad valida (solo letras y espacios).")
                 break
             except ValueError as e:
-                print("Error en ingresar una ciudad valida.")
+                print(f"Error inesperado al ingresar la ciudad: {e}")
         while True: 
             try:
                 descripcion = input("Ingrese una descripcion del destino: ")
                 break
             except ValueError as e:
-                print("Error en ingresar una descripcion valida.")
+                print(f"Error inesperado al ingresar la descripción: {e}")
         while True:
             try:
                 actividades_disponibles = input("Ingrese las actividades disponibles del destino: ")
