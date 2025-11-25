@@ -6,17 +6,6 @@ class Destino_Controller:
         # Recibe el Servicio por inyección. No sabe nada de repositorios o DB.
         self._service = usuario_service
 
-<<<<<<< HEAD
-
-    def buscar_destino(self, destino_nombre):        
-        try:
-            destino_encontrado = self._service.obtener_destino_por_nombre(destino_nombre)
-            
-            print(f"\nDestino encontrado: {destino_encontrado}")
-            
-        except ValueError as e:
-            print(f"\n[CONTROLADOR] ❌ -> Error capturado: {e}")
-=======
     def buscar_destino(self):   
         opcion = int(input(buscar_destino_vista()))
         while opcion not in [1,2,3]:
@@ -50,7 +39,6 @@ class Destino_Controller:
                         print("Los IDs de destino solo deben contener numeros")
             case 3:
                 return
->>>>>>> 8a8ee43ae2a152e1574f06247a914f832a43195a
 
 
     def crear_destino(self):
@@ -113,10 +101,6 @@ class Destino_Controller:
         
         self._service.nuevo_destino(datos_destino)
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 8a8ee43ae2a152e1574f06247a914f832a43195a
     def eliminar_destino(self):
         while True:
             try:

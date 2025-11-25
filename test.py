@@ -27,10 +27,6 @@ def main():
     #usuario_cont.buscar_usuario("correofalso@prueba.pru")
     #destino_cont.buscar_destino_nombre("mi_casa")
     #destino_cont.buscar_destino_id(1)
-<<<<<<< HEAD
-    ##paquete_cont.mostrar_paquete(1)
-    destino_cont.destino_controleitor()
-=======
     #paquete_cont.mostrar_paquete(1)
     usuario = usuario_cont.menu_controlador()
     if usuario.rol == "Administrador":
@@ -60,7 +56,6 @@ def main():
     else:
         usuario_cont.cliente_controlador()
 
->>>>>>> 59a9c6f21408b81cdf4d88bc482eb0d125aa4bab
 
 
 main()
