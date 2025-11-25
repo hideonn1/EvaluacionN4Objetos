@@ -34,7 +34,7 @@ class Usuario_Service:
         self._repo.delete(rut)
     
     def modificar_usuario_admin(self, email):
-        pass
+        self._repo.update(email)
 
     def modificar_usuario_basico(self, rut):
         pass

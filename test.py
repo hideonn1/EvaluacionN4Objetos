@@ -49,7 +49,7 @@ def main():
                 case 8:
                     paquete_cont._self.eliminar_usuario_admin()
                 case 9:
-                    pass
+                    paquete_cont._self.obtener_reserva_por_id()
                 case 10:
                     input("PRESIONE ENTER PARA SALIR ")
                     return None     
