@@ -11,8 +11,6 @@ class Usuario_Service:
 
     def obtener_usuario_por_email(self, email):
         usuario_objeto = self._repo.get_by_email(email)
-        if usuario_objeto is None:
-            raise ValueError(f"El usuario con email {email} no existe.")
         return usuario_objeto
     
     def verificar_contrasena(self, email, contraseña_ingresada):

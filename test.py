@@ -24,17 +24,13 @@ def main():
     paquete_serv = Paquete_Service(paquete_repo, destino_repo)
     paquete_cont = Paquete_Controller(paquete_serv,destino_serv)
 
-    #usuario_cont.buscar_usuario("correofalso@prueba.pru")
+    usuario_cont.registrar_usuario()
     #destino_cont.buscar_destino_nombre("mi_casa")
     #destino_cont.buscar_destino_id(1)
-<<<<<<< HEAD
-    ##paquete_cont.mostrar_paquete(1)
-    destino_cont.destino_controleitor()
-=======
     #paquete_cont.mostrar_paquete(1)
-    usuario = usuario_cont.menu_controlador()
-    if usuario.rol == "Administrador":
-        opcion_user = usuario_cont.admin_controlador()
+    #usuario = usuario_cont.menu_controlador()
+    #if usuario.rol == "Administrador":
+    """    opcion_user = usuario_cont.admin_controlador()
         match opcion_user:
                 case 1:
                     paquete_cont._self.crear_destino()
@@ -58,9 +54,8 @@ def main():
                     input("PRESIONE ENTER PARA SALIR ")
                     return None     
     else:
-        usuario_cont.cliente_controlador()
-
->>>>>>> 59a9c6f21408b81cdf4d88bc482eb0d125aa4bab
+        usuario_cont.cliente_controlador()"""
 
 
+    
 main()

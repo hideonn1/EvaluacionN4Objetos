@@ -94,7 +94,7 @@ class Usuario_Controller:
             try:
                 rut = input("Ingrese su RUT: (ej: 12345678-K o 9876543-1): ").strip().lower()
                 if self._service.validador_rut(rut) != None:              
-                    raise ValueError("El rut ya se encuentra registrado en")
+                    raise ValueError("El rut ya se encuentra registrado en") #validar que el rut este en la base de datos
                 break
             except ValueError as e:
                 print(f"Error en el formato del RUT: {e}. Intente nuevamente")
