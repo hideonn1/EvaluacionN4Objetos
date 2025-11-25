@@ -5,7 +5,7 @@ import bcrypt
 import re
 from datetime import datetime
 import pwinput
-from Logica_de_Negocio.models.Cliente import Cliente
+from ...Logica_de_Negocio.models.Cliente import Cliente
 from ..vista.principal_view import principal_view_inicio_sesion, principal_view_menu_admin, principal_view_menu_cliente
 
 class Usuario_Controller:
@@ -234,10 +234,7 @@ class Usuario_Controller:
                 else:
                     break
             except ValueError as Error:
-<<<<<<< HEAD
                 print(Error)
-
-
 
     def menu_controlador(self):
         while True:
@@ -325,6 +322,3 @@ class Usuario_Controller:
                 case 4:
                     input("PRESIONE ENTER PARA SALIR ")
                     return None   
-=======
-                print(Error)
->>>>>>> 1038cff213b902399f39ee2c35d669ab04e19140

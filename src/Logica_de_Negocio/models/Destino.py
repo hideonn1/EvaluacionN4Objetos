@@ -1,13 +1,14 @@
 # Clase de Destino
 
 class Destino():
-    def __init__ (self, id_destino,
+    def __init__ (self,
                 nombre,
                 ciudad,
                 pais,
                 descripcion,
                 actividades_disponibles,
-                costo):
+                costo,
+                id_destino = None):
 
         self.id_destino = id_destino
         self.nombre = nombre

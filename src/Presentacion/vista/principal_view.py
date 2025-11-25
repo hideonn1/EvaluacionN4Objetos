@@ -1,26 +1,11 @@
 ## vista encargada de mostrar la interfaz principal del programa
 
-<<<<<<< HEAD
 def principal_view_inicio_sesion():
     print("---Sistema gestor de Viajes Aventura---\n")
     print("---ELIJA UNA OPCIóN ---\n")
     print("1. INICIAR SESIÓN.")
     print("2. REGISTRARSE.")
     print("3. CERRAR EL PROGRAMA.\n")
-=======
-def pincipal_view_inicio_sesion():
-        while True:
-            print("---Sistema gestor de Viajes Aventura---\n")
-            print("---ELIJA UNA OPCIÓN ---\n")
-            print("1. INICIAR SESIÓN.")
-            print("2. REGISTRARSE.")
-            print("3. CERRAR EL PROGRAMA.\n")
-            try:
-                opcion_user = int(input("Ingrese una de las opciones disponibles (1-3): "))
-            except ValueError:
-                print("Debe ingresar un carácter numérico para continuar.")
-                continue
->>>>>>> 1038cff213b902399f39ee2c35d669ab04e19140
 
 def principal_view_menu_admin():
     print("---Menú Administrador---\n")
