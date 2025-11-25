@@ -234,6 +234,7 @@ class Usuario_Controller:
                 else:
                     break
             except ValueError as Error:
+<<<<<<< HEAD
                 print(Error)
 
 
@@ -324,3 +325,6 @@ class Usuario_Controller:
                 case 4:
                     input("PRESIONE ENTER PARA SALIR ")
                     return None   
+=======
+                print(Error)
+>>>>>>> 1038cff213b902399f39ee2c35d669ab04e19140
