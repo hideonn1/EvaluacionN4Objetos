@@ -6,6 +6,7 @@ class Destino_Controller:
         # Recibe el Servicio por inyección. No sabe nada de repositorios o DB.
         self._service = usuario_service
 
+
     def buscar_destino(self, destino_nombre):        
         try:
             destino_encontrado = self._service.obtener_destino_por_nombre(destino_nombre)
@@ -14,6 +15,7 @@ class Destino_Controller:
             
         except ValueError as e:
             print(f"\n[CONTROLADOR] ❌ -> Error capturado: {e}")
+
 
     def crear_destino(self):
         while True:
@@ -74,6 +76,8 @@ class Destino_Controller:
             'costo':costo}
         
         self._service.nuevo_destino(datos_destino)
+
+
     def eliminar_destino(self):
         opcion = int(input(eliminar_destino_vista()))
         while opcion not in [1,2,3]:
@@ -102,6 +106,7 @@ class Destino_Controller:
                 print("Será devuelto al menu anterior...")
                 input("PRESIONE ENTER PARA CONTINUAR")
                 return
+            
     def modificar_destino(self):
         opcion = int(input(modificar_destino_vista()))
         while opcion not in [1,2,3]:
@@ -134,6 +139,7 @@ class Destino_Controller:
                 print("Será devuelto al menu anterior...")
                 input("PRESIONE ENTER PARA CONTINUAR")
                 return
+            
             
     def modificar_datos_objeto(self, destino):
         print(destino)

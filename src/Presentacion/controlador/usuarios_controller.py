@@ -8,6 +8,7 @@ import pwinput
 from Logica_de_Negocio.models.Cliente import Cliente
 from ..vista.principal_view import principal_view_inicio_sesion, principal_view_menu_admin, principal_view_menu_cliente
 
+
 class Usuario_Controller:
     
     def __init__(self, usuario_service):
@@ -181,7 +182,8 @@ class Usuario_Controller:
         patron = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"               
         if not re.match(patron, email):
             raise ValueError("Formato de email inválido. Intente nuevamente.")
-        if self._service.obtener_usuario_por_email(email) != None:
+        usuario = self._service.obtener_usuario_por_email(email) 
+        if usuario != None:
             pass
 
 
@@ -221,7 +223,7 @@ class Usuario_Controller:
         while True:
             try:
                 email_usuario = usuario.email
-                print(f"Desea eliminar la cuenta de usuario, rut:{email_usuario}? ")
+                print(f"Desea eliminar la cuenta de usuario, email:{email_usuario}? ")
                 print("1.- Eliminar permanentemente ")
                 print("2.- No Eliminar\n ")
                 respuesta = int("Elija una opcion: ")
@@ -234,7 +236,6 @@ class Usuario_Controller:
                 else:
                     break
             except ValueError as Error:
-<<<<<<< HEAD
                 print(Error)
 
 
@@ -255,76 +256,53 @@ class Usuario_Controller:
             match opcion_user:
                 case 1:
                     usuario = self.iniciar_sesion()
-                    break
+                    return usuario
                 case 2:
                     self.registrar_usuario()
                 case 3:
                     input("PRESIONE ENTER PARA SALIR ")
                     return None     
         
-        if usuario.rol == 'Administrador':
-            self.admin_controlador(usuario)
-        elif usuario.rol == 'Cliente':
-            self.cliente_controlador(usuario)
-        else:
-            print("Solo hay 2 roles, administrador o cliente. ")
-
 
     def admin_controlador(self, usuario):
         while True:
             principal_view_menu_admin()
             try:
-                opcion_user = int(input("Ingrese una de las opciones disponibles (1-8): "))
+                opcion_user = int(input("Ingrese una de las opciones disponibles (1-10): "))
             except ValueError:
                 print("Debe ingresar un carácter numérico para continuar.")
                 continue
 
-            if opcion_user not in (1,2,3,4,5,6,7,8):
+            if opcion_user not in (1,2,3,4,5,6,7,8,9,10):
                 print("Debe ingresar una de las opciones disponibles para continuar.")
                 continue
-
-            match opcion_user:
-                case 1:
-                    break
-                case 2:
-                    break
-                case 3:
-                    break
-                case 4:
-                    break
-                case 5:
-                    break
-                case 6:
-                    break
-                case 7 :
-                    break
-                case 8:
-                    input("PRESIONE ENTER PARA SALIR ")
-                    return None     
+            return opcion_user
                 
     def cliente_controlador(self, cliente):
         while True:
             principal_view_menu_cliente()
             try:
-                opcion_user = int(input("Ingrese una de las opciones disponibles (1-4): "))
+                opcion_user = int(input("Ingrese una de las opciones disponibles (1-5): "))
             except ValueError:
                 print("Debe ingresar un carácter numérico para continuar.")
                 continue
 
-            if opcion_user not in (1,2,3,4):
+            if opcion_user not in (1,2,3,4,5):
                 print("Debe ingresar una de las opciones disponibles para continuar.")
                 continue
 
             match opcion_user:
                 case 1:
+                    self._
                     break
                 case 2:
+                    self._service.buscar_paquete()
                     break
                 case 3:
                     break
                 case 4:
+                    self.eliminar_usuario_basico()
+                    break
+                case 5:
                     input("PRESIONE ENTER PARA SALIR ")
                     return None   
-=======
-                print(Error)
->>>>>>> 1038cff213b902399f39ee2c35d669ab04e19140
