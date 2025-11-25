@@ -3,7 +3,7 @@
 def pincipal_view_inicio_sesion():
         while True:
             print("---Sistema gestor de Viajes Aventura---\n")
-            print("---ELIJA UNA OPCIóN ---\n")
+            print("---ELIJA UNA OPCIÓN ---\n")
             print("1. INICIAR SESIÓN.")
             print("2. REGISTRARSE.")
             print("3. CERRAR EL PROGRAMA.\n")

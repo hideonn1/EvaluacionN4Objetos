@@ -232,7 +232,3 @@ class Usuario_Controller:
                     break
             except ValueError as Error:
                 print(Error)
-
-
-
-          
