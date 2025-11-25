@@ -198,6 +198,8 @@ class Usuario_Controller:
                                 nombre = input("Ingrese el primer nombre del empleado: ")
                                 if not nombre or not all(c.isalpha() or c.isspace() for c in nombre):
                                     raise ValueError("Ingrese un nombre válido (solo letras y espacios).")
+                                usuario.nombre = nombre
+                                self._service.modificar_usuario_admin(usuario)
                                 break
                             except ValueError as Error:
                                 print(Error)
