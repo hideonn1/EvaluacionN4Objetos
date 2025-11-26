@@ -2,11 +2,12 @@
 from .Destino import Destino
 
 class PaqueteTuristico():
-    def __init__ (self, id_paquete,
+    def __init__ (self,
                   fecha_llegada,
                   fecha_salida,
                   orden_visita,
                   costo_destino,
+                  id_paquete = None,
                   destinos = None):
         
         self.id_paquete = id_paquete

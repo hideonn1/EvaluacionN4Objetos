@@ -3,7 +3,7 @@
 from src.Datos.reserva_repository import ReservaRepository
 from src.Logica_de_Negocio.models.Reserva import Reserva
 
-class ReservaService:
+class Reservas_Service:
     def __init__(self, reserva_repository: ReservaRepository):
         self._repo = reserva_repository
 

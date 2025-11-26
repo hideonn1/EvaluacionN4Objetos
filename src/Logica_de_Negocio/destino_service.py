@@ -20,3 +20,9 @@ class Destino_Service:
         self._repo.delete(id_destino)
     def modificar_destino(self, destino):
         self._repo.update(destino)
+    def obtener_destinos_por_pais(self, pais):
+        lista_destinos = self._repo.get_destinos_pais(pais)
+        return lista_destinos
+    def obtener_destinos_por_fecha(self, fecha):
+        destino_objeto = self._repo.read_by_date()
+        return destino_objeto
