@@ -48,4 +48,7 @@ class ReservasController:
             print("\nReserva actualizada:")
             mostrar_reserva(reserva_actualizada)
         except ValueError as Error:
-            print(f"\n{Error}")
+            print(f"\nError inesperado: {Error}")
+            # Se captura tanto el estado invalido, como reserva no encontrada.
+        except Exception as Error:
+            print(f"\nError inesperado: {Error}")
