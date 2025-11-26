@@ -22,12 +22,15 @@ class Paquete_Controller:
     def agregar_destino(self,paquete):
         lista_destinos = self._service_destino.mostrar_destinos()
         mostrar_destinos(lista_destinos)
+
         while True:
             try:
                 destino_id = int(input("Ingrese el ID del destino que quiere agregar al paquete."))
                 break
-            except Exception as e:
-                print(e)
-        self._service.agregar_destino_a_paquete(paquete.id_paquete, destino_id)
-
-
+            except ValueError as Error:
+                print(f"Debe ingresar un número válido: {Error}")
+        try:
+            self._service.agregar_destino_a_paquete(paquete.id_paquete, destino_id)
+            print("Destino agregado correctamente al paquete.")
+        except ValueError as Error:
+            print(f"Error: {Error}")
