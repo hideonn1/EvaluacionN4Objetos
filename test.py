@@ -54,12 +54,7 @@ def main():
                     input("PRESIONE ENTER PARA SALIR ")
                     return None     
     else:
-<<<<<<< HEAD
         usuario_cont.cliente_controlador()"""
-=======
-        usuario_cont.cliente_controlador()
-
->>>>>>> 43cbf49c783b9d7f5a462fb1540649f606beae92
 
 
     

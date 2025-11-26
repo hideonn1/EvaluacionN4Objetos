@@ -173,3 +173,40 @@ class Usuario_Repository:
             cursor.close()
             conexion.close()
 
+    def verificador_contraseña(self, contraseña_actual):
+        conexion = self._conectar_db() 
+        cursor = conexion.cursor(dictionary=True)
+
+        try:
+            query = "SELECT * FROM Usuario WHERE contraseña = %s"
+            datos = (contraseña_actual,)
+
+            cursor.execute(query,datos)
+            resultado = cursor.fetchone()
+
+            if resultado:
+                return True 
+            else:
+                return False
+
+        finally:
+            pass 
+
+    def verificador_telefono(self, telefono):
+        conexion = self._conectar_db() 
+        cursor = conexion.cursor(dictionary=True)
+
+        try:
+            query = "SELECT * FROM Usuario WHERE telefono = %s"
+            datos = (telefono,)
+
+            cursor.execute(query,datos)
+            resultado = cursor.fetchone()
+
+            if resultado:
+                return True 
+            else:
+                return False 
+
+        finally:
+            pass 

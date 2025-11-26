@@ -209,6 +209,8 @@ class Usuario_Controller:
                                 apellido_paterno = input("Ingrese el apellido paterno del empleado: ")
                                 if not apellido_paterno or not all(c.isalpha() or c.isspace() for c in apellido_paterno):
                                     raise ValueError("Ingrese un apellido paterno válido (solo letras y espacios).")
+                                usuario.apellido_paterno = apellido_paterno
+                                self._service.modificar_usuario_admin(usuario)
                                 break
                             except ValueError as Error:
                                 print(Error)
@@ -218,19 +220,23 @@ class Usuario_Controller:
                                 apellido_materno = input("Ingrese el apellido materno del empleado: ")
                                 if not apellido_materno or not all(c.isalpha() or c.isspace() for c in apellido_materno):
                                     raise ValueError("Ingrese un apellido materno válido (solo letras y espacios).")
+                                usuario.apellido_materno = apellido_materno
+                                self._service.modificar_usuario_admin(usuario)
                                 break
                             except ValueError as Error:
                                 print(Error) 
                     case 5:
                         while True:
                             try:
-                                email = input("Ingrese el email del empleado (ej: usuario@dominio.cl): ").strip()
+                                email_nuevo = input("Ingrese el email del empleado (ej: usuario@dominio.cl): ").strip()
                                 patron = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"               
-                                if not re.match(patron, email):
+                                if not re.match(patron, email_nuevo):
                                     raise ValueError("Formato de email inválido. Intente nuevamente.")
-                                usuario = self._service.obtener_usuario_por_email(email)
+                                usuario = self._service.obtener_usuario_por_email(email_nuevo)
                                 if usuario == None:
                                     raise ValueError ("Este email no existe en el sistema")
+                                usuario.email = email_nuevo
+                                self._service.modificar_usuario_admin(usuario)
                                 break
                             except ValueError as Error:
                                 print(Error)
@@ -268,7 +274,10 @@ class Usuario_Controller:
 
                                 if self._service.mayor_a_18(fecha_nacimiento) == False:   
                                     print("Usted no tiene 18 años.")
-                                    return
+                                    continue
+                                if self._service.mayor_a_18(fecha_nacimiento) == True:
+                                    usuario.fecha_nacimiento = fecha_nacimiento
+                                    self._service.modificar_usuario_admin(usuario)
                                 break
                             except ValueError:
                                 print("Formato inválido. Use el formato DD/MM/AAAA.")
@@ -363,6 +372,28 @@ class Usuario_Controller:
             if opcion_user not in (1,2,3,4,5,6,7,8,9,10):
                 print("Debe ingresar una de las opciones disponibles para continuar.")
                 continue
+            match opcion_user:
+                    case 1:
+                        paquete_cont._self.crear_destino()
+                    case 2:
+                        paquete_cont._self.modificar_destino()
+                    case 3:
+                        paquete_cont._self.eliminar_destino()
+                    case 4:
+                        pass
+                    case 5:
+                        pass
+                    case 6:
+                        pass
+                    case 7:
+                        pass
+                    case 8:
+                        paquete_cont._self.eliminar_usuario_admin()
+                    case 9:
+                        paquete_cont._self.obtener_reserva_por_id()
+                    case 10:
+                        input("PRESIONE ENTER PARA SALIR ")
+                        return None   
             return opcion_user
                 
     def cliente_controlador(self, cliente):
