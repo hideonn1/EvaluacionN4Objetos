@@ -70,7 +70,7 @@ class Reservas_Repository:
             cursor.close()
             conexion.close() 
 
-    # Actualiza los datos de un usuario ya existente.
+    # Actualiza los datos de una reserva existente 
     def update(self, reserva):
         conexion = self._conectar_db()
         cursor = conexion.cursor()
@@ -113,6 +113,29 @@ class Reservas_Repository:
             conexion.rollback()
             raise e
             
+        finally:
+            cursor.close()
+            conexion.close()
+
+    def read_by_usuario(self, id_usuario):
+        conexion = self._conectar_db()
+        cursor = conexion.cursor(dictionary=True)
+        try:
+            query = "SELECT * FROM reserva WHERE id_usuario = %s"
+            cursor.execute(query, (id_usuario,))
+            resultados = cursor.fetchall()
+            reservas = [
+                Reserva(
+                    id_reserva=r['id_reserva'],
+                    id_usuario=r['id_usuario'],
+                    fecha_inicio=r['fecha_inicio'],
+                    fecha_final=r['fecha_final'],
+                    estado=r['estado'],
+                    monto_total=r['monto_total']
+                )
+                for r in resultados
+            ]
+            return reservas
         finally:
             cursor.close()
             conexion.close()
