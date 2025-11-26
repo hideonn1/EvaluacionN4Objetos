@@ -40,15 +40,19 @@ class Reservas_Controller:
             reserva = self._service.obtener_reserva_por_id(id_reserva)
             # Se piden datos nuevos desde la view
             
-            nuevo_estado = input("Ingrese nuevo estado (pendiente/confirmada/cancelada): ")
+            nuevo_estado = input("Ingrese nuevo estado (pendiente/confirmada/cancelada): ").strip().lower()
+            if nuevo_estado not in ["pendiente", "confirmada", "cancelada"]:
+                print("Estado inválido. Debe ser pendiente, confirmada o cancelada.")
+                return
             reserva.estado = nuevo_estado
-            reserva.monto_actual = int(input("Ingrese nuevo monto total: "))
+            
+            reserva.monto_total = int(input("Ingrese nuevo monto total: "))
 
             reserva_actualizada = self._service.actualizar_reserva(reserva)
             print("\nReserva actualizada:")
             mostrar_reserva(reserva_actualizada)
         except ValueError as Error:
-            print(f"\nError inesperado: {Error}")
+            print(f"\nError al actualizar reserva: {Error}")
             # Se captura tanto el estado invalido, como reserva no encontrada.
         except Exception as Error:
             print(f"\nError inesperado: {Error}")

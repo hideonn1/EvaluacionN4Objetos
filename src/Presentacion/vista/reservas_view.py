@@ -3,18 +3,28 @@ from datetime import datetime
 
 def crear_reserva_vista():
     print("\n--- CREAR RESERVA ---")
+
     while True:
         try:
-            fecha_inicio = input("Ingrese fecha de inicio (YYYY-MM-DD): ")
-            fecha_final = input("Ingrese fecha final (YYYY-MM-DD): ")
-            #Validaciones de fecha :
+            # Los inputs se dejan al ser vista de consola y no de interfaz web
+            fecha_inicio = input("Ingrese fecha de inicio (YYYY-MM-DD): ").strip()
+            fecha_final = input("Ingrese fecha final (YYYY-MM-DD): ").strip()
+
             datetime.strptime(fecha_inicio, "%Y-%m-%d")
             datetime.strptime(fecha_final, "%Y-%m-%d")
             break
         except ValueError:
             print("Formato inválido. Use YYYY-MM-DD.")
 
-        monto_total = int(input("Ingrese monto total: "))
+    while True:
+        try:
+            monto_total = int(input("Ingrese monto total: "))
+            if monto_total <= 0:
+                print("El monto debe ser mayor a 0.")
+                continue
+            break
+        except ValueError:
+            print("Debe ingresar un número válido.")
 
     return {
         "fecha_inicio": fecha_inicio,
@@ -23,6 +33,9 @@ def crear_reserva_vista():
     }
 
 def mostrar_reserva(reserva):
+    if not reserva:
+        print("\nNo se encontró la reserva.")
+        return
     print("\n--- RESERVA ---")
     print(f"ID: {reserva.id_reserva}")
     print(f"Usuario: {reserva.id_usuario}")
