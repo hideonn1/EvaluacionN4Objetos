@@ -11,7 +11,7 @@ class Paquete_Repository:
         cursor = conexion.cursor()
         
         try:
-            query = ("""-
+            query = ("""
                     INSERT INTO paquete_turistico (fecha_llegada, fecha_salida, orden_visita, costo_destino) 
                     VALUES (%s, %s, %s, %s);
                 """)
@@ -103,7 +103,7 @@ class Paquete_Repository:
             datos = (id_paquete_turistico,)
             cursor.execute(query, datos)
             conexion.commit() 
-            return True 
+            return cursor.rowcount > 0
             
         except Exception as e:
             conexion.rollback()

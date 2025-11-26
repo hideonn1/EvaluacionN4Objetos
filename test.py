@@ -28,9 +28,17 @@ def main():
     #destino_cont.buscar_destino_nombre("mi_casa")
     #destino_cont.buscar_destino_id(1)
     #paquete_cont.mostrar_paquete(1)
+
+    destino_cont.probar_destino()
+    """
+    usuario = usuario_cont.menu_controlador()
+    if usuario.rol == "Administrador":
+        opcion_user = usuario_cont.admin_controlador()
+
     #usuario = usuario_cont.menu_controlador()
     #if usuario.rol == "Administrador":
     """    opcion_user = usuario_cont.admin_controlador()
+
         match opcion_user:
                 case 1:
                     paquete_cont._self.crear_destino()
@@ -54,8 +62,17 @@ def main():
                     input("PRESIONE ENTER PARA SALIR ")
                     return None     
     else:
+<<<<<<< HEAD
+        usuario_cont.cliente_controlador()"""
+=======
+
         usuario_cont.cliente_controlador()"""
 
+        usuario_cont.cliente_controlador()
 
-    
+>>>>>>> 43cbf49c783b9d7f5a462fb1540649f606beae92
+>>>>>>> 17dbb2db1f5ce57c28ab08a7fbfdbee315066b8e
+
+
+"""
 main()
