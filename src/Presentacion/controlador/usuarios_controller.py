@@ -94,7 +94,7 @@ class Usuario_Controller:
             try:
                 rut = input("Ingrese su RUT: (ej: 12345678-K o 9876543-1): ").strip().lower()
                 if self._service.validador_rut(rut) != None:              
-                    raise ValueError("El rut ya se encuentra registrado en")
+                    raise ValueError("El rut ya se encuentra registrado en") #validar que el rut este en la base de datos
                 break
             except ValueError as e:
                 print(f"Error en el formato del RUT: {e}. Intente nuevamente")
@@ -315,7 +315,7 @@ class Usuario_Controller:
                 print(f"Desea eliminar la cuenta de usuario, email:{email_usuario}? ")
                 print("1.- Eliminar permanentemente ")
                 print("2.- No Eliminar\n ")
-                respuesta = int("Elija una opcion: ")
+                respuesta = int(input("Elija una opcion: "))
                 if respuesta not in [1, 2]:
                     raise ValueError("Las opciones de respuesta son solo '1' o '2'. ")
                 elif respuesta == 1:
