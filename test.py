@@ -28,6 +28,8 @@ def main():
     #destino_cont.buscar_destino_nombre("mi_casa")
     #destino_cont.buscar_destino_id(1)
     #paquete_cont.mostrar_paquete(1)
+    destino_cont.probar_destino()
+    """
     usuario = usuario_cont.menu_controlador()
     if usuario.rol == "Administrador":
         opcion_user = usuario_cont.admin_controlador()
@@ -57,5 +59,5 @@ def main():
         usuario_cont.cliente_controlador()
 
 
-
+"""
 main()
