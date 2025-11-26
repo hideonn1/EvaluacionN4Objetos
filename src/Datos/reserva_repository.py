@@ -2,7 +2,7 @@
 
 from src.Logica_de_Negocio.models.Reserva import Reserva
 
-class ReservaRepository:
+class Reservas_Repository:
     
     def __init__(self, conectar_db):
         self._conectar_db = conectar_db
