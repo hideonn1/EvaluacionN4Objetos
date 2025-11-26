@@ -12,9 +12,16 @@ def crear_paquete_vista():
             break
         except ValueError:
             print("Formate inválido. Use YYYY-MM-DD.")
-    
-    orden_visita = int(input("Ingrese el orden de visita: "))
-    costo_destino = int(input("Ingrese el costo total del paquete: "))
+
+        try:
+            orden_visita = int(input("Ingrese el orden de visita: "))
+        except ValueError:
+            print("Debe ingresar un carácter numérico para indicar el orden.")
+        
+        try:
+            costo_destino = int(input("Ingrese el costo total del paquete: "))
+        except ValueError:
+            print("Debe ingresar un carácter numérico para indicar el costo total.")
 
     return {
         "fecha_llegada":fecha_llegada,
