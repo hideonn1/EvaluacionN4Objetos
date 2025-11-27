@@ -33,7 +33,7 @@ def mostrar_destinos(lista):
     for i in lista:
         print (i)
 
-def menu_destinos():
+def sub_menu_destinos_admin():
     print("---Sistema gestor de Destinos---\n")
     print("---ELIJA UNA OPCION ---")
     print("1. AGREGAR DESTINO.")
@@ -41,3 +41,4 @@ def menu_destinos():
     print("3. MODIFICAR DESTINO.")
     print("4. ELIMINAR DESTINO.")
     print("5. VOLVER AL MENU ANTERIOR.\n")
+

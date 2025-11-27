@@ -39,29 +39,33 @@ def main():
         opcion_user = usuario_cont.admin_controlador()
         match opcion_user:
                 case 1:
-                    destino_cont.crear_destino()
+                    destino_cont.destino_controleitor()
                 case 2:
-                    destino_cont.modificar_destino()
+                    paquete_cont.paquete.controleitor() #crear controlador y vista de menu de paquetes
+                    pass
                 case 3:
-                    destino_cont.eliminar_destino()
+                    usuario_cont.usuario.controleitor() #crear controlador y vista de menu de usuarios (contiene modificar y eliminar)
                 case 4:
-                    paquete_cont.crear_paquete()
-                    pass
-                case 5:
-                    paquete_cont.modificar_paquete()
-                    pass
-                case 6:
-                    paquete_cont.eliminar_paquete()
-                    pass
-                case 7:
-                    usuario_cont.modificar_usuario_admin()
-                    pass
-                case 8:
-                    usuario_cont.eliminar_usuario_admin()
-                case 9:
                     reserva_cont.obtener_reserva_por_id()
-                case 10:
+                case 5:
                     input("PRESIONE ENTER PARA SALIR ")
                     return None     
     else:
-        usuario_cont.cliente_controlador()
+        usuario = usuario_cont.menu_controlador()
+        if usuario.rol == "Cliente":
+            opcion_user = usuario_cont.admin_controlador()        
+
+            match opcion_user:
+                case 1:
+                    self._service.obtener_destinos_por_pais()
+                case 2:
+                    #buscar_paquete_turistico() #crear esta funcion
+                    pass
+                case 3:
+                    paquete_cont.funciones_reserva_cliente #crear esta funcion
+                case 4:
+                    paquete_cont.funciones_usuario_cliente #crear esta funcion
+                    pass
+                case 5:
+                    input("PRESIONE ENTER PARA SALIR ")
+                    return None   

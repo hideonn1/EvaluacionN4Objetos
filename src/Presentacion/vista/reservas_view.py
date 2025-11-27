@@ -54,3 +54,10 @@ def menu_reservas():
         "5. Volver al menú principal\n"
         "Seleccione una opción: "
     )
+
+def sub_menu_reserva_cliente():
+    print("---Menú gestión reservas---\n")
+    print("---ELIJA UNA OPCIóN ---\n")
+    print("1. CREAR RESERVA.")
+    print("2. BUSCAR RESERVA.")
+    print("3. VOLVER A MENÚ ANTERIOR.\n")

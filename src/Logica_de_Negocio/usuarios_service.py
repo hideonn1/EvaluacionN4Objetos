@@ -28,14 +28,14 @@ class Usuario_Service:
     def eliminar_usuario_admin(self, email):
         self._repo.delete(email)
 
-    def eliminar_usuario_basico(self, rut):
-        self._repo.delete(rut)
+    def eliminar_usuario_basico(self, email):
+        self._repo.delete(email)
     
     def modificar_usuario_admin(self, email):
         self._repo.update(email)
 
-    def modificar_usuario_basico(self, rut):
-        pass
+    def modificar_usuario_basico(self, email):
+        self._repo.update(email)
 
     def validador_rut(self, rut):
         rut = rut.strip().lower()
@@ -56,7 +56,7 @@ class Usuario_Service:
         if dv not in ['0','1','2','3','4','5','6','7','8','9','k']:
             raise ValueError("El dígito verificador debe ser un número o la letra 'k'.")
 
-        return rut.upper()
+        return rut.upper(), True
 
     def mayor_a_18(self, fecha_nacimiento: date):
         hoy = date.today()
@@ -67,6 +67,12 @@ class Usuario_Service:
             return True
         else:
             return False
+        
+    def verificador_numero(self, numero):
+        self._repo.get_numero(numero)
+
+    def verificador_contraseña(self, contraseña_nueva):
+        self._repo.get_contraseña(self, contraseña_nueva)
 
     #solo en repositorios usan base de datos
     

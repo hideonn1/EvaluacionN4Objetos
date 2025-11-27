@@ -8,7 +8,7 @@ import pwinput
 from ...Logica_de_Negocio.models.Cliente import Cliente
 from ..vista.principal_view import principal_view_inicio_sesion, principal_view_menu_admin, principal_view_menu_cliente
 from ..vista.usuario_view import modificar_usuario_vista
-
+from ..vista.reservas_view import sub_menu_reserva_cliente
 
 class Usuario_Controller:
     
@@ -190,8 +190,18 @@ class Usuario_Controller:
             if opcion not in [1,2,3,4,5,6,7,8,9,10]:
                 match opcion:
                     case 1:
-                        rut = input("Ingrese su rut: ")
-                        self._service.validador_rut(rut)
+                        while True:
+                            try:
+                                rut = input("Ingrese su rut: ")
+                                rut_validado = self._service.validador_rut(rut)
+                                if rut_validado == True:
+                                    usuario.rut = rut_validado
+                                    self._service.modificar_usuario_admin(usuario)
+                                    return
+                                else:
+                                    return
+                            except ValueError as Error:
+                                print(Error)
                     case 2:
                         while True:
                             try: 
@@ -200,7 +210,7 @@ class Usuario_Controller:
                                     raise ValueError("Ingrese un nombre válido (solo letras y espacios).")
                                 usuario.nombre = nombre
                                 self._service.modificar_usuario_admin(usuario)
-                                break
+                                return
                             except ValueError as Error:
                                 print(Error)
                     case 3:
@@ -211,7 +221,7 @@ class Usuario_Controller:
                                     raise ValueError("Ingrese un apellido paterno válido (solo letras y espacios).")
                                 usuario.apellido_paterno = apellido_paterno
                                 self._service.modificar_usuario_admin(usuario)
-                                break
+                                return
                             except ValueError as Error:
                                 print(Error)
                     case 4:
@@ -222,7 +232,7 @@ class Usuario_Controller:
                                     raise ValueError("Ingrese un apellido materno válido (solo letras y espacios).")
                                 usuario.apellido_materno = apellido_materno
                                 self._service.modificar_usuario_admin(usuario)
-                                break
+                                return
                             except ValueError as Error:
                                 print(Error) 
                     case 5:
@@ -237,18 +247,35 @@ class Usuario_Controller:
                                     raise ValueError ("Este email no existe en el sistema")
                                 usuario.email = email_nuevo
                                 self._service.modificar_usuario_admin(usuario)
-                                break
+                                return
                             except ValueError as Error:
                                 print(Error)
                                 
                     case 6:
-                        #preguntar por contraseña actual
                         while True:
                             try:
-                                contraseña_texto_plano = input("Ingrese la contraseña para el nuevo empleado: ")
+                                contraseña_texto_plano = input("Ingrese la contraseña actual: ")
+                                if self._validar_contraseña_segura(contraseña_texto_plano) == True:
+                                    contraseña_actual = bcrypt.hashpw(contraseña_texto_plano.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+                                    validado = self._service.verificador_contrseña(contraseña_actual)
+                                    if validado == True:
+                                        break
+                                    else:
+                                        print("La contraseña que ingresaste no se encuentra registrada")
+                                        return
+                            except ValueError as Error:
+                                # Asumo que validar_contraseña_segura levanta ValueError
+                                print(Error)
+                            except Exception as Error: 
+                                print(f"Error inesperado al guardar la contraseña: {Error}")
+                        while True:
+                            try:
+                                contraseña_texto_plano = input("Ingrese la contraseña nueva: ")
                                 if self._validar_contraseña_segura(contraseña_texto_plano) == True:
                                     contraseña_hash = bcrypt.hashpw(contraseña_texto_plano.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-                                    break
+                                    usuario.contraseña = contraseña_hash
+                                    self._service.modificar_usuario_admin(usuario)
+                                    return
                             except ValueError as Error:
                                 # Asumo que validar_contraseña_segura levanta ValueError
                                 print(Error)
@@ -261,9 +288,10 @@ class Usuario_Controller:
                                 patron = r"^\+56 9 \d{4} \d{4}$"
                                 if not re.match(patron, nro_telefono):
                                     raise ValueError("Formato inválido. Use: +56 9 XXXX XXXX")
-                                if self._service.verificar_numero(nro_telefono) == False:  #crear funcion de verificacion de numeros ya existentes en la base de datos
-                                    raise ValueError("Numero ya registrado en la base de datos")
-                                break
+                                if self._service.verificador_numero(nro_telefono) == True: 
+                                    usuario.telefono = nro_telefono
+                                    self._service.modificar_usuario_admin(usuario)
+                                return
                             except ValueError as Error:
                                 print(Error)
                     case 8:
@@ -278,7 +306,7 @@ class Usuario_Controller:
                                 if self._service.mayor_a_18(fecha_nacimiento) == True:
                                     usuario.fecha_nacimiento = fecha_nacimiento
                                     self._service.modificar_usuario_admin(usuario)
-                                break
+                                return
                             except ValueError:
                                 print("Formato inválido. Use el formato DD/MM/AAAA.")
                     case 9:
@@ -324,7 +352,7 @@ class Usuario_Controller:
                 print(f"Desea eliminar la cuenta de usuario, email:{email_usuario}? ")
                 print("1.- Eliminar permanentemente ")
                 print("2.- No Eliminar\n ")
-                respuesta = int(input("Elija una opcion: "))
+                respuesta = int("Elija una opcion: ")
                 if respuesta not in [1, 2]:
                     raise ValueError("Las opciones de respuesta son solo '1' o '2'. ")
                 elif respuesta == 1:
@@ -360,43 +388,22 @@ class Usuario_Controller:
                     return None     
         
 
-    def admin_controlador(self, usuario):
+    def admin_controlador(self):
         while True:
             principal_view_menu_admin()
             try:
-                opcion_user = int(input("Ingrese una de las opciones disponibles (1-10): "))
+                opcion_user = int(input("Ingrese una de las opciones disponibles (1-5): "))
             except ValueError:
                 print("Debe ingresar un carácter numérico para continuar.")
                 continue
 
-            if opcion_user not in (1,2,3,4,5,6,7,8,9,10):
+            if opcion_user not in (1,2,3,4,5):
                 print("Debe ingresar una de las opciones disponibles para continuar.")
-                continue
-            match opcion_user:
-                    case 1:
-                        paquete_cont._self.crear_destino()
-                    case 2:
-                        paquete_cont._self.modificar_destino()
-                    case 3:
-                        paquete_cont._self.eliminar_destino()
-                    case 4:
-                        pass
-                    case 5:
-                        pass
-                    case 6:
-                        pass
-                    case 7:
-                        pass
-                    case 8:
-                        paquete_cont._self.eliminar_usuario_admin()
-                    case 9:
-                        paquete_cont._self.obtener_reserva_por_id()
-                    case 10:
-                        input("PRESIONE ENTER PARA SALIR ")
-                        return None   
+                continue 
             return opcion_user
+        
                 
-    def cliente_controlador(self, cliente):
+    def cliente_controlador(self):
         while True:
             principal_view_menu_cliente()
             try:
@@ -408,19 +415,18 @@ class Usuario_Controller:
             if opcion_user not in (1,2,3,4,5):
                 print("Debe ingresar una de las opciones disponibles para continuar.")
                 continue
+            return opcion_user  
+        
+    def funciones_reserva_cliente(self):
+        while True:
+            sub_menu_reserva_cliente()
+            try:
+                opcion_user = int(input("Ingrese una de las opciones disponibles (1-3): "))
+            except ValueError:
+                print("Debe ingresar un carácter numérico para continuar.")
+                continue
 
-            match opcion_user:
-                case 1:
-                    self._
-                    break
-                case 2:
-                    self._service.buscar_paquete()
-                    break
-                case 3:
-                    break
-                case 4:
-                    self.eliminar_usuario_basico()
-                    break
-                case 5:
-                    input("PRESIONE ENTER PARA SALIR ")
-                    return None   
+            if opcion_user not in (1,2,3,4,5):
+                print("Debe ingresar una de las opciones disponibles para continuar.")
+                continue
+            return opcion_user 

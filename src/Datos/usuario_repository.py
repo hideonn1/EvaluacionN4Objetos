@@ -173,7 +173,7 @@ class Usuario_Repository:
             cursor.close()
             conexion.close()
 
-    def verificador_contraseña(self, contraseña_actual):
+    def get_contraseña(self, contraseña_actual):
         conexion = self._conectar_db() 
         cursor = conexion.cursor(dictionary=True)
 
@@ -192,7 +192,7 @@ class Usuario_Repository:
         finally:
             pass 
 
-    def verificador_telefono(self, telefono):
+    def get_telefono(self, telefono):
         conexion = self._conectar_db() 
         cursor = conexion.cursor(dictionary=True)
 
