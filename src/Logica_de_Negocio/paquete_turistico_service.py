@@ -48,3 +48,15 @@ class Paquete_Service:
         
     def duplicidad_verf(self, destino_id,paquete_id):
         return self._repo.duplicidad_destino(destino_id,paquete_id)
+    
+    def quitar_paquete(self, id_paquete):
+        return self._repo.eliminar_paquete(paquete_id)
+
+    def quitar_destino(self,id_paquete, orden_visita):
+        destino = self._repo.obtener_destino(id_paquete, orden_visita)
+        fecha_inicio = destino['fecha_salida']
+        fecha_fin = destino['fecha_llegada']
+        diferencia = fecha_fin - fecha_inicio
+        diferencia_dias = diferencia.days
+
+        self._repo.eliminar_destino(id_paquete, orden_visita, diferencia_dias)

@@ -55,3 +55,11 @@ def menu_paquete_turistico():
         "5. Volver al menú principal\n"
         "Seleccione una opción: "
     )
+
+def modificar_paquete_vista():
+    return (
+        "\n--- MENU MODIFICACION PAQUETE TURÍSITCO ---\n"
+        "1. AGREGAR NUEVO DESTINO\n"
+        "2. QUITAR UN DESTINO\n"
+        "3. VOLVER AL MENU ANTERIOR\n"
+    )

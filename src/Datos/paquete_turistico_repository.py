@@ -169,3 +169,129 @@ class Paquete_Repository:
         finally:
             cursor.close()
             conexion.close()
+
+    def obtener_destino(self, orden_visita, paquete_id):
+        conexion = self._conectar_db()
+        cursor = conexion.cursor(dictionary=True)
+        
+        try:
+            # 1. Consulta SQL: Busca si existe al menos una fila con ambos IDs
+            query = """
+                SELECT * FROM destino_has_paquete_turistico 
+                WHERE orden_visita = %s
+                AND paquete_turistico_id_paquete_turistico = %s 
+                LIMIT 1;
+            """
+            datos = (orden_visita, paquete_id)
+            
+            cursor.execute(query, datos)
+            
+            resultado = cursor.fetchone()
+            
+            # 3. Retorno Booleano
+            return resultado
+
+        except Exception as e:
+            # En caso de error de DB, lanzamos una excepción
+            raise e
+            
+        finally:
+            cursor.close()
+            conexion.close()
+
+    def eliminar_destino(self, id_paquete, orden_visita, dias):
+        conexion = self._conectar_db()
+        cursor = conexion.cursor()
+        
+        try:
+            # ELIMINAR DESTINO POR ORDEN DE VISITA
+            query_1 = """
+                DELETE FROM destino_has_paquete_turistico 
+                WHERE paquete_turistico_id_paquete_turistico = %s
+                AND orden_visita = %s;"""
+            datos_1 = (id_paquete,orden_visita,)
+
+            cursor.execute(query_1, datos_1)
+
+            # ACTUALIZAR ORDEN DE DESTINO DEL RESTO 
+
+            query_2 = """
+                UPDATE destino_has_paquete_turistico
+                SET orden_visita = orden_visita - 1
+                WHERE paquete_turistico_id_paquete_turistico = %s
+                AND orden_visita > %s;"""
+            
+            datos_2 = (id_paquete, orden_visita,)
+
+            cursor.execute(query_2, datos_2)
+
+            # 1. ARREGLO DE FECHAS
+            query_3 = """
+                UPDATE destino_has_paquete_turistico
+                SET 
+                    fecha_llegada = DATE_SUB(fecha_llegada, INTERVAL %s DAY),
+                    fecha_salida = DATE_SUB(fecha_salida, INTERVAL %s DAY)
+                WHERE 
+                    paquete_turistico_id_paquete_turistico = %s
+                    AND orden_visita > %s;
+            """
+            datos_3 = (dias, dias, id_paquete, orden_visita)
+            
+            cursor.execute(query_3, datos_3)
+            conexion.commit()
+
+        except Exception as e:
+            # En caso de error de DB, lanzamos una excepción
+            raise e
+            
+        finally:
+            cursor.close()
+            conexion.close()
+
+
+
+
+
+
+
+    def eliminar_paquete(self, id_paquete) :
+        """
+        Elimina un paquete turístico por su ID. 
+        Las referencias en destino_has_paquete_turistico se eliminan automáticamente 
+        gracias a la configuración ON DELETE CASCADE.
+        """
+        conexion = None
+        cursor = None
+        
+        try:
+            conexion = self._conectar_db()
+            cursor = conexion.cursor()
+            
+            # 1. Sentencia SQL: Eliminar el registro principal
+            query = """
+                DELETE FROM paquete_turistico 
+                WHERE id_paquete_turistico = %s;
+            """
+            params = (id_paquete,)
+            
+            cursor.execute(query, params)
+            
+            # 2. Confirmar la transacción
+            conexion.commit() 
+            
+            # 3. Verificar si se eliminó alguna fila
+            return cursor.rowcount > 0 
+
+        except Exception as e:
+            # Si hay un error, deshacer todos los cambios
+            if conexion:
+                conexion.rollback()
+            # Lanzar el error al Servicio (BLL) para su manejo
+            raise e
+            
+        finally:
+            # Asegurar el cierre de recursos
+            if cursor:
+                cursor.close()
+            if conexion:
+                conexion.close()

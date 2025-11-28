@@ -1,7 +1,7 @@
 ## controlador de paquete_turistico_view.py
 
 from ..vista.destinos_view import mostrar_destinos
-from ..vista.paquete_turistico_view import menu_paquete_turistico
+from ..vista.paquete_turistico_view import menu_paquete_turistico, modificar_paquete_vista
 from ...Logica_de_Negocio.models.PaqueteTuristico import PaqueteTuristico
 from datetime import datetime
 class Paquete_Controller:
@@ -17,10 +17,16 @@ class Paquete_Controller:
 
         return lista_destinos
 
-    def mostrar_paquete(self, id_paquete):
+    def mostrar_paquete(self):
+        while True:
+            try:
+                id_paquete = int(input("Ingrese id del paquete: "))
+                break
+            except ValueError as e:
+                print (e)
         paquete_objeto = self._service.buscar_paquete(id_paquete)
-        print(paquete_objeto)
-
+        return paquete_objeto
+    
     def agregar_destino(self,paquete):
         lista_destinos = self._service_destino.mostrar_destinos()
         mostrar_destinos(lista_destinos)
@@ -127,19 +133,78 @@ class Paquete_Controller:
     def nuevo_destino(self, paquete):
         destino_paquete = self.agregar_destino_paquete(paquete.id_paquete)
         while True:
-            fecha_salida = self.fecha_salida_ver(paquete.fecha_salida)
             fecha_llegada = self.fecha_llegada_ver(paquete.fecha_llegada)
-            destino_paquete.fecha_inicio = fecha_salida
             destino_paquete.fecha_llegada = fecha_llegada
             break
         self._service.agregar_destino_a_paquete(paquete,destino_paquete)
+
+    def quitar_destino(self, paquete):
+        while True:
+            try:
+                lista_destinos = mostrar_destinos()
+                orden_destino = int(input("Ingrese el orden de visita del destino que desea eliminar: "))
+                ordenes_validas = [d.orden_visita for d in lista_destinos]
+                if orden_destino not in ordenes_validas:
+                    raise ValueError ("El numero de orden ingresado no existe en este paquete turistico.")
+                break
+            except ValueError as e:
+                print(e)
+            except Exception as f:
+                print(f)
+        while True:
+            try:
+                print(f"Esta seguro que desea eliminar este destino?")
+                opcion = input("Para confirmar escriba 'si' o 'no': ")
+                while opcion.lower() != 'si' and opcion.lower() != 'no':
+                    print("Error. Las unicas opciones disponibles son 'si' o 'no' ")
+                    opcion = input("Para confirmar escriba 'si' o 'no': ")
+                if opcion.lower() == 'si':
+                    self._service.quitar_destino(paquete.id_paquete, orden_destino)
+                    print("Destino eliminado")
+                    return
+            except Exception as e:
+                print(e)
         
+    def modificar_paquete(self):
+        try:
+            modificar_paquete_vista()
+            opcion = int(input("Selecciona una opcion (1-3): "))
+            while opcion not in [1,2,3]:
+                print("Error al ingresar una opcion, intentelo denuevo.")
+                opcion = int(input("Selecciona una opcion (1-3): "))
+        except ValueError as e:
+            print(e)
+        match opcion:
+            case 1:
+                paquete = self.buscar_paquete()
+                self.nuevo_destino(paquete)
+            case 2:
+                paquete = self.buscar_paquete()
+                self.quitar_destino(paquete)
+            case 3:
+                return
         
+    def eliminar_paquete(self):
+        paquete = self.mostrar_paquete()
+        while True:
+            try:
+                print(f"Esta seguro que desea eliminar este paquete?")
+                opcion = input("Para confirmar escriba 'si' o 'no': ")
+                while opcion.lower() != 'si' and opcion.lower() != 'no':
+                    print("Error. Las unicas opciones disponibles son 'si' o 'no' ")
+                    opcion = input("Para confirmar escriba 'si' o 'no': ")
+                if opcion.lower() == 'si':
+                    self._service.quitar_paquete(paquete.id_paquete)
+                    print("Destino eliminado")
+                    return
+            except Exception as e:
+                print(e)
+
 
     def paquete_controleitor(self):
         try:
             menu_paquete_turistico()
-            opcion = int(input("Seleccione una opcion (1-5: "))
+            opcion = int(input("Seleccione una opcion (1-5): "))
             while opcion not in [1,2,3,4,5]:
                 print("Error al ingresar una opcion, intentelo denuevo")
                 opcion = int(input("Seleccione una opcion (1-5): "))
@@ -147,16 +212,12 @@ class Paquete_Controller:
             print(e)
         match opcion:
             case 1:
-                #crear
-                pass
+                self.crear_paquete()
             case 2:
-                #buscar
-                pass
+                self.mostrar_paquete()
             case 3:
-                #actualizar
-                pass
+                self.modificar_paquete()
             case 4:
-                #eliminar
-                pass
+                self.eliminar_paquete()
             case 5:
                 return
