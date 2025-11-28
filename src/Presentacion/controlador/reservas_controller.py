@@ -1,5 +1,5 @@
 ## controlador de reservas
-from vista.reservas_view import (
+from ..vista.reservas_view import (
     crear_reserva_vista,
     mostrar_reserva,
     menu_reservas

@@ -13,9 +13,9 @@ class Persona(ABC):
                   email,
                   contraseña_hash,
                   telefono,
-                  direccion,
                   fecha_nacimiento, 
-                  fecha_registro):
+                  fecha_registro,
+                  rol=None):
         
         self.id_usuario = id_usuario
         self.rut = rut
@@ -24,10 +24,11 @@ class Persona(ABC):
         self.apellido_materno = apellido_materno
         self.email = email
         self.contraseña_hash = contraseña_hash
+        self.contraseña = contraseña_hash  # Alias for repository compatibility
         self.telefono = telefono
-        self.direccion = direccion
         self.fecha_nacimiento = fecha_nacimiento
         self.fecha_registro = fecha_registro
+        self.rol = rol
 
     @abstractmethod
     def iniciar_sesion(self):

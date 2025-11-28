@@ -47,17 +47,17 @@ def mostrar_reserva(reserva):
 def menu_reservas():
     return (
         "\n--- MENU RESERVAS ---\n"
-        "1. Crear reserva\n"
-        "2. Buscar reserva por ID\n"
-        "3. Actualizar reserva\n"
-        "4. Eliminar reserva\n"
-        "5. Volver al menú principal\n"
+        "1. CREAR RESERVA.\n"
+        "2. BUSCAR RESERVA.\n"
+        "3. ACTUALIZAR RESERVA.\n"
+        "4. ELIMINAR RESERVA.\n"
+        "5. VOLVER AL MENÚ PRINCIPAL.\n"
         "Seleccione una opción: "
     )
 
 def sub_menu_reserva_cliente():
     print("---Menú gestión reservas---\n")
-    print("---ELIJA UNA OPCIóN ---\n")
+    print("---ELIJA UNA OPCIÓN ---\n")
     print("1. CREAR RESERVA.")
     print("2. BUSCAR RESERVA.")
     print("3. VOLVER A MENÚ ANTERIOR.\n")

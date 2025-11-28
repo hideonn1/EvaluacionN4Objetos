@@ -1,5 +1,5 @@
 # Clase de Reserva
-from PaqueteTuristico import PaqueteTuristico
+from .PaqueteTuristico import PaqueteTuristico
 
 class Reserva():
     def __init__ (self, id_reserva,
