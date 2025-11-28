@@ -1,13 +1,3 @@
 mysql-connector-python
 bcrypt
 pwinput
-
-Usuarios de prueba: 
-
-Administrador: 
-email: admin@admin.cl
-password: Administrador123?
-
-Cliente: 
-email: cliente@cliente.cl
-password: Cliente123?
