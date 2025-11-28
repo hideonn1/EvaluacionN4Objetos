@@ -24,45 +24,12 @@ def main():
     paquete_serv = Paquete_Service(paquete_repo, destino_repo)
     paquete_cont = Paquete_Controller(paquete_serv,destino_serv)
 
-    usuario_cont.registrar_usuario()
+    #usuario_cont.registrar_usuario()
     #destino_cont.buscar_destino_nombre("mi_casa")
     #destino_cont.buscar_destino_id(1)
     #paquete_cont.mostrar_paquete(1)
 
-    destino_cont.probar_destino()
-    """
-    usuario = usuario_cont.menu_controlador()
-    if usuario.rol == "Administrador":
-        opcion_user = usuario_cont.admin_controlador()
-    """
-
-    usuario = usuario_cont.menu_controlador()
-    if usuario.rol == "Administrador": 
-        opcion_user = usuario_cont.admin_controlador()
-
-        match opcion_user:
-                case 1:
-                    paquete_cont._self.crear_destino()
-                case 2:
-                    paquete_cont._self.modificar_destino()
-                case 3:
-                    paquete_cont._self.eliminar_destino()
-                case 4:
-                    pass
-                case 5:
-                    pass
-                case 6:
-                    pass
-                case 7:
-                    pass
-                case 8:
-                    paquete_cont._self.eliminar_usuario_admin()
-                case 9:
-                    paquete_cont._self.obtener_reserva_por_id()
-                case 10:
-                    input("PRESIONE ENTER PARA SALIR ")
-                    return None     
-    
-        usuario_cont.cliente_controlador()
+    paquete_cont.crear_paquete()
+   
 
 main()

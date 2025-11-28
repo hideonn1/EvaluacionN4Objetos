@@ -52,7 +52,6 @@ def menu_paquete_turistico():
         "2. Buscar paquete por ID\n"
         "3. Actualizar paquete\n"
         "4. Eliminar paquete\n"
-        "5. Agregar destino a paquete\n"
-        "6. Volver al menú principal\n"
+        "5. Volver al menú principal\n"
         "Seleccione una opción: "
     )

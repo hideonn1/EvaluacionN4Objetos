@@ -12,16 +12,16 @@ class Paquete_Repository:
         
         try:
             query = ("""
-                    INSERT INTO paquete_turistico (fecha_llegada, fecha_salida, orden_visita, costo_destino) 
-                    VALUES (%s, %s, %s, %s);
+                    INSERT INTO paquete_turistico (costo_destino) 
+                    VALUES (%s);
                 """)
-            datos = (paquete.fecha_llegada,
-                     paquete.fecha_salida,
-                     paquete.orden_visita,
-                     paquete.costo_destino
+            datos = (paquete.costo_destino,
                     )
             cursor.execute(query, datos)
             conexion.commit() 
+
+            paquete_id = cursor.lastrowid
+            paquete.id_paquete = paquete_id
 
             return paquete
             
@@ -113,3 +113,59 @@ class Paquete_Repository:
             cursor.close()
             conexion.close()
 
+    def destino_x_paquete(self, paquete, destino):
+        conexion = self._conectar_db()
+        cursor = conexion.cursor()
+        
+        try:
+            query = ("""
+                    INSERT INTO destino_has_paquete_turistico (destino_id_destino, paquete_turistico_id_paquete_turistico, fecha_llegada, fecha_salida, orden_visita) 
+                    VALUES (%s, %s, %s, %s, %s);
+                """)
+            datos = (destino.id_destino,
+                    paquete.id_paquete,
+                    destino.fecha_llegada,
+                    destino.fecha_salida,
+                    destino.orden_visita
+                    )
+            print(paquete.id_paquete)
+            cursor.execute(query, datos)
+            conexion.commit() 
+            
+        except Exception as e:
+            conexion.rollback()
+            raise e
+            
+        finally:
+            cursor.close()
+            conexion.close()     
+
+    def duplicidad_destino(self, destino_id, paquete_id):
+
+        conexion = self._conectar_db()
+        cursor = conexion.cursor()
+        
+        try:
+            # 1. Consulta SQL: Busca si existe al menos una fila con ambos IDs
+            query = """
+                SELECT 1 FROM destino_has_paquete_turistico 
+                WHERE destino_id_destino = %s 
+                AND paquete_turistico_id_paquete_turistico = %s 
+                LIMIT 1;
+            """
+            datos = (destino_id, paquete_id)
+            
+            cursor.execute(query, datos)
+            
+            resultado = cursor.fetchone()
+            
+            # 3. Retorno Booleano
+            return resultado is not None 
+
+        except Exception as e:
+            # En caso de error de DB, lanzamos una excepción
+            raise e
+            
+        finally:
+            cursor.close()
+            conexion.close()
