@@ -276,5 +276,5 @@ class Destino_Controller:
        
             
     def probar_destino(self):
-        pais = input("Ingresa el nombre del pais oe: ")
+        pais = input("Ingresa el nombre del pais: ")
         self._service.obtener_destinos_por_pais(pais)

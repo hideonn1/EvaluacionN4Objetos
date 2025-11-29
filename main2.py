@@ -12,6 +12,7 @@ from src.Presentacion.controlador.paquete_turistico_controller import Paquete_Co
 from src.Datos.reserva_repository import Reservas_Repository
 from src.Logica_de_Negocio.reservas_service import Reservas_Service
 from src.Presentacion.controlador.reservas_controller import Reservas_Controller
+from src.Presentacion.vista.paquete_turistico_view import menu_paquete_turistico
 
 def main():
     ## BLOQUE DE DEPENDENCIAS ##
@@ -47,46 +48,47 @@ def main():
                     case 1:  # Gestión Destinos
                         while True:
                             op_destino = destino_cont.destino_controlador_admin()
-                            if op_destino == 1:
-                                destino_cont.crear_destino()
-                            elif op_destino == 2:
-                                destino_cont.buscar_destino()
-                            elif op_destino == 3:
-                                destino_cont.modificar_destino()
-                            elif op_destino == 4:
-                                destino_cont.eliminar_destino()
-                            elif op_destino == 5:
-                                break
+                            match op_destino:
+                                case 1:
+                                    destino_cont.crear_destino()
+                                case 2:
+                                    destino_cont.buscar_destino()
+                                case 3:
+                                    destino_cont.modificar_destino()
+                                case 4:
+                                    destino_cont.eliminar_destino()
+                                case 5:
+                                    break
                     case 2:  # Gestión Paquetes
                         while True:
                             op_paquete = paquete_cont.paquete_controlador_admin()
-                            if op_paquete == 1:
-                                paquete_cont.crear_paquete()
-                            elif op_paquete == 2:
-                                paquete_cont.buscar_paquete()
-                            elif op_paquete == 3:
-                                paquete_cont.modificar_paquete()
-                            elif op_paquete == 4:
-                                paquete_cont.eliminar_paquete()
-                            elif op_paquete == 5:
-                                break
-                    case 3:  # Gestión Usuarios
+                            match op_paquete:
+                                case 1:
+                                    paquete_cont.crear_paquete()
+                                case 2:
+                                    paquete_cont.buscar_paquete()
+                                case 3:
+                                    paquete_cont.modificar_paquete()
+                                case 4:
+                                    paquete_cont.eliminar_paquete()
+                                case 5:
+                                    break
+                    case 3:  # Gestión propia cuenta
                         while True:
-                            print("\n--- GESTIÓN USUARIOS ---")
-                            print("1. Modificar Usuario")
-                            print("2. Eliminar Usuario")
+                            print("\n--- MI CUENTA ---")
+                            print("1. Modificar mis datos")
+                            print("2. Eliminar mi cuenta")
                             print("3. Volver")
                             try:
                                 sub_op = int(input("Seleccione una opcion: "))
                                 if sub_op == 1:
-                                    email = input("Ingrese el email del usuario a modificar: ").strip()
-                                    usuario_modificar = usuario_cont._service.obtener_usuario_por_email(email)
-                                    if usuario_modificar:
-                                        usuario_cont.modificar_usuario(usuario_modificar)
-                                    else:
-                                        print("Usuario no encontrado.")
+                                    usuario_cont.modificar_usuario(usuario)
+                                    print("Usuario modificado exitosamente")
                                 elif sub_op == 2:
-                                    usuario_cont.eliminar_usuario_admin()
+                                    usuario_cont.eliminar_usuario_basico(usuario)
+                                    print("Usuario eliminado exitosamente")
+                                    if usuario_cont._service.obtener_usuario_por_email(usuario.email) is None:
+                                        break  
                                 elif sub_op == 3:
                                     break
                             except ValueError:
@@ -94,14 +96,15 @@ def main():
                     case 4:  
                         while True:
                             op_reserva = reserva_cont.reserva_controlador_admin(usuario)
-                            if op_reserva == 1:
-                                reserva_cont.obtener_reserva_por_id()
-                            elif op_reserva == 2:
-                                reserva_cont.eliminar_reserva()
-                            elif op_reserva == 3: 
-                                break
-                            elif op_reserva == 4: 
-                                break
+                            match op_reserva:
+                                case 1:
+                                    reserva_cont.obtener_reserva_por_id()
+                                case 2:
+                                    reserva_cont.eliminar_reserva()
+                                case 3: 
+                                    break # Falta implementar esto
+                                case 4: 
+                                    break # Falta implementar esto
                     case 5: 
                         break
             
@@ -142,11 +145,14 @@ def main():
                                 sub_op = int(input("Seleccione una opcion: "))
                                 if sub_op == 1:
                                     usuario_cont.modificar_usuario(usuario)
+                                    print("Usuario modificado exitosamente")
                                 elif sub_op == 2:
                                     usuario_cont.eliminar_usuario_basico(usuario)
+                                    print("Usuario eliminado exitosamente")
                                     if usuario_cont._service.obtener_usuario_por_email(usuario.email) is None:
                                         break  
                                 elif sub_op == 3:
+                                    print("Saliendo del menu..")
                                     break
                             except ValueError:
                                 print("Opcion invalida")
