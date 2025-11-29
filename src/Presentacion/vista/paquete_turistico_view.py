@@ -53,7 +53,6 @@ def menu_paquete_turistico():
         "3. Actualizar paquete\n"
         "4. Eliminar paquete\n"
         "5. Volver al menú principal\n"
-        "Seleccione una opción: "
     )
 
 def modificar_paquete_vista():

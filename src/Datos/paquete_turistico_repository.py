@@ -12,10 +12,10 @@ class Paquete_Repository:
         
         try:
             query = ("""
-                    INSERT INTO paquete_turistico (costo_destino) 
-                    VALUES (%s);
+                    INSERT INTO paquete_turistico (costo_destino, fecha_inicio, fecha_final) 
+                    VALUES (%s,%s,%s);
                 """)
-            datos = (paquete.costo_destino,
+            datos = (paquete.costo_destino, paquete.fecha_salida, paquete.fecha_llegada,
                     )
             cursor.execute(query, datos)
             conexion.commit() 
@@ -47,9 +47,8 @@ class Paquete_Repository:
             if resultado:
                 paquete_objeto = PaqueteTuristico(
                     id_paquete = resultado['id_paquete_turistico'],
-                    fecha_llegada = resultado['fecha_llegada'],
-                    fecha_salida = resultado['fecha_salida'],
-                    orden_visita = resultado['orden_visita'],
+                    fecha_llegada = resultado['fecha_final'],
+                    fecha_salida = resultado['fecha_inicio'],
                     costo_destino = resultado['costo_destino']
                 )
                 return paquete_objeto
@@ -65,21 +64,18 @@ class Paquete_Repository:
     def update(self, paquete_turistico):
         conexion = self._conectar_db()
         cursor = conexion.cursor()
-        
         try:
             query = ("""
                 UPDATE paquete_turistico SET 
-                    fecha_llegada = %s,
-                    fecha_salida = %s,
-                    orden_visita = %s,
+                    fecha_final = %s,
+                    fecha_inicio = %s,
                     costo_destino = %s
                 WHERE id_paquete_turistico = %s;
                 """)
             datos = (paquete_turistico.fecha_llegada,
                     paquete_turistico.fecha_salida,
-                    paquete_turistico.orden_visita,
                     paquete_turistico.costo_destino,
-                    paquete_turistico.id_paquete_turistico
+                    paquete_turistico.id_paquete
                     )
             cursor.execute(query, datos)
             conexion.commit() 
@@ -295,3 +291,37 @@ class Paquete_Repository:
                 cursor.close()
             if conexion:
                 conexion.close()
+
+    def get_ultimo_orden_visita(self, id_paquete: int) -> int:
+            conexion = None
+            cursor = None
+            
+            try:
+                conexion = self._conectar_db()
+                cursor = conexion.cursor() 
+                query = """
+                    SELECT MAX(orden_visita) 
+                    FROM destino_has_paquete_turistico
+                    WHERE paquete_turistico_id_paquete_turistico = %s;
+                """
+                params = (id_paquete,)
+                
+                cursor.execute(query, params)
+                
+                # fetchone() devuelve una tupla, incluso si solo hay una columna
+                resultado = cursor.fetchone() 
+                
+                # Si la tabla está vacía, MAX() devuelve None. Lo convertimos a 0.
+                ultimo_orden = resultado[0] if resultado and resultado[0] is not None else 0
+                
+                return ultimo_orden
+
+            except Exception as e:
+                # En caso de error, lanzamos la excepción al servicio
+                raise e
+                
+            finally:
+                if cursor:
+                    cursor.close()
+                if conexion:
+                    conexion.close()

@@ -26,7 +26,14 @@ class Paquete_Service:
         self._repo.create(paquete)
         return paquete
     def agregar_destino_a_paquete(self, paquete, destino):
+        orden_visita = self._repo.get_ultimo_orden_visita(paquete.id_paquete) + 1
+        destino.orden_visita = orden_visita
         self._repo.destino_x_paquete(paquete,destino)
+        print(orden_visita,"AAAAAAAAAAAAAAAAAAAAAAAA")
+        if orden_visita > 1:
+            paquete.fecha_llegada = destino.fecha_llegada
+            paquete.costo_destino += destino.costo
+            self._repo.update(paquete)
 
     def confirmar_fecha_salida(self, fecha, fecha_salida = None):
         hoy = date.today()
@@ -50,7 +57,7 @@ class Paquete_Service:
         return self._repo.duplicidad_destino(destino_id,paquete_id)
     
     def quitar_paquete(self, id_paquete):
-        return self._repo.eliminar_paquete(paquete_id)
+        return self._repo.eliminar_paquete(id_paquete)
 
     def quitar_destino(self,id_paquete, orden_visita):
         destino = self._repo.obtener_destino(id_paquete, orden_visita)

@@ -29,7 +29,7 @@ def main():
     #destino_cont.buscar_destino_id(1)
     #paquete_cont.mostrar_paquete(1)
 
-    paquete_cont.crear_paquete()
+    paquete_cont.paquete_controleitor()
    
 
 main()
