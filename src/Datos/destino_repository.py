@@ -157,7 +157,7 @@ class Destino_Repository:
                     SELECT
                         d.id_destino, d.nombre, d.ciudad, d.pais, d.descripcion,
                         d.actividades_disponibles,
-                        d.costo 
+                        d.costo, dhp.orden_visita
                     FROM 
                         destino AS d
                     JOIN 

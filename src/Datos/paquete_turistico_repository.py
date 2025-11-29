@@ -124,7 +124,6 @@ class Paquete_Repository:
                     destino.fecha_salida,
                     destino.orden_visita
                     )
-            print(paquete.id_paquete)
             cursor.execute(query, datos)
             conexion.commit() 
             
@@ -166,7 +165,7 @@ class Paquete_Repository:
             cursor.close()
             conexion.close()
 
-    def obtener_destino(self, orden_visita, paquete_id):
+    def obtener_destino(self, paquete_id,orden_visita):
         conexion = self._conectar_db()
         cursor = conexion.cursor(dictionary=True)
         
@@ -183,6 +182,7 @@ class Paquete_Repository:
             cursor.execute(query, datos)
             
             resultado = cursor.fetchone()
+            print(resultado)
             
             # 3. Retorno Booleano
             return resultado
@@ -208,6 +208,20 @@ class Paquete_Repository:
             datos_1 = (id_paquete,orden_visita,)
 
             cursor.execute(query_1, datos_1)
+            # 1. ARREGLO DE FECHAS
+            dias_int = int(dias)
+            query_3 = """
+                UPDATE destino_has_paquete_turistico
+                SET 
+                    fecha_llegada = DATE_SUB(fecha_llegada, INTERVAL %s DAY),
+                    fecha_salida = DATE_SUB(fecha_salida, INTERVAL %s DAY)
+                WHERE 
+                    paquete_turistico_id_paquete_turistico = %s
+                    AND orden_visita > %s;
+            """
+            datos_3 = (dias_int, dias_int, id_paquete, orden_visita)
+            
+            cursor.execute(query_3, datos_3)
 
             # ACTUALIZAR ORDEN DE DESTINO DEL RESTO 
 
@@ -220,21 +234,8 @@ class Paquete_Repository:
             datos_2 = (id_paquete, orden_visita,)
 
             cursor.execute(query_2, datos_2)
-
-            # 1. ARREGLO DE FECHAS
-            query_3 = """
-                UPDATE destino_has_paquete_turistico
-                SET 
-                    fecha_llegada = DATE_SUB(fecha_llegada, INTERVAL %s DAY),
-                    fecha_salida = DATE_SUB(fecha_salida, INTERVAL %s DAY)
-                WHERE 
-                    paquete_turistico_id_paquete_turistico = %s
-                    AND orden_visita > %s;
-            """
-            datos_3 = (dias, dias, id_paquete, orden_visita)
-            
-            cursor.execute(query_3, datos_3)
             conexion.commit()
+
 
         except Exception as e:
             # En caso de error de DB, lanzamos una excepción
