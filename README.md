@@ -93,15 +93,6 @@ Cliente:
     email: cliente@cliente.cl
     password: Cliente123?
 
-<<<<<<< HEAD
-    diegro@gmail.com  
-
-### Fallos dentro del sistema:
-# al crear reservas, admite input que no siguen el formato de fecha  
-# revisar todo los controladores y vistas de reserva
-# revisar todo los controladores y vistas de paquete
-
-=======
 ### Autores
 
 - Diego Agüero
@@ -116,4 +107,12 @@ Cliente:
 
 Este proyecto está licenciado bajo la licencia MIT - véase el archivo LICENSE para detalles.
 (puedes usarlo, modificarlo y distribuirlo libremente, siempre que mantengas el aviso de copyright original)
->>>>>>> 258871beb322e35e8da19fe55550d669f3ef2a43
+
+
+
+
+
+### Fallos dentro del sistema:
+# al crear reservas, admite input que no siguen el formato de fecha  
+# revisar todo los controladores y vistas de reserva
+# revisar todo los controladores y vistas de paquete

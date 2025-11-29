@@ -7,8 +7,8 @@ from datetime import datetime
 import pwinput
 from ...Logica_de_Negocio.models.Cliente import Cliente
 from ..vista.principal_view import principal_view_inicio_sesion, principal_view_menu_admin, principal_view_menu_cliente
-from ..vista.usuario_view import modificar_usuario_vista
-from ..vista.reservas_view import sub_menu_reserva_cliente
+from ..vista.usuario_view import modificar_usuario_vista, sub_menu_usuario
+from ..vista.reservas_view import sub_menu_reserva
 
 class Usuario_Controller:
     
@@ -387,17 +387,31 @@ class Usuario_Controller:
                 print("Debe ingresar una de las opciones disponibles para continuar.")
                 continue
             return opcion_user  
-        
-    def funciones_reserva_cliente(self):
+
+    def funciones_usuario_cliente(self):
         while True:
-            sub_menu_reserva_cliente()
+            sub_menu_usuario()
             try:
                 opcion_user = int(input("Ingrese una de las opciones disponibles (1-3): "))
             except ValueError:
                 print("Debe ingresar un carácter numérico para continuar.")
                 continue
 
-            if opcion_user not in (1,2,3,4,5):
+            if opcion_user not in (1,2,3):
+                print("Debe ingresar una de las opciones disponibles para continuar.")
+                continue
+            return opcion_user 
+
+    def funciones_usuario_admin(self):
+        while True:
+            sub_menu_usuario()
+            try:
+                opcion_user = int(input("Ingrese una de las opciones disponibles (1-3): "))
+            except ValueError:
+                print("Debe ingresar un carácter numérico para continuar.")
+                continue
+
+            if opcion_user not in (1,2,3):
                 print("Debe ingresar una de las opciones disponibles para continuar.")
                 continue
             return opcion_user 

@@ -209,24 +209,18 @@ class Paquete_Controller:
                 print(e)
 
 
-    def paquete_controleitor(self):
+    def paquete_controlador_admin(self):
         while True:
+            menu_paquete_turistico()
             try:
-                print(menu_paquete_turistico())
-                opcion = int(input("Seleccione una opcion (1-5): "))
-                while opcion not in [1,2,3,4,5]:
-                    print("Error al ingresar una opcion, intentelo denuevo")
-                    opcion = int(input("Seleccione una opcion (1-5): "))
-            except ValueError as e:
-                print(e)
-            match opcion:
-                case 1:
-                    self.crear_paquete()
-                case 2:
-                    self.mostrar_paquete()
-                case 3:
-                    self.modificar_paquete()
-                case 4:
-                    self.eliminar_paquete()
-                case 5:
-                    return
+                opcion_user = int(input("Seleccione una opcion (1-5): "))
+            except ValueError:
+                print("Debe ingresar un carácter numérico para continuar.")
+                continue
+
+            if opcion_user not in (1,2,3,4,5):
+                print("Debe ingresar una de las opciones disponibles para continuar.")
+                continue
+            return opcion_user 
+
+

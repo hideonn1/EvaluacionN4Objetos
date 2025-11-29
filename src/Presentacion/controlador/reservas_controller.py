@@ -1,8 +1,7 @@
 ## controlador de reservas
 from ..vista.reservas_view import (
-    crear_reserva_vista,
     mostrar_reserva,
-    menu_reservas
+    sub_menu_reserva
 ) 
 
 class Reservas_Controller:
@@ -12,11 +11,30 @@ class Reservas_Controller:
 
     def crear_reserva(self, id_usuario):
         try:
-            #1. Pedir datos a la vista
-            datos_reserva = crear_reserva_vista()
+            #1. Pedir datos
+            while True:
+                try:
+                    inicio = input("Ingrese fecha de inicio (YYYY-MM-DD): ").strip()
+                    final = input("Ingrese fecha final (YYYY-MM-DD): ").strip()
+
+                    fecha_inicio = datetime.strptime(inicio, "%Y-%m-%d").date()
+                    fecha_final = datetime.strptime(final, "%Y-%m-%d").date()
+                    break
+                except ValueError:
+                    print("Formato inválido. Use YYYY-MM-DD.")
+
+            while True:
+                try:
+                    monto_total = int(input("Ingrese monto total: "))
+                    if monto_total <= 0:
+                        print("El monto debe ser mayor a 0.")
+                        continue
+                    break
+                except ValueError:
+                    print("Debe ingresar un número válido.")
 
             #2. Pasar los datos al service
-            nueva_reserva = self._service.crear_reserva(datos_reserva, id_usuario)
+            nueva_reserva = self._service.crear_reserva(fecha_final, fecha_inicio, monto_total, id_usuario)
 
             #3. Mostrar resultado
             print("\nReserva creada con exito:")
@@ -56,3 +74,37 @@ class Reservas_Controller:
             # Se captura tanto el estado invalido, como reserva no encontrada.
         except Exception as Error:
             print(f"\nError inesperado: {Error}")
+
+
+    def reserva_controlador_admin(self, usuario):
+        while True:
+            sub_menu_reserva()
+            try:
+                opcion_user = int(input("Ingrese una de las opciones disponibles (1-4): "))
+            except ValueError:
+                print("Debe ingresar un carácter numérico para continuar.")
+                continue
+
+            if opcion_user not in (1,2,3,4):
+                print("Debe ingresar una de las opciones disponibles para continuar.")
+                continue
+            return opcion_user    
+                
+    def funciones_reserva_cliente(self):
+            while True:
+                sub_menu_reserva_cliente()
+                try:
+                    opcion_user = int(input("Ingrese una de las opciones disponibles (1-5: "))
+                except ValueError:
+                    print("Debe ingresar un carácter numérico para continuar.")
+                    continue
+
+                if opcion_user not in (1,2,3,4,5):
+                    print("Debe ingresar una de las opciones disponibles para continuar.")
+                    continue
+                return opcion_user 
+
+
+
+
+

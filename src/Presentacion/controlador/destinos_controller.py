@@ -260,27 +260,20 @@ class Destino_Controller:
             case 5:
                 return
 
-    def destino_controleitor(self):
-        try: 
+    def destino_controlador_admin(self):
+        while True:
             sub_menu_destinos_admin()
-            opcion = int(input("Seleccione una opcion (1-5): "))
-            while opcion not in [1,2,3,4,5]:
-                print("Error al ingresar una opcion, intenelo denuevo")
-                opcion = int(input("Seleccione una opcion (1-5): "))    
-        except ValueError as e:
-            print(e)
+            try: 
+                opcion_user = int(input("Ingrese una de las opciones disponibles (1-5): "))
+            except ValueError:
+                print("Debe ingresar un carácter numérico para continuar.")
+                continue
 
-        match opcion:
-            case 1:
-                self.crear_destino()
-            case 2:
-                self.buscar_destino()
-            case 3:
-                self.modificar_destino()
-            case 4:
-                self.eliminar_destino()
-            case 5:
-                return
+            if opcion_user not in (1,2,3,4,5):
+                print("Debe ingresar una de las opciones disponibles para continuar.")
+                continue
+            return opcion_user      
+       
             
     def probar_destino(self):
         pais = input("Ingresa el nombre del pais oe: ")
