@@ -139,4 +139,3 @@ class Reservas_Repository:
         finally:
             cursor.close()
             conexion.close()
-

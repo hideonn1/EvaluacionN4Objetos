@@ -47,32 +47,32 @@ class Usuario_Repository:
         cursor = conexion.cursor(dictionary=True)
 
         try:
-            query = "SELECT * FROM Usuario WHERE id_usuario = %s"
+            query = "SELECT * FROM usuario WHERE id_usuario = %s"
             datos = (id_usuario,)
-
-            cursor.execute(query,datos)
+            cursor.execute(query, datos)
             resultado = cursor.fetchone()
 
             if resultado:
-                usuario_objeto = Cliente(
-                    id_cliente = resultado['id_usuario'],
-                    rut = resultado['rut'],
-                    nombres = resultado['nombres'],
-                    apellido_paterno = resultado['apellido_paterno'],
-                    apellido_materno = resultado['apellido_materno'],
-                    email = resultado['email'],
-                    contraseña_hash = ['contraseña'],
-                    telefono = resultado['telefono'],
-                    direccion = resultado['direccion'],
-                    fecha_nacimiento = resultado['fecha_nacimiento'],
-                    fecha_registro = resultado['fecha_registro']
+                return Cliente(
+                    id_cliente=resultado['id_usuario'],
+                    rut=resultado['rut'],
+                    nombres=resultado['nombres'],
+                    apellido_paterno=resultado['apellido_paterno'],
+                    apellido_materno=resultado['apellido_materno'],
+                    email=resultado['email'],
+                    contraseña_hash=resultado['contraseña'],
+                    telefono=resultado['telefono'],
+                    fecha_nacimiento=resultado['fecha_nacimiento'],
+                    fecha_registro=resultado['fecha_registro'],
+                    rol=resultado['rol']
                 )
-                return usuario_objeto 
-            else:
-                return None 
+            return None
 
         finally:
-            pass 
+            if cursor:
+                cursor.close()
+            if conexion:
+                conexion.close()
 
     # Busca y retorna un Usuario por su email
     def get_by_email(self, email):
@@ -80,40 +80,65 @@ class Usuario_Repository:
         cursor = conexion.cursor(dictionary=True)
 
         try:
-            query = "SELECT * FROM Usuario WHERE email = %s"
+            query = "SELECT * FROM usuario WHERE email = %s"
             datos = (email,)
-
-            cursor.execute(query,datos)
+            cursor.execute(query, datos)
             resultado = cursor.fetchone()
 
             if resultado:
-                usuario_objeto = Cliente(
-                    id_cliente = resultado['id_usuario'],
-                    rut = resultado['rut'],
-                    nombres = resultado['nombres'],
-                    apellido_paterno = resultado['apellido_paterno'],
-                    apellido_materno = resultado['apellido_materno'],
-                    email = resultado['email'],
-                    contraseña_hash = ['contraseña'],
-                    telefono = resultado['telefono'],
-                    direccion = resultado['direccion'],
-                    fecha_nacimiento = resultado['fecha_nacimiento'],
-                    fecha_registro = resultado['fecha_registro']
+                return Cliente(
+                    id_cliente=resultado['id_usuario'],
+                    rut=resultado['rut'],
+                    nombres=resultado['nombres'],
+                    apellido_paterno=resultado['apellido_paterno'],
+                    apellido_materno=resultado['apellido_materno'],
+                    email=resultado['email'],
+                    contraseña_hash=resultado['contraseña'],
+                    telefono=resultado['telefono'],
+                    fecha_nacimiento=resultado['fecha_nacimiento'],
+                    fecha_registro=resultado['fecha_registro'],
+                    rol=resultado['rol']
                 )
-                return usuario_objeto 
-            else:
-                return None
-        except mysql.connector.Error as Error:
-            print(f"Error inesperado al intentar iniciar sesión: {Error}")
             return None
+
         finally:
-            try:
-                if cursor:
-                    cursor.close()
-                if conexion:
-                    conexion.close()
-            except:
-                pass
+            if cursor:
+                cursor.close()
+            if conexion:
+                conexion.close()
+
+    # Busca y retorna un Usuario por su RUT
+    def get_by_rut(self, rut):
+        conexion = self._conectar_db() 
+        cursor = conexion.cursor(dictionary=True)
+
+        try:
+            query = "SELECT * FROM usuario WHERE rut = %s"
+            datos = (rut,)
+            cursor.execute(query, datos)
+            resultado = cursor.fetchone()
+
+            if resultado:
+                return Cliente(
+                    id_cliente=resultado['id_usuario'],
+                    rut=resultado['rut'],
+                    nombres=resultado['nombres'],
+                    apellido_paterno=resultado['apellido_paterno'],
+                    apellido_materno=resultado['apellido_materno'],
+                    email=resultado['email'],
+                    contraseña_hash=resultado['contraseña'],
+                    telefono=resultado['telefono'],
+                    fecha_nacimiento=resultado['fecha_nacimiento'],
+                    fecha_registro=resultado['fecha_registro'],
+                    rol=resultado['rol']
+                )
+            return None
+
+        finally:
+            if cursor:
+                cursor.close()
+            if conexion:
+                conexion.close()
 
     # Actualiza los datos de un usuario ya existente.
     def update(self, usuario):
@@ -128,7 +153,6 @@ class Usuario_Repository:
                     apellido_materno = %s, 
                     email = %s, 
                     telefono = %s, 
-                    direccion = %s,
                     contraseña = %s 
                 WHERE id_usuario = %s;
                 """)
@@ -137,7 +161,6 @@ class Usuario_Repository:
                     usuario.apellido_materno, 
                     usuario.email, 
                     usuario.telefono, 
-                    usuario.direccion,
                     usuario.contraseña,
                     usuario.id_usuario
                     )

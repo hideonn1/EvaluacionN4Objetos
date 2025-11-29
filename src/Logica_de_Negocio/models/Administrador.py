@@ -1,6 +1,6 @@
 # Clase de Administrador heredera de Persona.
 
-from Persona import Persona
+from .Persona import Persona
 
 class Administrador(Persona):
     def __init__ (self,
@@ -12,7 +12,6 @@ class Administrador(Persona):
                   email,
                   contraseña_hash,
                   telefono,
-                  direccion,
                   fecha_nacimiento,
                   fecha_registro):
         
@@ -24,27 +23,26 @@ class Administrador(Persona):
                        email,
                        contraseña_hash,
                        telefono,
-                       direccion,
                        fecha_nacimiento,
                        fecha_registro)
         
         self.id_administrador = id_administrador
 
-    def crear_destino():
+    def crear_destino(self):
         pass
 
-    def buscar_destino():
+    def buscar_destino(self):
         pass
 
-    def modificar_destino():
+    def modificar_destino(self):
         pass
 
-    def eliminar_destino():
+    def eliminar_destino(self):
         pass
 
 # Métodos propios de la clase abstracta Persona.
-    def iniciar_sesion():
+    def iniciar_sesion(self):
         pass
 
-    def validar_rut():
+    def validar_rut(self):
         pass

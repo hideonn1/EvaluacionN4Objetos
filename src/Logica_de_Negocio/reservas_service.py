@@ -1,10 +1,10 @@
-## archivo encargado de logica y comunicar a reservas_controller con reservas_repository
+# archivo encargado de logica y comunicar a reservas_controller con reservas_repository
 
-from src.Datos.reserva_repository import Reserva_Repository
+from src.Datos.reserva_repository import Reservas_Repository
 from src.Logica_de_Negocio.models.Reserva import Reserva
 
 class Reservas_Service:
-    def __init__(self, reserva_repository: Reserva_Repository):
+    def __init__(self, reserva_repository: Reservas_Repository):
         self._repo = reserva_repository
 
     def crear_reserva(self, datos_reserva, id_usuario):
@@ -36,7 +36,7 @@ class Reservas_Service:
         if reserva_objeto.estado not in ["pendiente", "confirmada", "cancelada"]:
             raise ValueError("Estado inválido para la reserva.")
         
-        if reserva_objeto <= 0:
+        if reserva_objeto.monto_total <= 0:
             raise ValueError("El monto total debe ser mayor a 0.")
         
         if reserva_objeto.fecha_inicio >= reserva_objeto.fecha_final:
