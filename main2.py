@@ -120,7 +120,7 @@ def main():
                         paquete_cont.buscar_paquete()
                     case 3:  
                         while True:
-                            op_reserva = usuario_cont.funciones_reserva_cliente()
+                            op_reserva = reserva_cont.funciones_reserva_cliente()
                             if op_reserva not in [1,2,3,4]:
                                 continue
                             if op_reserva == 1:  
