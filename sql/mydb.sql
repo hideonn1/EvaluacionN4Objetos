@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2025 at 11:06 PM
+-- Generation Time: Nov 29, 2025 at 10:13 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -44,11 +44,36 @@ CREATE TABLE `destino` (
 --
 
 INSERT INTO `destino` (`id_destino`, `nombre`, `ciudad`, `pais`, `descripcion`, `actividades_disponibles`, `costo`) VALUES
-(1, 'mi_casa', 'valdivia', '11', 'valdivia es lo mas grande', 'costanera', 35000),
-(3, 'Inacap', 'Valdivia', '0', 'Inacap es una universidad', 'Estudiar', 2000000),
-(4, 'Casino de Inacap', 'Valdivia', '0', 'Este es el casino que esta dentro de Inacap', 'Comprar comida', 3900),
-(5, 'Plaza de Armas', 'Santiago', 'Chile', 'Aqui vive Boric', 'Tirar piedras', 7000000),
-(6, 'Supermercado El Trebol', 'Valdivia', 'Chile', 'Este es un supermercado', 'Venden cosas como pan', 990);
+(1, 'Torres del Paine', 'Puerto Natales', 'Chile', 'Parque con picos de granito y glaciares. Ideal para el trekking patagónico.', 'Trekking, Observación de fauna, Kayak', 55000),
+(2, 'Valle de la Luna', 'San Pedro de Atacama', 'Chile', 'Paisaje desértico que simula la superficie lunar, famoso por sus atardeceres.', 'Senderismo, Observación de estrellas, Tour en bicicleta', 30000),
+(3, 'Valparaíso', 'Valparaíso', 'Chile', 'Ciudad puerto, Patrimonio de la Humanidad, conocida por sus cerros y ascensores.', 'Recorrido por cerros, Visita a museos, Ascensores históricos', 25000),
+(4, 'Pucón', 'Pucón', 'Chile', 'Capital de la aventura en el sur, a orillas del Lago Villarrica y cerca del volcán.', 'Ascenso al Volcán, Rafting, Termas, Deportes náuticos', 38000),
+(5, 'Isla de Pascua (Rapa Nui)', 'Hanga Roa', 'Chile', 'Isla polinésica famosa por los Moais. Centro de historia y cultura ancestral.', 'Visita a Moais, Buceo, Playa Anakena', 120000),
+(6, 'Carretera Austral', 'Coyhaique', 'Chile', 'Ruta escénica que atraviesa la Patagonia, con fiordos y bosques.', 'Ruta en auto, Camping, Pesca con mosca', 70000),
+(7, 'Santiago - Centro', 'Santiago', 'Chile', 'Capital de Chile, mezcla de edificios históricos, modernos y áreas verdes.', 'Museos, Palacio de La Moneda, Barrio Lastarria', 15000),
+(8, 'Laguna San Rafael', 'Puerto Río Tranquilo', 'Chile', 'Famoso por el ventisquero San Rafael y su laguna azul con témpanos de hielo.', 'Navegación, Avistamiento de fauna marina', 90000),
+(9, 'Viña del Mar', 'Viña del Mar', 'Chile', 'Ciudad jardín costera con amplias playas, parques y el famoso Reloj de Flores.', 'Playa, Muelle Vergara, Casino', 22000),
+(10, 'Parque Nacional Lauca', 'Putre', 'Chile', 'Famoso por el Lago Chungará, uno de los más altos del mundo, y su fauna andina.', 'Observación de aves, Senderismo de altura, Vistas al Volcán Parinacota', 45000),
+(11, 'Copacabana', 'Río de Janeiro', 'Brasil', 'Famosa playa en forma de media luna. Hogar del Cristo Redentor y el Pan de Azúcar.', 'Vóley playa, Natación, Teleférico, Visita al Corcovado', 50000),
+(12, 'Cataratas del Iguazú', 'Foz do Iguaçu', 'Brasil', 'Impresionante conjunto de cascadas compartidas con Argentina, rodeadas de selva.', 'Recorridos en bote, Senderismo en el parque, Vistas panorámicas', 65000),
+(13, 'Praia do Forte', 'Mata de São João', 'Brasil', 'Pueblo costero conocido por sus playas y la reserva de tortugas marinas (Proyecto Tamar).', 'Buceo, Proyecto Tamar, Relax en la playa', 40000),
+(14, 'Salvador de Bahía', 'Salvador', 'Brasil', 'Capital cultural afrobrasileña, famosa por el Pelourinho y su vibrante música.', 'Explorar Pelourinho, Clases de Capoeira, Gastronomía local', 35000),
+(15, 'Amazonas', 'Manaus', 'Brasil', 'Corazón de la selva amazónica, con biodiversidad única y el encuentro de los ríos.', 'Paseos en canoa, Avistamiento de fauna, Visita a tribus', 85000),
+(16, 'Florianópolis', 'Florianópolis', 'Brasil', 'Isla con más de 40 playas, conocida por su surf, dunas y lagunas.', 'Surf, Sandboard en dunas, Senderismo costero', 30000),
+(17, 'Búzios', 'Búzios', 'Brasil', 'Antiguo pueblo de pescadores popularizado por Brigitte Bardot, con hermosas calas.', 'Buceo, Paseos en barco, Vida nocturna en la Rua das Pedras', 42000),
+(18, 'Ouro Preto', 'Ouro Preto', 'Brasil', 'Ciudad colonial Patrimonio de la Humanidad, rica en arquitectura barroca y minas de oro.', 'Visita a iglesias barrocas, Museos, Minas históricas', 28000),
+(19, 'Recife y Olinda', 'Recife', 'Brasil', 'Recife (Venecia brasileña) y Olinda (centro histórico colonial y carnavalesco).', 'Visita a Olinda, Playas urbanas, Frevo y carnaval', 33000),
+(20, 'Chapada Diamantina', 'Lençóis', 'Brasil', 'Parque Nacional de mesetas y cañones. Ideal para el ecoturismo.', 'Cascadas, Grutas, Trekking a mesetas', 48000),
+(21, 'Glaciar Perito Moreno', 'El Calafate', 'Argentina', 'Masa de hielo espectacular conocida por sus rupturas y pasarelas de observación.', 'Excursión sobre el glaciar (Minitrekking), Navegación', 75000),
+(22, 'Buenos Aires - Centro', 'Buenos Aires', 'Argentina', 'Capital cosmopolita. Famosa por el tango, teatros y su arquitectura europea.', 'Visita al Obelisco, Teatro Colón, San Telmo y Caminito', 20000),
+(23, 'Ushuaia', 'Ushuaia', 'Argentina', 'La \"Ciudad del Fin del Mundo\". Punto de partida hacia la Antártida.', 'Tren del Fin del Mundo, Navegación por el Canal Beagle, Trekking en el Parque Nacional', 60000),
+(24, 'Mendoza', 'Mendoza', 'Argentina', 'Región vitivinícola líder mundial, al pie de la Cordillera de los Andes.', 'Degustación de vinos, Tour por bodegas, Aventura en montaña', 35000),
+(25, 'Puerto Madryn', 'Puerto Madryn', 'Argentina', 'Capital de las actividades subacuáticas y avistamiento de fauna marina (ballenas).', 'Avistamiento de Ballenas (en temporada), Buceo con lobos marinos', 52000),
+(26, 'Bariloche', 'San Carlos de Bariloche', 'Argentina', 'Centro de esquí y turismo de aventura en la Patagonia andina. Famoso por sus chocolates.', 'Esquí, Senderismo, Circuito Chico, Chocolaterías', 40000),
+(27, 'Salta y Jujuy', 'Salta', 'Argentina', 'Región del Norte con cultura andina, cerros de colores y tradiciones coloniales.', 'Quebrada de Humahuaca, Tren a las Nubes, Vinos de altura', 32000),
+(28, 'Peninsula Valdés', 'Puerto Pirámides', 'Argentina', 'Reserva natural con colonias de elefantes marinos, pingüinos y aves.', 'Observación de fauna marina, Safaris terrestres', 58000),
+(29, 'Córdoba', 'Córdoba', 'Argentina', 'Famosa por sus universidades, arquitectura jesuítica y su vida cultural.', 'Manzana Jesuítica, Visita a las Sierras, Museos', 27000),
+(30, 'Rosario', 'Rosario', 'Argentina', 'Cuna de la bandera argentina, importante puerto y centro cultural.', 'Monumento a la Bandera, Paseo por la Costanera, Museos', 24000);
 
 -- --------------------------------------------------------
 
@@ -64,27 +89,6 @@ CREATE TABLE `destino_has_paquete_turistico` (
   `orden_visita` tinyint(4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- Dumping data for table `destino_has_paquete_turistico`
---
-
-INSERT INTO `destino_has_paquete_turistico` (`destino_id_destino`, `paquete_turistico_id_paquete_turistico`, `fecha_salida`, `fecha_llegada`, `orden_visita`) VALUES
-(1, 1, NULL, NULL, NULL),
-(5, 8, NULL, NULL, 1),
-(5, 9, NULL, NULL, 1),
-(5, 12, NULL, NULL, 1),
-(5, 14, NULL, NULL, 1),
-(5, 15, NULL, NULL, 1),
-(5, 16, NULL, NULL, 1),
-(5, 17, NULL, NULL, 1),
-(5, 18, NULL, NULL, 1),
-(6, 6, NULL, NULL, 1),
-(6, 7, NULL, NULL, 1),
-(6, 10, NULL, NULL, 1),
-(6, 11, NULL, NULL, 1),
-(6, 13, NULL, NULL, 1),
-(6, 18, NULL, '2025-12-14 00:00:00', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -97,30 +101,6 @@ CREATE TABLE `paquete_turistico` (
   `fecha_inicio` date DEFAULT NULL,
   `fecha_final` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `paquete_turistico`
---
-
-INSERT INTO `paquete_turistico` (`id_paquete_turistico`, `costo_destino`, `fecha_inicio`, `fecha_final`) VALUES
-(1, 35000, NULL, NULL),
-(2, 7000000, NULL, NULL),
-(3, 990, NULL, NULL),
-(4, 990, NULL, NULL),
-(5, 990, NULL, NULL),
-(6, 990, NULL, NULL),
-(7, 990, NULL, NULL),
-(8, 7000000, NULL, NULL),
-(9, 7000000, NULL, NULL),
-(10, 990, NULL, NULL),
-(11, 990, NULL, NULL),
-(12, 7000000, NULL, NULL),
-(13, 990, NULL, NULL),
-(14, 7000000, NULL, NULL),
-(15, 7000000, NULL, NULL),
-(16, 7000000, NULL, NULL),
-(17, 7000000, NULL, NULL),
-(18, 7000000, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -167,6 +147,14 @@ CREATE TABLE `usuario` (
   `fecha_nacimiento` date DEFAULT NULL,
   `fecha_registro` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `usuario`
+--
+
+INSERT INTO `usuario` (`id_usuario`, `rut`, `nombres`, `apellido_paterno`, `apellido_materno`, `email`, `contraseña`, `rol`, `telefono`, `fecha_nacimiento`, `fecha_registro`) VALUES
+(1, '12345678-9', 'Admin', 'Sistema', 'Principal', 'admin@admin.cl', '$2b$12$BpM6YxY9Mh6BaBllbSKO4OvH362uguAwyNqKrW3lvp9aeOHToPL4S', 'Administrador', '+56 9 1234 5678', '1990-01-01', '2025-11-29'),
+(2, '98765432-1', 'Cliente', 'Prueba', 'Test', 'cliente@cliente.cl', '$2b$12$cbxQoXJlzE9aFW9NRVHeMuljXIHv85rVxmSkc2afQEAgAyJloLyrC', 'Cliente', '+56 9 8765 4321', '1995-06-15', '2025-11-29');
 
 --
 -- Indexes for dumped tables
@@ -221,13 +209,13 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT for table `destino`
 --
 ALTER TABLE `destino`
-  MODIFY `id_destino` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_destino` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `paquete_turistico`
 --
 ALTER TABLE `paquete_turistico`
-  MODIFY `id_paquete_turistico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_paquete_turistico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `reserva`
@@ -239,7 +227,7 @@ ALTER TABLE `reserva`
 -- AUTO_INCREMENT for table `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables

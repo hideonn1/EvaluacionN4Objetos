@@ -29,7 +29,7 @@ class Paquete_Service:
         orden_visita = self._repo.get_ultimo_orden_visita(paquete.id_paquete) + 1
         destino.orden_visita = orden_visita
         self._repo.destino_x_paquete(paquete,destino)
-        print(orden_visita,"AAAAAAAAAAAAAAAAAAAAAAAA")
+        
         if orden_visita > 1:
             paquete.fecha_llegada = destino.fecha_llegada
             paquete.costo_destino += destino.costo
@@ -48,7 +48,6 @@ class Paquete_Service:
 
     def confirmar_fecha_llegada(self, fecha_llegada, fecha_salida ):
         if fecha_salida < fecha_llegada:
-            print("hola")
             return True
         else:
             return "Error! La fecha de llegada no puede ser anterior a la fecha de Salida. "
@@ -61,9 +60,10 @@ class Paquete_Service:
 
     def quitar_destino(self,id_paquete, orden_visita):
         destino = self._repo.obtener_destino(id_paquete, orden_visita)
+        print(destino)
         fecha_inicio = destino['fecha_salida']
         fecha_fin = destino['fecha_llegada']
         diferencia = fecha_fin - fecha_inicio
         diferencia_dias = diferencia.days
-
+        print(diferencia_dias, '+', type(diferencia_dias))
         self._repo.eliminar_destino(id_paquete, orden_visita, diferencia_dias)

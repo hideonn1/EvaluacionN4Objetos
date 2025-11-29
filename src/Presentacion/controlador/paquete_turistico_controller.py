@@ -104,7 +104,6 @@ class Paquete_Controller:
             except ValueError:
                 print("Error! debe ingresar un numero para la duracion de dias.")
         fecha_final = fecha_inicio + timedelta(days = duracion)
-        print(fecha_final)
         return fecha_final
 
     def crear_paquete(self):
@@ -118,7 +117,6 @@ class Paquete_Controller:
             destino_objeto.fecha_salida = fecha_salida
             destino_objeto.fecha_llegada = fecha_llegada
             destino_objeto.orden_visita = 1
-            print(destino_objeto)
             paquete_completo = self._service.agregar_paquete(nuevo_paquete)
             self._service.agregar_destino_a_paquete(paquete_completo,destino_objeto)
             try:
@@ -145,9 +143,10 @@ class Paquete_Controller:
     def quitar_destino(self, paquete):
         while True:
             try:
-                lista_destinos = mostrar_destinos()
+                lista_destinos = self.mostrar_destinos(paquete.id_paquete)
+                input("")
                 orden_destino = int(input("Ingrese el orden de visita del destino que desea eliminar: "))
-                ordenes_validas = [d.orden_visita for d in lista_destinos]
+                ordenes_validas = [d['orden_visita'] for d in lista_destinos]
                 if orden_destino not in ordenes_validas:
                     raise ValueError ("El numero de orden ingresado no existe en este paquete turistico.")
                 break
