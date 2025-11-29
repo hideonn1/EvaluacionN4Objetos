@@ -8,7 +8,7 @@ import pwinput
 from ...Logica_de_Negocio.models.Cliente import Cliente
 from ..vista.principal_view import principal_view_inicio_sesion, principal_view_menu_admin, principal_view_menu_cliente
 from ..vista.usuario_view import modificar_usuario_vista, sub_menu_usuario
-from ..vista.reservas_view import sub_menu_reserva
+from ..vista.reservas_view import sub_menu_reserva_cliente
 
 class Usuario_Controller:
     

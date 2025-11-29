@@ -1,7 +1,8 @@
 ## controlador de reservas
 from ..vista.reservas_view import (
     mostrar_reserva,
-    sub_menu_reserva
+    sub_menu_reserva_cliente,
+    sub_menu_reserva_admin
 ) 
 
 class Reservas_Controller:
@@ -78,7 +79,7 @@ class Reservas_Controller:
 
     def reserva_controlador_admin(self, usuario):
         while True:
-            sub_menu_reserva()
+            sub_menu_reserva_admin()
             try:
                 opcion_user = int(input("Ingrese una de las opciones disponibles (1-4): "))
             except ValueError:

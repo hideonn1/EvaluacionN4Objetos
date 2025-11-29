@@ -6,6 +6,7 @@ def eliminar_destino_vista():
     print("1. ELIMINAR DESTINO POR NOMBRE.")
     print("2. ELIMINAR DESTINO POR ID.")    
     print("3. VOLVER AL MENU ANTERIOR.\n")
+    return "Seleccione una opcion (1-3): "
 
 def modificar_destino_vista():
     print("---Sistema gestor de Destinos---\n")
@@ -13,6 +14,7 @@ def modificar_destino_vista():
     print("1. MODIFICAR DESTINO POR NOMBRE.")
     print("2. MODIFICAR DESTINO POR ID.")
     print("3. VOLVER AL MENU ANTERIOR.\n")
+    return "Seleccione una opcion (1-3): "
 
 def modificar_destino_escogido_vista():
     print("\n ¿Que campo desea modificar?")
@@ -28,6 +30,7 @@ def buscar_destino_vista():
     print("1. BUSCAR DESTINO POR NOMBRE.")
     print("2. BUSCAR DESTINO POR ID.")
     print("3. VOLVER AL MENU ANTERIOR.\n")
+    return "Seleccione una opcion (1-3): "
 
 def mostrar_destinos(lista):
     for i in lista:
