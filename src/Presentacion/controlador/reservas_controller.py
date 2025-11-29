@@ -15,11 +15,14 @@ class Reservas_Controller:
             #1. Pedir datos
             while True:
                 try:
-                    inicio = input("Ingrese fecha de inicio (YYYY-MM-DD): ").strip()
-                    final = input("Ingrese fecha final (YYYY-MM-DD): ").strip()
+                    inicio = input("Ingrese fecha de inicio (YYYY-MM-DD): ")
+                    final = input("Ingrese fecha final (YYYY-MM-DD): ")
 
                     fecha_inicio = datetime.strptime(inicio, "%Y-%m-%d").date()
                     fecha_final = datetime.strptime(final, "%Y-%m-%d").date()
+                    if fecha_final <= fecha_inicio:
+                        print("La fecha final no puede ser menor que la inicial.")
+                        continue
                     break
                 except ValueError:
                     print("Formato inválido. Use YYYY-MM-DD.")
@@ -35,7 +38,7 @@ class Reservas_Controller:
                     print("Debe ingresar un número válido.")
 
             #2. Pasar los datos al service
-            nueva_reserva = self._service.crear_reserva(fecha_final, fecha_inicio, monto_total, id_usuario)
+            nueva_reserva = self._service.crear_reserva(fecha_inicio, fecha_final, monto_total, id_usuario)
 
             #3. Mostrar resultado
             print("\nReserva creada con exito:")
