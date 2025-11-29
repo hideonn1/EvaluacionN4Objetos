@@ -40,11 +40,9 @@ class Destino_Repository:
     def read_by_id(self, id_destino):
         conexion = self._conectar_db() 
         cursor = conexion.cursor(dictionary=True)
-        print (id_destino)
         try:
             query = "SELECT * FROM destino WHERE id_destino = %s"
             datos = (id_destino,)
-            print (id_destino , type(id_destino))
             cursor.execute(query,datos)
             resultado = cursor.fetchone()
 
@@ -171,8 +169,6 @@ class Destino_Repository:
 
             cursor.execute(query,datos)
             lista_destinos = cursor.fetchall()
-            for i in lista_destinos:
-                print(i)
             return lista_destinos
             
         except Exception as e:
@@ -198,8 +194,6 @@ class Destino_Repository:
 
             cursor.execute(query,datos)
             lista_destinos = cursor.fetchall()
-            for i in lista_destinos:
-                print(i)
             return lista_destinos
             
         except Exception as e:
