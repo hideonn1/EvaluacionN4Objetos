@@ -34,3 +34,11 @@ Administrador:
 Cliente: 
     email: cliente@cliente.cl
     password: Cliente123?
+
+    diegro@gmail.com  
+
+### Fallos dentro del sistema:
+# al crear reservas, admite input que no siguen el formato de fecha  
+# revisar todo los controladores y vistas de reserva
+# revisar todo los controladores y vistas de paquete
+

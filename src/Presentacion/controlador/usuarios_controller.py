@@ -181,30 +181,13 @@ class Usuario_Controller:
             print(f"Error al crear el objeto: {e}")
         
             
-    def modificar_usuario_admin(self):
-        email = input("Ingrese el email del empleado (ej: usuario@dominio.cl): ").strip()
-        patron = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"               
-        if not re.match(patron, email):
-            raise ValueError("Formato de email inválido. Intente nuevamente.")
-        usuario = self._service.obtener_usuario_por_email(email) 
+    def modificar_usuario(self, usuario):
         if usuario != None:
-            opcion = int(input(modificar_usuario_vista()))
-            if opcion in [1,2,3,4,5,6,7,8,9,10]:
+            modificar_usuario_vista()
+            opcion = int(input("Ingrese su opcion: "))
+            if opcion in [1,2,3,4,5,6,7]:
                 match opcion:
                     case 1:
-                        while True:
-                            try:
-                                rut = input("Ingrese su rut: ")
-                                rut_validado = self._service.validador_rut(rut)
-                                if rut_validado == True:
-                                    usuario.rut = rut_validado
-                                    self._service.modificar_usuario_admin(usuario)
-                                    return
-                                else:
-                                    return
-                            except ValueError as Error:
-                                print(Error)
-                    case 2:
                         while True:
                             try: 
                                 nombre = input("Ingrese el primer nombre del empleado: ")
@@ -212,10 +195,10 @@ class Usuario_Controller:
                                     raise ValueError("Ingrese un nombre válido (solo letras y espacios).")
                                 usuario.nombres = nombre
                                 self._service.modificar_usuario_admin(usuario)
-                                return
+                                break
                             except ValueError as Error:
                                 print(Error)
-                    case 3:
+                    case 2:
                         while True:
                             try: 
                                 apellido_paterno = input("Ingrese el apellido paterno del empleado: ")
@@ -226,7 +209,7 @@ class Usuario_Controller:
                                 return
                             except ValueError as Error:
                                 print(Error)
-                    case 4:
+                    case 3:
                         while True:
                             try: 
                                 apellido_materno = input("Ingrese el apellido materno del empleado: ")
@@ -237,7 +220,7 @@ class Usuario_Controller:
                                 return
                             except ValueError as Error:
                                 print(Error) 
-                    case 5:
+                    case 4:
                         while True:
                             try:
                                 email_nuevo = input("Ingrese el email del empleado (ej: usuario@dominio.cl): ").strip()
@@ -254,7 +237,7 @@ class Usuario_Controller:
                             except ValueError as Error:
                                 print(Error)
                                 
-                    case 6:
+                    case 5:
                         while True:
                             try:
                                 contraseña_texto_plano = input("Ingrese la contraseña actual: ")
@@ -284,7 +267,7 @@ class Usuario_Controller:
                                 print(Error)
                             except Exception as Error: 
                                 print(f"Error inesperado al guardar la contraseña: {Error}")
-                    case 7:
+                    case 6:
                         while True:
                             try:
                                 nro_telefono = input("Ingrese el número de teléfono del empleado (formato: +56 9 XXXX XXXX): ").strip()
@@ -297,22 +280,7 @@ class Usuario_Controller:
                                 return
                             except ValueError as Error:
                                 print(Error)
-                    case 8:
-                        while True:
-                            try:
-                                fecha = input("Ingrese la fecha de nacimiento del empleado (formato DD/MM/AAAA): ")
-                                fecha_nacimiento = datetime.strptime(fecha, '%d/%m/%Y').date()
-
-                                if self._service.mayor_a_18(fecha_nacimiento) == False:   
-                                    print("Usted no tiene 18 años.")
-                                    continue
-                                if self._service.mayor_a_18(fecha_nacimiento) == True:
-                                    usuario.fecha_nacimiento = fecha_nacimiento
-                                    self._service.modificar_usuario_admin(usuario)
-                                return
-                            except ValueError:
-                                print("Formato inválido. Use el formato DD/MM/AAAA.")
-                    case 9:
+                    case 7:
                         input("PRESIONE ENTER PARA SALIR ")
                         return None    
 

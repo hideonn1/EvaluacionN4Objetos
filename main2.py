@@ -12,6 +12,7 @@ from src.Presentacion.controlador.paquete_turistico_controller import Paquete_Co
 from src.Datos.reserva_repository import Reservas_Repository
 from src.Logica_de_Negocio.reservas_service import Reservas_Service
 from src.Presentacion.controlador.reservas_controller import Reservas_Controller
+from src.Presentacion.vista.usuario_view import sub_menu_usuario
 
 def main():
     ## BLOQUE DE DEPENDENCIAS ##
@@ -48,16 +49,13 @@ def main():
                 elif opcion_user == 2: # Gestion Paquete
                     paquete_cont.paquete_controleitor()
                 elif opcion_user == 3: # Gestion Usuario
-                    print("\n--- GESTION USUARIOS ---")
-                    print("1. Modificar Usuario")
-                    print("2. Eliminar Usuario")
-                    print("3. Volver")
+                    self._view.sub_menu_usuario()
                     try:
                         sub_op = int(input("Seleccione una opcion: "))
                         if sub_op == 1:
-                            usuario_cont.modificar_usuario_admin()
+                            usuario_cont.modificar_usuario_admin(usuario)
                         elif sub_op == 2:
-                            usuario_cont.eliminar_usuario_admin()
+                            usuario_cont.eliminar_usuario_admin(usuario)
                     except ValueError:
                         print("Opcion invalida")
                 elif opcion_user == 4: # Buscar Reservas
@@ -68,39 +66,51 @@ def main():
         elif usuario.rol == "Cliente":
              while True:
                 opcion_user = usuario_cont.cliente_controlador()
-                if opcion_user == 1: # Buscar Destino por Pais
-                    destino_cont.probar_destino()
-                elif opcion_user == 2: # Buscar Paquete
-                    print("Funcionalidad de buscar paquete aun no implementada completamente.")
-                elif opcion_user == 3: # Gestion Reserva
-                    while True:
-                        op_reserva = usuario_cont.funciones_reserva_cliente()
-                        if op_reserva == 1: # Crear
-                            # Try to get ID from usuario object
-                            user_id = getattr(usuario, 'id_usuario', getattr(usuario, 'id_cliente', None))
-                            if user_id:
-                                reserva_cont.crear_reserva(user_id)
-                            else:
-                                print("Error: No se pudo identificar al usuario.")
-                        elif op_reserva == 2: # Buscar
-                            reserva_cont.obtener_reserva_por_id()
-                        elif op_reserva == 3: # Volver
-                            break
-                elif opcion_user == 4: # Gestion Usuario (Mi Cuenta)
-                     print("\n--- MI CUENTA ---")
-                     print("1. Eliminar mi cuenta")
-                     print("2. Volver")
-                     try:
-                        sub_op = int(input("Seleccione una opcion: "))
-                        if sub_op == 1:
-                            usuario_cont.eliminar_usuario_basico(usuario)
-                            # Check if user still exists (simple check if we can find by email)
-                            if usuario_cont._service.obtener_usuario_por_email(usuario.email) is None:
-                                break # Logout if deleted
-                     except ValueError:
-                        print("Opcion invalida")
-                elif opcion_user == 5: # Volver/Salir
-                    break
+                if opcion_user not in [1,2,3,4,5]:
+                    continue
+                match opcion_user:
+                    case 1: # Buscar Destino por Pais
+                        destino_cont.probar_destino()
+                    case 2: # Buscar Paquete
+                        print("Funcionalidad de buscar paquete aun no implementada completamente.")
+                    case 3: # Gestion Reserva
+                        while True:
+                            op_reserva = usuario_cont.funciones_reserva_cliente()
+                            if op_reserva == 1: # Crear
+                                # Try to get ID from usuario object
+                                user_id = getattr(usuario, 'id_usuario', getattr(usuario, 'id_cliente', None))
+                                if user_id:
+                                    reserva_cont.crear_reserva(user_id)
+                                else:
+                                    print("Error: No se pudo identificar al usuario.")
+                            elif op_reserva == 2: # Buscar
+                                reserva_cont.obtener_reserva_por_id()
+                            elif op_reserva == 3: # Volver
+                                break
+                    case 4: # Gestion Usuario (Mi Cuenta)
+                        while True:
+                            sub_menu_usuario()
+                            try:
+                                sub_op = int(input("Seleccione una opcion: "))
+                                if sub_op not in [1,2,3]:
+                                    print("Opcion invalida, debe estar en el rango [1,3]")
+                                    continue
+                                elif sub_op == 1:
+                                    usuario_cont.modificar_usuario(usuario)
+                                    # Check if user still exists (simple check if we can find by email)
+                                    if usuario_cont._service.obtener_usuario_por_email(usuario.email) is None:
+                                        break # Logout if delet
+                                elif sub_op == 2:
+                                    usuario_cont.eliminar_usuario(usuario)
+                                    # Check if user still exists (simple check if we can find by email)
+                                    if usuario_cont._service.obtener_usuario_por_email(usuario.email) is None:
+                                        break # Logout if deleted
+                                else:
+                                    break
+                            except ValueError:
+                                print("Opcion invalida")
+                    case 5: # Volver/Salir
+                        break
 
 if __name__ == "__main__":
     main()

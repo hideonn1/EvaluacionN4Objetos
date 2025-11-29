@@ -1,5 +1,5 @@
 ## controlador de destinos_view
-from ..vista.destinos_view import eliminar_destino_vista, modificar_destino_vista, buscar_destino_vista, modificar_destino_escogido_vista
+from ..vista.destinos_view import eliminar_destino_vista, modificar_destino_vista, buscar_destino_vista, modificar_destino_escogido_vista, sub_menu_destinos_admin
 class Destino_Controller:
     
     def __init__(self, usuario_service):
@@ -262,7 +262,7 @@ class Destino_Controller:
 
     def destino_controleitor(self):
         try: 
-            #menu_destinos()
+            sub_menu_destinos_admin()
             opcion = int(input("Seleccione una opcion (1-5): "))
             while opcion not in [1,2,3,4,5]:
                 print("Error al ingresar una opcion, intenelo denuevo")
