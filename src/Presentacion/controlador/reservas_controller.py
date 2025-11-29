@@ -112,3 +112,21 @@ class Reservas_Controller:
 
 
 
+    def eliminar_reserva(self):
+        try:
+            id_reserva = int(input("Ingrese el ID de la reserva a eliminar: "))
+            reserva = self._service.obtener_reserva_por_id(id_reserva)
+            mostrar_reserva(reserva)
+            
+            confirmacion = input("¿Está seguro que desea eliminar esta reserva? (si/no): ").lower()
+            if confirmacion == 'si':
+                if self._service.eliminar_reserva(id_reserva):
+                    print("Reserva eliminada exitosamente.")
+                else:
+                    print("No se pudo eliminar la reserva.")
+            else:
+                print("Operación cancelada.")
+        except ValueError as Error:
+            print(f"\nError: {Error}")
+        except Exception as Error:
+            print(f"\nError inesperado: {Error}")

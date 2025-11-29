@@ -17,16 +17,20 @@ class Paquete_Controller:
 
         return lista_destinos
 
-    def mostrar_paquete(self):
+    def buscar_paquete(self):
         while True:
             try:
                 id_paquete = int(input("Ingrese id del paquete: "))
                 break
             except ValueError as e:
                 print (e)
-        paquete_objeto = self._service.buscar_paquete(id_paquete)
-        print(paquete_objeto)
-        return paquete_objeto
+        try:
+            paquete_objeto = self._service.buscar_paquete(id_paquete)
+            print(paquete_objeto)
+            return paquete_objeto
+        except ValueError as e:
+            print(f"Error: {e}")
+            return None
     
     def agregar_destino(self,paquete):
         lista_destinos = self._service_destino.mostrar_destinos()
@@ -179,16 +183,20 @@ class Paquete_Controller:
             print(e)
         match opcion:
             case 1:
-                paquete = self.mostrar_paquete()
-                self.nuevo_destino(paquete)
+                paquete = self.buscar_paquete()
+                if paquete:
+                    self.nuevo_destino(paquete)
             case 2:
-                paquete = self.mostrar_paquete()
-                self.quitar_destino(paquete)
+                paquete = self.buscar_paquete()
+                if paquete:
+                    self.quitar_destino(paquete)
             case 3:
                 return
         
     def eliminar_paquete(self):
-        paquete = self.mostrar_paquete()
+        paquete = self.buscar_paquete()
+        if not paquete:
+            return
         while True:
             try:
                 while True:
