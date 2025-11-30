@@ -93,18 +93,26 @@ def main():
                                     break
                             except ValueError:
                                 print("Opcion invalida")
-                    case 4:  
+                    case 4:  # Gestión Reservas
                         while True:
                             op_reserva = reserva_cont.reserva_controlador_admin(usuario)
                             match op_reserva:
                                 case 1:
-                                    reserva_cont.obtener_reserva_por_id()
+                                    resultado = reserva_cont.obtener_reserva_por_id()
+                                    if resultado == "volver":
+                                        print("Será devuelto al menú anterior..")
+                                        input("Presione enter para continuar..")
+                                        continue # regresa al menu de reservas sin cerrar el programa
+                                    elif resultado == "ok":
+                                        continue # reserva encontrada y vuelve al menú
+                                    elif resultado == "error":
+                                        print("Ocurrió un error al buscar la reserva.")
+                                        continue
+
                                 case 2:
-                                    reserva_cont.eliminar_reserva()
-                                case 3: 
-                                    break # Falta implementar esto
-                                case 4: 
-                                    break # Falta implementar esto
+                                    print("Será devuelto al menú anterior..")
+                                    break
+                                
                     case 5: 
                         break
             
@@ -130,7 +138,9 @@ def main():
                                 else:
                                     print("Error: No se pudo identificar al usuario.")
                             elif op_reserva == 2:  
-                                reserva_cont.obtener_reserva_por_id()
+                                resultado = reserva_cont.obtener_reserva_por_id()
+                                if resultado == "volver":
+                                    continue #regresar al menu de reservas sin cerrar el programa
                             elif op_reserva == 3:  
                                 reserva_cont.eliminar_reserva()
                             elif op_reserva == 4:  

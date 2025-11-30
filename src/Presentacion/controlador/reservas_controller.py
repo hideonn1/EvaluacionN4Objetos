@@ -57,13 +57,28 @@ class Reservas_Controller:
                     print(f"\nError inesperado {Error}")
     
     def obtener_reserva_por_id(self):
+        # Verificacion extra 
+        todas = self._service.obtener_todas_reservas()
+        if not todas:
+            print("\nNo hay reservas disponibles.")
+            return "volver"
+
         while True:
             try:
                 id_reserva = int(input("Ingrese el ID de la reserva: "))
                 reserva = self._service.obtener_reserva_por_id(id_reserva)
-                mostrar_reserva(reserva)
-            except ValueError as Error:
-                print(f"\n{Error}")
+
+                if reserva:
+                    mostrar_reserva(reserva)
+                    return "ok"
+
+                else:
+                    print("\nNo se encontró ninguna reserva con ese ID.")
+            except ValueError:
+                print(f"\nDebe ingresar un número válido. Intente nuevamente")
+            except Exception as Error:
+                print(f"\nError inesperado: {Error}")
+                return "error"
 
     def actualizar_reserva(self):
         while True:
@@ -71,7 +86,10 @@ class Reservas_Controller:
                 id_reserva = int(input("Ingrese el ID de la reserva a actualizar: "))
                 reserva = self._service.obtener_reserva_por_id(id_reserva)
                 # Se piden datos nuevos desde la view
-            
+                if not reserva:
+                    print("\nNo se encontró ninguna reserva con ese ID.")
+                    continue
+
                 nuevo_estado = input("Ingrese nuevo estado (pendiente/confirmada/cancelada): ").strip().lower()
                 if nuevo_estado not in ["pendiente", "confirmada", "cancelada"]:
                     print("Estado inválido. Debe ser pendiente, confirmada o cancelada.")
@@ -119,15 +137,16 @@ class Reservas_Controller:
                     continue
                 return opcion_user 
 
-
-
-
-
     def eliminar_reserva(self):
         while True:
             try:
                 id_reserva = int(input("Ingrese el ID de la reserva a eliminar: "))
                 reserva = self._service.obtener_reserva_por_id(id_reserva)
+
+                if not reserva:
+                    print("\nNo se encontró ninguna reserva con ese ID.")
+                    continue
+
                 mostrar_reserva(reserva)
                 
                 confirmacion = input("¿Está seguro que desea eliminar esta reserva? (si/no): ").lower()

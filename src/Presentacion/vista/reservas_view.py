@@ -19,12 +19,11 @@ def sub_menu_reserva_cliente():
     print("---ELIJA UNA OPCIÓN ---\n")
     print("1. CREAR RESERVA.")
     print("2. BUSCAR RESERVA.")
-    print("3. ELIMINAR RESERVA.\n")
+    print("3. ELIMINAR MI(s) RESERVA(s).\n")
     print("4. VOLVER A MENÚ ANTERIOR.\n")
 
 def sub_menu_reserva_admin():
     print("---Menú gestión reservas---\n")
     print("---ELIJA UNA OPCIÓN ---\n")
     print("1. BUSCAR RESERVA.")
-    print("2. ELIMINAR RESERVA.\n")
-    print("3. VOLVER A MENÚ ANTERIOR.\n")
+    print("2. VOLVER A MENÚ ANTERIOR.\n")

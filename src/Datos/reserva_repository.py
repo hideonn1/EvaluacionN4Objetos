@@ -139,3 +139,25 @@ class Reservas_Repository:
         finally:
             cursor.close()
             conexion.close()
+
+    def read_all(self):
+        conexion = self._conectar_db()
+        cursor = conexion.cursor(dictionary=True)
+        try:
+            query = "SELECT * FROM reserva"
+            cursor.execute(query)
+            resultados = cursor.fetchall()
+            return [
+                Reserva(
+                    id_reserva=r['id_reserva'],
+                    id_usuario=r['id_usuario'],
+                    fecha_inicio=r['fecha_inicio'],
+                    fecha_final=r['fecha_final'],
+                    estado=r['estado'],
+                    monto_total=r['monto_total']
+                )
+                for r in resultados
+            ]  
+        finally:
+            cursor.close()
+            conexion.close()

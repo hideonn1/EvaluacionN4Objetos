@@ -27,9 +27,6 @@ class Reservas_Service:
     
     def obtener_reserva_por_id(self, id_reserva):
         reserva = self._repo.read_by_id(id_reserva)
-
-        if not reserva:
-            raise ValueError("Reserva no encontrada")
         return reserva
     
     def actualizar_reserva(self, reserva_objeto):
@@ -50,3 +47,6 @@ class Reservas_Service:
     
     def obtener_reservas_por_usuario(self, id_usuario):
         return self._repo.read_by_usuario(id_usuario)
+
+    def obtener_todas_reservas(self):
+        return self._repo.read_all()
