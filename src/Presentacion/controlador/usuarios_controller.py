@@ -195,7 +195,7 @@ class Usuario_Controller:
                                     raise ValueError("Ingrese un nombre válido (solo letras y espacios).")
                                 usuario.nombres = nombre
                                 self._service.modificar_usuario_admin(usuario)
-                                break
+                                return
                             except ValueError as Error:
                                 print(Error)
                     case 2:
