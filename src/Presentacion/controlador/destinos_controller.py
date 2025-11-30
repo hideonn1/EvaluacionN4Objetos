@@ -1,5 +1,5 @@
 ## controlador de destinos_view
-from ..vista.destinos_view import eliminar_destino_vista, modificar_destino_vista, buscar_destino_vista, modificar_destino_escogido_vista
+from ..vista.destinos_view import eliminar_destino_vista, modificar_destino_vista, buscar_destino_vista, modificar_destino_escogido_vista, sub_menu_destinos_admin
 class Destino_Controller:
     
     def __init__(self, usuario_service):
@@ -260,28 +260,21 @@ class Destino_Controller:
             case 5:
                 return
 
-    def destino_controleitor(self):
-        try: 
-            #menu_destinos()
-            opcion = int(input("Seleccione una opcion (1-5): "))
-            while opcion not in [1,2,3,4,5]:
-                print("Error al ingresar una opcion, intenelo denuevo")
-                opcion = int(input("Seleccione una opcion (1-5): "))    
-        except ValueError as e:
-            print(e)
+    def destino_controlador_admin(self):
+        while True:
+            sub_menu_destinos_admin()
+            try: 
+                opcion_user = int(input("Ingrese una de las opciones disponibles (1-5): "))
+            except ValueError:
+                print("Debe ingresar un carácter numérico para continuar.")
+                continue
 
-        match opcion:
-            case 1:
-                self.crear_destino()
-            case 2:
-                self.buscar_destino()
-            case 3:
-                self.modificar_destino()
-            case 4:
-                self.eliminar_destino()
-            case 5:
-                return
+            if opcion_user not in (1,2,3,4,5):
+                print("Debe ingresar una de las opciones disponibles para continuar.")
+                continue
+            return opcion_user      
+       
             
     def probar_destino(self):
-        pais = input("Ingresa el nombre del pais oe: ")
+        pais = input("Ingresa el nombre del pais: ")
         self._service.obtener_destinos_por_pais(pais)

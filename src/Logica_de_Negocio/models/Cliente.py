@@ -12,9 +12,9 @@ class Cliente(Persona):
                   email,
                   contraseña_hash,
                   telefono,
-                  direccion,
                   fecha_nacimiento,
-                  fecha_registro):
+                  fecha_registro,
+                  rol="Cliente"):
         
         super().__init__(id_cliente,
                        rut,
@@ -24,9 +24,9 @@ class Cliente(Persona):
                        email,
                        contraseña_hash,
                        telefono,
-                       direccion,
                        fecha_nacimiento,
-                       fecha_registro)
+                       fecha_registro,
+                       rol)
         
         self.id_cliente = id_cliente
 

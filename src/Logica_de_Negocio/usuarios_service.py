@@ -3,6 +3,7 @@ import bcrypt
 from .models.Cliente import Cliente
 from datetime import date
 import re
+
 class Usuario_Service:
     
     def __init__(self, usuario_repository):
@@ -17,13 +18,27 @@ class Usuario_Service:
         usuario_objeto = self._repo.get_by_email(email)
         if usuario_objeto is None:
             raise ValueError(f"El usuario con email {email} no existe.")
+        # Check if password matches
         if bcrypt.checkpw(contraseña_ingresada.encode('utf-8'), usuario_objeto.contraseña_hash.encode('utf-8')):
             return True
         return False
     
     def nuevo_usuario(self, registro):
-        usuario_objeto = Cliente()#llenar con datos que estan dentro de registro)
+        usuario_objeto = Cliente(
+            id_cliente=None,
+            rut=registro['rut'],
+            nombres=registro['nombre'],
+            apellido_paterno=registro['apellido_paterno'],
+            apellido_materno=registro['apellido_materno'],
+            email=registro['email'],
+            contraseña_hash=registro['contraseña'],
+            telefono=registro['telefono'],
+            fecha_nacimiento=registro['fecha_nacimiento'],
+            fecha_registro=registro['fecha_registro'],
+            rol=registro['rol']
+        )
         self._repo.create(usuario_objeto)
+        return True
 
     def eliminar_usuario_admin(self, email):
         self._repo.delete(email)
@@ -68,11 +83,11 @@ class Usuario_Service:
         else:
             return False
         
-    def verificador_numero(self, numero):
-        self._repo.get_numero(numero)
+    def verificar_numero(self, numero):
+        return self._repo.get_telefono(numero)
+
+    def obtener_usuario_por_rut(self, rut):
+        return self._repo.get_by_rut(rut)
 
     def verificador_contraseña(self, contraseña_nueva):
-        self._repo.get_contraseña(self, contraseña_nueva)
-
-    #solo en repositorios usan base de datos
-    
+        return self._repo.get_contraseña(contraseña_nueva)
