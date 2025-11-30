@@ -155,17 +155,18 @@ class Reservas_Controller:
 
                 mostrar_reserva(reserva)
                 
-                confirmacion = input("¿Está seguro que desea eliminar esta reserva? (si/no): ").lower()
-                if confirmacion == 'si':
-                    if self._service.eliminar_reserva(id_reserva):
-                        print("Reserva eliminada exitosamente.")
+                while True:
+                    confirmacion = input("¿Está seguro que desea eliminar esta reserva? (si/no): ").strip().lower()
+                    if confirmacion == 'si':
+                        if self._service.eliminar_reserva(id_reserva):
+                            print("Reserva eliminada exitosamente.")
+                            break
+                    elif confirmacion == 'no':
+                        print("Operación cancelada.")
                         break
                     else:
-                        print("No se pudo eliminar la reserva.")
-                        break
-                else:
-                    print("Operación cancelada.")
-                    break
+                        print("Debe ingresar 'si' o 'no'.")
+                        continue
             except ValueError as Error:
                 print(f"\nError: {Error}")
             except Exception as Error:

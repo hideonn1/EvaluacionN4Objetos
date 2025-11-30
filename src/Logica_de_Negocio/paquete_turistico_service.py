@@ -8,6 +8,22 @@ class Paquete_Service:
         self._repo = paquete_repository
         self._repo_destino = destino_repository
 
+    def obtener_multiplicador(self, fecha_salida):
+        mes = fecha_salida.month  
+
+        if mes in (7, 9):  # Julio, Septiembre
+            return 1.2
+        elif mes in (1, 2):  # Enero, Febrero
+            return 1.3
+        elif mes in (12, 3):  # Diciembre, Marzo
+            return 1.1
+        elif mes in (6, 4, 8):  # Junio, Abril, Agosto
+            return 1.0
+        elif mes in (10, 5, 11):  # Octubre, Mayo, Noviembre
+            return 0.9
+        else:
+            return 1.0  # DEFAULT 
+
     def buscar_paquete(self, paquete_id):
         # Buscar paquete en el repositorio
         paquete_objeto = self._repo.read_by_id(paquete_id)
@@ -28,11 +44,12 @@ class Paquete_Service:
     def agregar_destino_a_paquete(self, paquete, destino):
         orden_visita = self._repo.get_ultimo_orden_visita(paquete.id_paquete) + 1
         destino.orden_visita = orden_visita
+        multiplicador = self.obtener_multiplicador(paquete.fecha_salida)
         self._repo.destino_x_paquete(paquete,destino)
         
         if orden_visita > 1:
             paquete.fecha_llegada = destino.fecha_llegada
-            paquete.costo_destino += destino.costo
+            paquete.costo_destino += destino.costo * multiplicador
             self._repo.update(paquete)
 
     def confirmar_fecha_salida(self, fecha, fecha_salida = None):

@@ -114,26 +114,27 @@ class Paquete_Controller:
             destino_objeto = self.agregar_destino_paquete()
             fecha_salida = self.fecha_salida_ver()
             fecha_llegada = self.fecha_llegada_ver(fecha_salida)
+            multiplicador = self._service.obtener_multiplicador(fecha_salida)
             nuevo_paquete = PaqueteTuristico(fecha_llegada = fecha_llegada,
                                              fecha_salida = fecha_salida,
-                                             costo_destino = destino_objeto.costo
+                                             costo_destino = destino_objeto.costo * multiplicador
             )
             destino_objeto.fecha_salida = fecha_salida
             destino_objeto.fecha_llegada = fecha_llegada
             destino_objeto.orden_visita = 1
             paquete_completo = self._service.agregar_paquete(nuevo_paquete)
             self._service.agregar_destino_a_paquete(paquete_completo,destino_objeto)
-            try:
-                while True:
-                    respuesta = input("Desea ingresar otro destino? [si/no]: ")
+            while True:
+                try:
+                    respuesta = input("Desea ingresar otro destino? [si/no]: ").strip()
                     if respuesta.lower() == 'si':
                         self.nuevo_destino(paquete_completo)
                     elif respuesta.lower() == 'no':
                         break
                     else:
                         print("Error, debe ingresar una respuesta valida!")
-            except ValueError as e:
-                print(e)
+                except ValueError as e:
+                    print(e)
 
     def nuevo_destino(self, paquete):
         destino_paquete = self.agregar_destino_paquete(paquete.id_paquete)
