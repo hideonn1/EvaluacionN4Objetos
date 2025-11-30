@@ -1,28 +1,29 @@
 # Clase de Reserva
-from .PaqueteTuristico import PaqueteTuristico
+# from .PaqueteTuristico import PaqueteTuristico # Removed as it seems unused in this context
 
 class Reserva():
-    def __init__ (self, id_reserva,
-                id_cliente,
-                fecha_reserva,
+    def __init__ (self, 
+                id_usuario,
+                fecha_inicio,
+                fecha_final,
                 estado,
-                monto_pagado,
-                paquete_turistico = None):
+                monto_total,
+                id_reserva = None):
         
         self.id_reserva = id_reserva
-        self.id_cliente = id_cliente
-        self.paquete_turistico = PaqueteTuristico(**paquete_turistico)
-        self.fecha_reserva = fecha_reserva
+        self.id_usuario = id_usuario
+        self.fecha_inicio = fecha_inicio
+        self.fecha_final = fecha_final
         self.estado = estado
-        self.monto_pagado = monto_pagado
+        self.monto_total = monto_total
     
     def __str__(self):
         info_reserva = (
             f"Reserva ID: {self.id_reserva}\n"
-            f"Cliente ID: {self.id_cliente}\n"
-            f"Fecha de reserva: {self.fecha_reserva}\n"
+            f"Usuario ID: {self.id_usuario}\n"
+            f"Fecha inicio: {self.fecha_inicio}\n"
+            f"Fecha final: {self.fecha_final}\n"
             f"Estado: {self.estado}\n"
-            f"Monto pagado: ${self.monto_pagado}")
-        info_paquete = str(self.paquete_turistico)
-
-        return info_reserva + info_paquete
+            f"Monto total: ${self.monto_total}")
+        
+        return info_reserva

@@ -132,11 +132,11 @@ def main():
                             if op_reserva not in [1,2,3,4]:
                                 continue
                             if op_reserva == 1:  
-                                user_id = getattr(usuario, 'id_usuario', getattr(usuario, 'id_cliente', None))
-                                if user_id:
-                                    reserva_cont.crear_reserva(user_id)
-                                else:
-                                    print("Error: No se pudo identificar al usuario.")
+                                #user_id = getattr(usuario, 'id_usuario', getattr(usuario, 'id_cliente', None))
+                                #if user_id:
+                                reserva_cont.crear_reserva(usuario.id_usuario)
+                                #else:
+                                    #print("Error: No se pudo identificar al usuario.")
                             elif op_reserva == 2:  
                                 resultado = reserva_cont.obtener_reserva_por_id()
                                 if resultado == "volver":

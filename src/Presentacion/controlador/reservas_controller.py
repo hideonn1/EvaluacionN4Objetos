@@ -1,4 +1,5 @@
 ## controlador de reservas
+from datetime import datetime
 from ..vista.reservas_view import (
     mostrar_reserva,
     sub_menu_reserva_cliente,
@@ -45,7 +46,12 @@ class Reservas_Controller:
                         print("Debe ingresar un número válido.")
                 try:
                     #2. Pasar los datos al service
-                    nueva_reserva = self._service.crear_reserva(fecha_inicio, fecha_final, monto_total, id_usuario)
+                    datos_reserva = {
+                        "fecha_inicio": fecha_inicio,
+                        "fecha_final": fecha_final,
+                        "monto_total": monto_total
+                    }
+                    nueva_reserva = self._service.crear_reserva(datos_reserva, id_usuario)
             
                     #3. Mostrar resultado
                     print("\nReserva creada con exito:")
