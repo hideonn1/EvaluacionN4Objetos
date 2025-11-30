@@ -48,11 +48,12 @@ def mostrar_paquete_vista(paquete):
 def menu_paquete_turistico():
     return (
         "\n--- MENÚ PAQUETE TURÍSITCO ---\n"
-        "1. Crear paquete\n"
-        "2. Buscar paquete por ID\n"
-        "3. Actualizar paquete\n"
-        "4. Eliminar paquete\n"
-        "5. Volver al menú principal\n"
+        "---ELIJA UNA OPCIÓN ---\n"
+        "1. CREAR PAQUETE\n"
+        "2. BUSCAR PAQUETE POR ID\n"
+        "3. ACTUALIZAR PAQUETE\n"
+        "4. ELIMINAR PAQUETE\n"
+        "5. VOLVER AL MENÚ PRINCIPAL\n"
     )
 
 def modificar_paquete_vista():

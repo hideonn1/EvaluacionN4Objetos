@@ -17,6 +17,7 @@ class Reservas_Service:
             raise ValueError("El monto total debe ser mayor a 0.")
         
         nueva_reserva = Reserva(
+            id_usuario = id_usuario,
             fecha_inicio = datos_reserva["fecha_inicio"],
             fecha_final = datos_reserva["fecha_final"],
             estado = "pendiente",
