@@ -20,17 +20,27 @@ class Paquete_Controller:
     def buscar_paquete(self):
         while True:
             try:
-                id_paquete = int(input("Ingrese id del paquete: "))
-                break
-            except ValueError as e:
-                print (e)
-        try:
-            paquete_objeto = self._service.buscar_paquete(id_paquete)
-            print(paquete_objeto)
-            return paquete_objeto
-        except ValueError as e:
-            print(f"Error: {e}")
-            return None
+                id_paquete_input = input("Ingrese ID del paquete (o 0 para cancelar): ")
+                
+                if id_paquete_input == '0':
+                    print("Búsqueda cancelada.")
+                    return None
+
+                id_paquete = int(id_paquete_input)
+                
+                paquete_objeto = self._service.obtener_paquete_por_id(id_paquete)
+                
+                print("\n Paquete Encontrado:")
+                print(paquete_objeto) 
+                
+                return paquete_objeto
+                
+            except ValueError:
+                print("\n Error de formato: Por favor, ingrese un número entero válido para el ID.")
+                
+            except Exception as e:
+                print(f"\n Error de Búsqueda: {e}")
+
     
     def agregar_destino(self,paquete):
         lista_destinos = self._service_destino.mostrar_destinos()
@@ -52,33 +62,44 @@ class Paquete_Controller:
 
 
     def agregar_destino_paquete(self,id_paquete=None):
-        while True:
+        while True: 
             try:
-                pais = input("Ingrese un Pais para ver sus destinos disponibles: ")
-                ###Verificacion pais
-                while True:
-                    try:
-                        lista_destino = self._service_destino.obtener_destinos_por_pais(pais)
-                        for i in lista_destino:
-                            print(i)
-                        destino_id = int(input("Ingrese el id del destino que quiere agregar al paquete (0 para cancelar operacion: "))
-                        duplicado = False
-                        if id_paquete: 
-                            duplicado = self._service.duplicidad_verf(destino_id,id_paquete)
-                        if duplicado == True:
-                            print("No puede ingresar destinos duplicados!")
-                            continue
-                        destino_paquete = self._service_destino.obtener_destino_por_id(destino_id)
-                        if destino_paquete != None:
-                            break
-                        else:
-                            print("No se ha encontrado un destino con esa id, intentelo denuevo")
-                    except Exception as e:
-                        print(e)
-            except Exception as e:
-                print (e)
-            return destino_paquete
+                while True: 
+                    pais = input("Ingrese un Pais para ver sus destinos disponibles: ")
+                    if not pais or not all(c.isalpha() or c.isspace() for c in pais):
+                        print("Error: Ingrese un Pais válido (solo letras y espacios).")
+                        continue 
+                    lista_destino = self._service_destino.obtener_destinos_por_pais(pais)
+                    if len(lista_destino) < 1:
+                        raise ValueError("Error! No se ha encontrado destinos en el país especificado.")
+                    break 
 
+                while True:
+                    mostrar_destinos(lista_destino)
+                    destino_id_input = input("Ingrese el id del destino que quiere agregar (0 para cancelar): ")
+                    if destino_id_input == '0':
+                        print("Operación cancelada.")
+                        return None 
+                    destino_id = int(destino_id_input) 
+                    
+                    if id_paquete and self._service.duplicidad_verf(destino_id, id_paquete):
+                        print("No puede ingresar destinos duplicados!")
+                        continue 
+                    
+                    destino_paquete = self._service_destino.obtener_destino_por_id(destino_id)
+                    
+                    if destino_paquete is None:
+                        print("No se ha encontrado un destino con ese ID, inténtelo de nuevo.")
+                        continue                      
+                    break 
+                return destino_paquete
+
+            except ValueError as e:
+                print(f"Error de formato o validación: {e}")
+
+            except Exception as e:
+                print(f"Error inesperado del sistema: {e}")
+                return None 
 
     def fecha_salida_ver(self, fecha_inicio=None):
         while True:
@@ -112,6 +133,9 @@ class Paquete_Controller:
 
     def crear_paquete(self):
             destino_objeto = self.agregar_destino_paquete()
+            if destino_objeto == None:
+                print("Será devuelto al menu anterior")
+                return
             fecha_salida = self.fecha_salida_ver()
             fecha_llegada = self.fecha_llegada_ver(fecha_salida)
             nuevo_paquete = PaqueteTuristico(fecha_llegada = fecha_llegada,
@@ -129,7 +153,7 @@ class Paquete_Controller:
                     if respuesta.lower() == 'si':
                         self.nuevo_destino(paquete_completo)
                     elif respuesta.lower() == 'no':
-                        break
+                        return
                     else:
                         print("Error, debe ingresar una respuesta valida!")
             except ValueError as e:
@@ -173,25 +197,26 @@ class Paquete_Controller:
                 print(e)
         
     def modificar_paquete(self):
-        try:
-            print(modificar_paquete_vista())
-            opcion = int(input("Selecciona una opcion (1-3): "))
-            while opcion not in [1,2,3]:
-                print("Error al ingresar una opcion, intentelo denuevo.")
+        while True:
+            try:
+                print(modificar_paquete_vista())
                 opcion = int(input("Selecciona una opcion (1-3): "))
-        except ValueError as e:
-            print(e)
-        match opcion:
-            case 1:
-                paquete = self.buscar_paquete()
-                if paquete:
-                    self.nuevo_destino(paquete)
-            case 2:
-                paquete = self.buscar_paquete()
-                if paquete:
-                    self.quitar_destino(paquete)
-            case 3:
-                return
+                while opcion not in [1,2,3]:
+                    print("Error al ingresar una opcion, intentelo denuevo.")
+                    opcion = int(input("Selecciona una opcion (1-3): "))
+                match opcion:
+                    case 1:
+                        paquete = self.buscar_paquete()
+                        if paquete:
+                            self.nuevo_destino(paquete)
+                    case 2:
+                        paquete = self.buscar_paquete()
+                        if paquete:
+                            self.quitar_destino(paquete)
+                    case 3:
+                        return
+            except ValueError as e:
+                print(e)
         
     def eliminar_paquete(self):
         paquete = self.buscar_paquete()
@@ -218,7 +243,7 @@ class Paquete_Controller:
 
     def paquete_controlador_admin(self):
         while True:
-            menu_paquete_turistico()
+            print(menu_paquete_turistico())
             try:
                 opcion_user = int(input("Seleccione una opcion (1-5): "))
             except ValueError:
